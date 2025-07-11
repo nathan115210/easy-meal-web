@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <a href="#">
+    <img src="./public/logo.svg" alt="Easy Meal Logo" width="120" />
 
-## Getting Started
+  </a>
+</p>
+_Easy Meal_ is an open-source **Next.js** & **TypeScript** web app to help you discover recipes, plan your week, and
+generate shopping lists—effortlessly.
 
-First, run the development server:
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [Tech Stack](#tech-stack)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## Features
+
+- **Smart Recipe Search** — Find recipes by ingredients, cuisine, or dietary needs.
+- **Weekly Meal Planner & Reminders** — Plan your meals and get timely reminders.
+- **One-Click Shopping Lists** — Instantly generate and export shopping lists.
+- **Community Reviews & Tips** — Share feedback and cooking tips with others.
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js `>= 14`
+- npm or yarn
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone git@github.com:nathan115210/easy-meal-web.git
+cd easy-meal-web
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## TODO
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Add user authentication and profiles
+- [ ] Integrate nutrition data for recipes
+- [ ] Enable drag-and-drop meal planning
+- [ ] Improve mobile responsiveness
+- [ ] Add recipe import from external sources
+- [ ] Write more unit and integration tests
+- [ ] Enhance accessibility and ARIA support
+- [ ] Update the RADME logo link with the actual prod URL 
