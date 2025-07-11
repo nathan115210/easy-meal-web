@@ -1,0 +1,54 @@
+@use '@styles/core/_colors' as colors;
+
+.cta {
+  padding: 0.75rem;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  user-select: none;
+  gap: 0.25rem;
+
+  &--primary {
+    background: colors.$brand-color;
+    color: #fff;
+
+    &:hover {
+      background: colors.$brand-color-300;
+      color: #fff;
+    }
+  }
+
+  &--secondary {
+    background: #f8fafc;
+    color: colors.$brand-color;
+    border: 1px solid colors.$brand-color;
+
+    &:hover {
+      background: #e0e7ef;
+      color: colors.$brand-color;
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: colors.$brand-color;
+    border: 2px solid colors.$brand-color;
+
+    &:hover {
+      background: #f0f6ff;
+      color: colors.$brand-color;
+    }
+  }
+
+  &--compact {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

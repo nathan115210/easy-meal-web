@@ -1,0 +1,55 @@
+@import '@styles/core/_colors.scss';
+@import '@styles/core/_spacing.scss';
+
+$color-background: var(--color-neutral-900);
+$color-border: #eee;
+$color-title: #222;
+$color-link: #0070f3;
+$color-link-hover: #0051a3;
+$padding-header: 1rem 2rem;
+$gap-nav: 1.5rem;
+
+.main-header {
+  background-color: $color-background;
+  border-bottom: 1px solid $color-border;
+  padding: $padding-header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    height: 50px;
+
+    img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $color-title;
+  }
+
+  &__nav {
+    display: flex;
+    gap: $gap-nav;
+  }
+
+  &__link {
+    color: $color-link;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $color-link-hover;
+    }
+  }
+}
+
+
