@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from 'next/font/google';
-import '@styles/core/_global.scss';
+import '@styles/global.scss';
 import MainHeader from "../components/MainHeader/MainHeader";
 import Footer from "@/components/Footer/Footer";
 
@@ -27,7 +27,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className={`${geistSans.variable} 
-        ${geistMono.variable}`}>
+            ${geistMono.variable}`}>
         <MainHeader/>
         {children}
         <Footer/>

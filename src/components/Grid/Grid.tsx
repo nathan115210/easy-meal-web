@@ -3,7 +3,7 @@ import React, {FC, useMemo} from 'react';
 import Image from 'next/image';
 import Cta from '@/components/Cta/Cta';
 import {CtaVariants} from '@/components/Cta/ctaType';
-import './Grid.scss';
+import styles from './grid.module.scss';
 import GridCard from "@/components/Grid/GridCard";
 
 export interface GridItemProps {
@@ -23,11 +23,6 @@ export interface GridProps {
 
 const Grid: FC<GridProps> = ({items, featuredId, heading, enableFeatured = true}) => {
 
-    if (items.length === 0) {
-        return null;
-    }
-
-
     const {featuredItem, otherItems}: {
         featuredItem: GridItemProps | null;
         otherItems: GridItemProps[]
@@ -38,13 +33,18 @@ const Grid: FC<GridProps> = ({items, featuredId, heading, enableFeatured = true}
         return {featuredItem, otherItems};
     }, [items, featuredId, enableFeatured]);
 
-    return (
-        <section className="grid">
-            {heading && <h2 className="grid__heading">{heading}</h2>}
+    if (items.length === 0) {
+        return null;
+    }
 
-            {featuredItem && <div className="grid__featured">
+
+    return (
+        <section className={styles.grid}>
+            {heading && <h2 className={styles.grid__heading}>{heading}</h2>}
+
+            {featuredItem && <div className={styles.grid__featured}>
                 {featuredItem.imageUrl && (
-                    <div className="grid__featured-image">
+                    <div className={styles.grid__featured_image}>
                         <Image
                             src={featuredItem.imageUrl}
                             alt={featuredItem.title}
@@ -55,11 +55,10 @@ const Grid: FC<GridProps> = ({items, featuredId, heading, enableFeatured = true}
                         />
                     </div>
                 )}
-                <div className='grid__featured-content'>
-
-                    <h3 className="grid__featured-title">{featuredItem.title}</h3>
+                <div className={styles.grid__featured_content}>
+                    <h3 className={styles.grid__featured_title}>{featuredItem.title}</h3>
                     {featuredItem.description && (
-                        <p className="grid__featured-desc">{featuredItem.description}</p>
+                        <p className={styles.grid__featured_desc}>{featuredItem.description}</p>
                     )}
                     {featuredItem.href && (
                         <Cta href={featuredItem.href} variant={CtaVariants.Primary}>
@@ -69,7 +68,7 @@ const Grid: FC<GridProps> = ({items, featuredId, heading, enableFeatured = true}
                 </div>
             </div>}
 
-            <ul className="grid__list">
+            <ul className={styles.grid__list}>
                 {otherItems.map(item => {
                     const {id, title, imageUrl, description, href} = item;
                     return (

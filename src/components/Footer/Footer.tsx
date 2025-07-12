@@ -1,12 +1,12 @@
-import React from 'react'
-import Link from 'next/link'
-import './Footer.scss'
+import React from 'react';
+import Link from 'next/link';
+import styles from './footer.module.scss';
 
 export default function Footer() {
     return (
-        <footer className="footer">
-            <div className="footer__inner">
-                <div className="footer__col">
+        <footer className={styles.footer}>
+            <div className={styles.footer__inner}>
+                <div className={styles.footer__col}>
                     <h4>About Easy Meal</h4>
                     <p>
                         Easy Meal helps you discover recipes, plan your week, and shop with
@@ -14,7 +14,7 @@ export default function Footer() {
                     </p>
                 </div>
 
-                <div className="footer__col">
+                <div className={styles.footer__col}>
                     <h4>Quick Links</h4>
                     <ul>
                         <li>
@@ -32,7 +32,7 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                <div className="footer__col">
+                <div className={styles.footer__col}>
                     <h4>Contact</h4>
                     <p>
                         <a href="nathan_115210@hotmail.com">nathan_115210@hotmail.com</a>
@@ -41,5 +41,5 @@ export default function Footer() {
                 </div>
             </div>
         </footer>
-    )
+    );
 }

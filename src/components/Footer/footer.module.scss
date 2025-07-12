@@ -1,40 +1,33 @@
-@use '@styles/core/_colors' as colors;
-
 .footer {
-  background-color: map-get(colors.$neutral-light, 800);
-  color: map-get(colors.$neutral-light, 100);
+  background-color: var(--neutral-800);
+  color: var(--neutral-100);
   padding: 3rem 2rem;
   font-size: 0.9rem;
 
   &__inner {
-
-
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
-
     max-width: 80vw;
 
     @media (max-width: 768px) {
       max-width: 100vw;
       text-align: center;
     }
-
-
   }
 
   &__col {
     h4 {
       margin-bottom: 1rem;
       font-size: 1.1rem;
-      color: colors.$brand-color;
+      color: var(--brand-color);
     }
 
     p,
     a,
     li {
-      color: map-get(colors.$neutral-light, 200);
+      color: var(--neutral-200);
       line-height: 1.6;
     }
 
@@ -44,7 +37,7 @@
       transition: border-color 0.2s;
 
       &:hover {
-        border-color: colors.$brand-color;
+        border-color: var(--brand-color);
       }
     }
 
