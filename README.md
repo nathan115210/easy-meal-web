@@ -5,7 +5,6 @@
   </a>
 </p>
 
-
 _Easy Meal_ is an open-source **Next.js** & **TypeScript** web app to help you discover recipes, plan your week, and
 generate shopping lists—effortlessly.
 
@@ -56,4 +55,4 @@ pnpm dev
 - [ ] Add recipe import from external sources
 - [ ] Write more unit and integration tests
 - [ ] Enhance accessibility and ARIA support
-- [ ] Update the RADME logo link with the actual prod URL 
+- [ ] Update the README logo link with the actual prod URL

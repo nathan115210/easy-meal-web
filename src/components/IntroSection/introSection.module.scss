@@ -1,11 +1,5 @@
 .introSection {
-  background: linear-gradient(
-                  135deg,
-                  var(--brand-color-100),
-                  var(--brand-color-200) 40%,
-                  var(--brand-color-300) 70%,
-                  var(--brand-color-400)
-  );
+  background: linear-gradient(135deg, var(--brand-color-100), var(--brand-color-200) 40%, var(--brand-color-300) 70%, var(--brand-color-400));
   padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
@@ -71,7 +65,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {

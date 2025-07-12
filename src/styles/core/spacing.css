@@ -1,12 +1,12 @@
 :root {
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    --spacing-xxl: 40px;
-    --spacing-base: 16px;
-    --spacing-gap-sm: 8px;
-    --spacing-gap-md: 16px;
-    --spacing-gap-lg: 24px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 40px;
+  --spacing-base: 16px;
+  --spacing-gap-sm: 8px;
+  --spacing-gap-md: 16px;
+  --spacing-gap-lg: 24px;
 }

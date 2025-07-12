@@ -39,7 +39,9 @@
       font-size: 1.1rem;
       padding: 0.5rem 1rem;
       border-radius: var(--border-radius-lg);
-      transition: background 0.2s, color 0.2s;
+      transition:
+        background 0.2s,
+        color 0.2s;
 
       &:hover,
       &:focus {
@@ -69,8 +71,6 @@
       width: 100%;
       justify-content: center;
       gap: var(--spacing-md);
-
-
     }
   }
 }
