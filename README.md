@@ -5,8 +5,7 @@
   </a>
 </p>
 
-_Easy Meal_ is an open-source **Next.js** & **TypeScript** web app to help you discover recipes, plan your week, and
-generate shopping lists—effortlessly.
+_Easy Meal_ is an open-source **Next.js** & **TypeScript** web app to help you discover recipes, plan your week, and generate shopping lists—effortlessly.
 
 ---
 
