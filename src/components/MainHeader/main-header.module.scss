@@ -39,13 +39,25 @@
       font-size: 1.1rem;
       padding: 0.5rem 1rem;
       border-radius: var(--border-radius-lg);
-      transition: background 0.2s,
-      color 0.2s;
+      transition:
+        background 0.2s,
+        color 0.2s;
 
       &:hover,
       &:focus {
         background: var(--primary-100);
         color: var(--primary-900);
+      }
+
+      &_active {
+        background: var(--brand-color);
+        color: var(--white);
+
+        &:hover,
+        &:focus {
+          background: var(--brand-color-100);
+          color: var(--brand-color-900);
+        }
       }
     }
   }
