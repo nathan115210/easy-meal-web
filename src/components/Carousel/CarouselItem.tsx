@@ -1,10 +1,8 @@
-'use client';
-
 import React, {FC} from 'react';
 import Image from 'next/image';
 import Cta from '@/components/Cta/Cta';
 import styles from './carousel.module.scss';
-import {CtaSizes, CtaVariants} from "@/components/Cta/ctaType";
+import {CtaSizes, CtaVariants} from '@/components/Cta/ctaType';
 
 export interface CarouselItemProps {
     title: string;
@@ -18,13 +16,7 @@ const CarouselItem: FC<CarouselItemProps> = ({title, imageUrl, description, href
     return (
         <div className={styles['carousel-item']}>
             <div className={styles['carousel-item-image']}>
-                <Image
-                    src={imageUrl}
-                    alt={altText}
-                    fill
-                    style={{objectFit: 'cover'}}
-                    sizes="100vw"
-                />
+                <Image src={imageUrl} alt={altText} fill style={{objectFit: 'cover'}} sizes="100vw"/>
             </div>
             {/*<div className={styles['carousel-item-image']}>
             </div>*/}

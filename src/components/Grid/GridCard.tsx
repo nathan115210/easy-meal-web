@@ -9,26 +9,8 @@ const GridCard: FC<GridItemProps> = ({href, title, imageUrl}) => {
     return (
         <li className={styles.grid__card}>
             {imageUrl && (
-                /*<div className={styles['grid__card-image']}>
-                    <Image src={imageUrl} alt={title} width={16} height={9} objectFit="cover" layout="responsive"/>
-                </div>*/
-                /*<div className={styles['grid__card-image']}>
 
-                    <Image
-                        src={imageUrl}
-                        alt={title}
-                        fill
-                        sizes="100vw"
-                        style={{objectFit: 'cover'}}
-                    />
-                </div>*/
-                <Image
-                    className={styles['grid__card-image']}
-                    src={imageUrl}
-                    alt={title}
-                    width={400}
-                    height={300}
-                />
+                <Image className={styles['grid__card-image']} src={imageUrl} alt={title} width={400} height={300}/>
             )}
             <div className={styles['grid__card-content']}>
                 <h3 className={styles['grid__card-content-title']}>{title}</h3>
