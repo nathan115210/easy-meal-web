@@ -5,15 +5,15 @@ import styles from './grid.module.scss';
 import {CtaVariants} from '@/components/Cta/ctaType';
 import Cta from '@/components/Cta/Cta';
 
-const GridCard: FC<GridItemProps> = ({href, title, imageUrl}) => {
+const GridCard: FC<GridItemProps> = ({href, title, imageUrl, description}) => {
     return (
         <li className={styles.grid__card}>
             {imageUrl && (
-
                 <Image className={styles['grid__card-image']} src={imageUrl} alt={title} width={400} height={300}/>
             )}
             <div className={styles['grid__card-content']}>
                 <h3 className={styles['grid__card-content-title']}>{title}</h3>
+                
                 {href && (
                     <Cta href={href} variant={CtaVariants.Secondary}>
                         Learn More

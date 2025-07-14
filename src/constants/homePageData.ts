@@ -57,14 +57,12 @@ export const featureGridItems: GridItemProps[] = [
         id: 'shopping',
         title: 'One-Click Shopping Lists',
         imageUrl: '/shopping-list.png',
-        description: 'Generate a shopping list from your planned recipes.',
         href: '/features/shopping-list',
     },
     {
         id: 'search',
         title: 'Smart Recipe Search',
         imageUrl: '/smart-search-1.png',
-        description: 'Find recipes based on ingredients, cuisine, and dietary needs.',
         href: '/features/search',
     },
     {
@@ -79,7 +77,6 @@ export const featureGridItems: GridItemProps[] = [
         id: 'community',
         title: 'Community Reviews & Tips',
         imageUrl: '/community.png',
-        description: 'Read and share tips with fellow home cooks.',
         href: '/features/community',
     },
 ];

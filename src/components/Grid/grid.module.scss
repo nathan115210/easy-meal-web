@@ -1,3 +1,5 @@
+$card-border-radius: 12px;
+
 .grid {
   width: 100%;
   max-width: 100%;
@@ -17,7 +19,7 @@
     display: flex;
     background-color: var(--brand-color-100);
     padding: var(--spacing-lg);
-    border-radius: 12px;
+    border-radius: $card-border-radius;
     text-align: center;
     gap: 2rem;
     justify-content: space-around;
@@ -65,19 +67,17 @@
 
   &__card {
     background-color: white;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    padding: 1rem;
+    border-radius: $card-border-radius;
+    /*padding: 1rem;*/
     text-align: center;
     cursor: pointer;
-    transition:
-      border-color 0.2s,
-      box-shadow 0.2s;
+    transition: border-color 0.2s,
+    box-shadow 0.2s;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
     align-items: center;
     position: relative;
+    overflow: hidden;
 
     &:hover {
       border-color: var(--brand-color);
@@ -85,26 +85,33 @@
     }
 
     &-image {
-      border-radius: 20px;
-      object-fit: contain;
+      border-top-left-radius: $card-border-radius;
+      border-top-right-radius: $card-border-radius;
+      object-fit: fill;
       width: 100%;
-      height: 70%;
+      height: 100%;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.08);
+      }
     }
 
     &-content {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      position: absolute;
+      /*position: absolute;*/
+      padding: var(--spacing-md);
       width: 100%;
       background: var(--primary-900);
-      height: 30%;
+      height: 100%;
       bottom: 0;
       opacity: 0.9;
       align-items: center;
       justify-content: center;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: $card-border-radius;
+      border-bottom-right-radius: $card-border-radius;
 
       &-title {
         font-size: 1.125rem;
