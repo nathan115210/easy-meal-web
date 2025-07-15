@@ -1,3 +1,8 @@
+.meals-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}
 .mealsPage {
   padding: 4rem 2rem;
   background: linear-gradient(135deg, var(--brand-color-100), var(--brand-color-300) 70%, var(--brand-color-400));
@@ -21,4 +26,50 @@
   margin-bottom: 2rem;
   text-align: center;
   max-width: 600px;
+}
+
+.meals-error {
+  background: var(--neutral-100);
+  color: var(--danger);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  margin: var(--spacing-xl) auto;
+  max-width: 480px;
+  box-shadow: 0 2px 8px var(--neutral-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meals-error__title {
+  font-size: var(--typography-headings-h2);
+  font-weight: var(--typography-font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  color: var(--danger);
+}
+
+.meals-error__description {
+  font-size: var(--typography-font-size-base);
+  color: var(--neutral-700);
+  margin-bottom: var(--spacing-lg);
+  max-width: 400px;
+}
+
+.meals-error__button {
+  background: var(--primary-500);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-pill);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-bold);
+  cursor: pointer;
+  box-shadow: 0 1px 4px var(--neutral-200);
+  transition: background 0.2s;
+
+  &:hover,
+  &:focus {
+    background: var(--primary-600);
+  }
 }

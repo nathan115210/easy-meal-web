@@ -2,3 +2,5 @@ node_modules
 .next
 dist
 build
+# Ignore the SQLite database
+src/lib/database/mealsDb.ts

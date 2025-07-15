@@ -1,8 +1,8 @@
 'use client';
-import React, {FC, useMemo} from 'react';
+import React, { FC, useMemo } from 'react';
 import Image from 'next/image';
 import Cta from '@/components/Cta/Cta';
-import {CtaVariants} from '@/components/Cta/ctaType';
+import { CtaVariants } from '@/components/Cta/ctaType';
 import styles from './grid.module.scss';
 import GridCard from '@/components/Grid/GridCard';
 
@@ -76,8 +76,8 @@ const Grid: FC<GridProps> = ({items, featuredId, heading, enableFeatured = true}
             <ul className={styles.grid__list}>
                 {otherItems.map((item) => {
                     const {id, title, imageUrl, description, href} = item;
-                    console.log('description', description)
-                    return <GridCard key={id} id={id} title={title} imageUrl={imageUrl} description={description}
+
+                  return <GridCard key={id} id={id} title={title} imageUrl={imageUrl} description={description}
                                      href={href}/>;
                 })}
             </ul>

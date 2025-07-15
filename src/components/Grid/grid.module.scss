@@ -47,7 +47,7 @@ $card-border-radius: 12px;
     }
 
     &_desc {
-      color: white;
+      color: var(---white);
       margin-bottom: 1rem;
     }
   }
@@ -114,12 +114,13 @@ $card-border-radius: 12px;
       border-bottom-right-radius: $card-border-radius;
 
       &-title {
-        font-size: 1.125rem;
+        font-size: 1rem;
         color: black;
       }
 
       &-desc {
         font-size: 1rem;
+        color: var(---black);
         color: black;
       }
     }

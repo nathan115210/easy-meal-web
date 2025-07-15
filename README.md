@@ -45,6 +45,24 @@ pnpm install
 pnpm dev
 ```
 
+### Running the Init Script for Database Setup
+
+To compile & execute your TypeScript DB script with pnpm:
+
+```
+pnpm ts-node src/lib/database/mealsDb.ts
+```
+
+> - Troubleshhoting
+>- For get error: ``Error: Could not locate the bindings file. Tried:`` Try below command:
+
+```bash
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
+npm rebuild better-sqlite3 --build-from-source
+pnpm ts-node src/lib/database/mealsDb.ts
+```
+
 ## TODO
 
 - [ ] Add user authentication and profiles

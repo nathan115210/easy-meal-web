@@ -1,7 +1,13 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // ignore better-sqlite3 on client side
+      config.resolve.alias['better-sqlite3'] = false;
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

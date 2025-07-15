@@ -1,41 +1,58 @@
 import React from 'react';
-import Grid, {GridItemProps} from '@/components/Grid/Grid';
+import Grid, { GridItemProps } from '@/components/Grid/Grid';
 import styles from './meals.module.scss';
+import { Meal } from '@/types/meals';
+import Cta from '@/components/Cta/Cta';
 
-const mealItems: GridItemProps[] = [
-    {
-        id: 'meal1',
-        title: 'Grilled Chicken Salad',
-        description: 'Fresh greens with grilled chicken, avocado, and vinaigrette.',
-        imageUrl: '/meals/dummy-1.png',
-        href: '/meals/grilled-chicken-salad',
-    },
-    {
-        id: 'meal2',
-        title: 'Vegan Buddha Bowl',
-        description: 'Quinoa, roasted veggies, chickpeas, and tahini sauce.',
-        imageUrl: '/meals/dummy-2.png',
-        href: '/meals/vegan-buddha-bowl',
-    },
-    {
-        id: 'meal3',
-        title: 'Pasta Primavera',
-        description: 'Whole wheat pasta with seasonal vegetables and pesto.',
-        imageUrl: '/meals/dummy-3.png',
-        href: '/meals/pasta-primavera',
-    },
-];
 
-const MealsPage = () => {
+async function fetchMeals(): Promise<Meal[]> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/meals`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('Failed to fetch meals');
+  return res.json();
+}
+
+export default async function MealsPage() {
+  const meals = await fetchMeals();
+  const mealItems = extractMealItems(meals);
+
+  if (!!mealItems.length) {
     return (
-        <section className={styles.mealsPage}>
-            <h1 className={styles.mealsHeading}>Our Meals</h1>
-            <p className={styles.mealsDescription}>
-                Discover delicious, healthy meals crafted for every lifestyle.
-            </p>
-            <Grid items={mealItems} heading="All Meals" enableFeatured={false}/>
-        </section>
+      <section className={styles.mealsPage}>
+        <h1 className={styles.mealsHeading}>Our Meals</h1>
+        <p className={styles.mealsDescription}>
+          Discover delicious, healthy meals crafted for every lifestyle.
+        </p>
+        <Grid items={mealItems} heading="All Meals" enableFeatured={false} />
+      </section>
     );
+  } else {
+    return (
+      <section className={styles.mealsPage}>
+        <h1 className={styles.mealsHeading}>Our Meals</h1>
+        <p className={styles.mealsDescription}>
+          No meals found. Please check back later.
+        </p>
+        <Cta href={'/'}>Back to home page</Cta>
+      </section>
+    );
+  }
 };
 
-export default MealsPage;
+
+// helpers
+const extractMealItems = (meals: Meal[]): GridItemProps[] => {
+  if (!!meals.length) {
+    return meals.map((meal) => ({
+      id: meal.slug,
+      title: meal.title,
+      description: meal.description,
+      imageUrl: meal.image,
+      href: `/meals/${meal.slug}`,
+    }));
+  } else {
+    return [] as GridItemProps[];
+  }
+};

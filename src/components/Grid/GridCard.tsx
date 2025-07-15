@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
-import {GridItemProps} from '@/components/Grid/Grid';
+import React, { FC } from 'react';
+import { GridItemProps } from '@/components/Grid/Grid';
 import Image from 'next/image';
 import styles from './grid.module.scss';
-import {CtaVariants} from '@/components/Cta/ctaType';
+import { CtaVariants } from '@/components/Cta/ctaType';
 import Cta from '@/components/Cta/Cta';
 
 const GridCard: FC<GridItemProps> = ({href, title, imageUrl, description}) => {
@@ -13,7 +13,8 @@ const GridCard: FC<GridItemProps> = ({href, title, imageUrl, description}) => {
             )}
             <div className={styles['grid__card-content']}>
                 <h3 className={styles['grid__card-content-title']}>{title}</h3>
-                
+              {description &&
+                <p className={styles['grid__card-content-desc']}>{description}</p>}
                 {href && (
                     <Cta href={href} variant={CtaVariants.Secondary}>
                         Learn More
