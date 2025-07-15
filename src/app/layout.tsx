@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import '@styles/global.scss';
 import MainHeader from '../components/MainHeader/MainHeader';
 import Footer from '@/components/Footer/Footer';
+import React, { Suspense } from 'react';
+import LoadingMainHeader from '@/components/LoadingCmponents/LoadingMainHeader/LoadingMainHeader';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,9 +31,12 @@ export default function RootLayout({
         className={`${geistSans.variable} 
             ${geistMono.variable}`}
       >
+      {/*TODO: this suspense will only work when header suspense. For example when getting user data from api / local*/}
+      <Suspense fallback={<LoadingMainHeader />}>
         <MainHeader />
+      </Suspense>
         {children}
-        <Footer />
+      <Footer />
       </body>
     </html>
   );
