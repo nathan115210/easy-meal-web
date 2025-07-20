@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Grid, { GridItemProps } from '@/components/Grid/Grid';
 import styles from './meals.module.scss';
 import { Meal } from '@/types/meals';
-import Cta from '@/components/Cta/Cta';
+import LoadingCardGrid from '@/components/LoadingCmponents/LoadingMainHeader/LoadingCardGrid/LoadingCardGrid';
 
 
 async function fetchMeals(): Promise<Meal[]> {
@@ -11,34 +11,29 @@ async function fetchMeals(): Promise<Meal[]> {
     cache: 'no-store',
   });
   if (!res.ok) throw new Error('Failed to fetch meals');
+
   return res.json();
 }
 
-export default async function MealsPage() {
+async function Meals() {
   const meals = await fetchMeals();
+  console.log('meals', meals);
   const mealItems = extractMealItems(meals);
 
-  if (!!mealItems.length) {
-    return (
-      <section className={styles.mealsPage}>
-        <h1 className={styles.mealsHeading}>Our Meals</h1>
-        <p className={styles.mealsDescription}>
-          Discover delicious, healthy meals crafted for every lifestyle.
-        </p>
-        <Grid items={mealItems} heading="All Meals" enableFeatured={false} />
-      </section>
-    );
-  } else {
-    return (
-      <section className={styles.mealsPage}>
-        <h1 className={styles.mealsHeading}>Our Meals</h1>
-        <p className={styles.mealsDescription}>
-          No meals found. Please check back later.
-        </p>
-        <Cta href={'/'}>Back to home page</Cta>
-      </section>
-    );
-  }
+  return <Grid items={mealItems} heading="All Meals" enableFeatured={false} />;
+}
+
+export default async function MealsPage() {
+
+  return <section className={styles.mealsPage}>
+    <h1 className={styles.mealsHeading}>Our Meals</h1>
+    <p className={styles.mealsDescription}>
+      Discover delicious, healthy meals crafted for every lifestyle.
+    </p>
+    <Suspense fallback={<LoadingCardGrid />}>
+      <Meals />
+    </Suspense>
+  </section>;
 };
 
 

@@ -45,8 +45,7 @@ svg {
   height: auto;
 }
 
-Add carousel and refactor Intro page
-  // Links
+// Links
 a {
   color: var(--primary-600);
   text-decoration: none;
@@ -76,5 +75,20 @@ ol {
 
   &::-webkit-scrollbar {
     display: none;
+  }
+}
+
+// Loading page container styles
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--neutral-100);
+  overflow: hidden;
+  width: 100vw;
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
   }
 }
