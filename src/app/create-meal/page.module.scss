@@ -1,0 +1,60 @@
+.container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: var(--spacing-lg);
+  background: var(--neutral-100);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.heading {
+  font-size: var(--typography-headings-h2);
+  font-weight: var(--typography-font-weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-700);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-lg);
+}
+
+.label {
+  display: block;
+  font-size: var(--typography-font-size-base);
+  margin-bottom: var(--spacing-sm);
+  color: var(--neutral-700);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--border-radius-md);
+  font-size: var(--typography-font-size-base);
+  background: var(--white);
+  color: var(--neutral-900);
+  transition: border-color 0.2s;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--primary-400);
+  outline: none;
+}
+
+.button {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--primary-500);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-bold);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: var(--primary-600);
+}

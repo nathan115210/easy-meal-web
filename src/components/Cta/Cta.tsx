@@ -13,6 +13,7 @@ interface CtaProps {
   variant?: CtaVariants;
   size?: CtaSizes;
   className?: string;
+  hasIcon?: boolean;
 }
 
 const LinkIcon: FC = () => (
@@ -21,7 +22,18 @@ const LinkIcon: FC = () => (
   </svg>
 );
 
-export default function Cta({ children, href, onClick, disabled = false, type = CtaType.Button, variant = CtaVariants.Primary, size = CtaSizes.Medium, className = '', ...rest }: CtaProps) {
+export default function Cta({
+  children,
+  href,
+  onClick,
+  disabled = false,
+  type = CtaType.Button,
+  variant = CtaVariants.Primary,
+  size = CtaSizes.Medium,
+  hasIcon = true,
+  className = '',
+  ...rest
+}: CtaProps) {
   const classes = [styles.cta, styles[`cta--${variant}`], styles[`cta--${size}`], disabled ? styles['cta--disabled'] : '', className].filter(Boolean).join(' ');
 
   if (!href) {
@@ -45,7 +57,7 @@ export default function Cta({ children, href, onClick, disabled = false, type = 
       {...rest}
     >
       {children}
-      <LinkIcon />
+      {!!hasIcon && <LinkIcon />}
     </Link>
   );
 }

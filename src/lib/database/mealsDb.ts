@@ -9,14 +9,13 @@ const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 const db = new Database(dbPath, { verbose: console.log });
 
-
-const dummyMeals: Meal[] = [{
-  title: 'Juicy Cheese Burger',
-  slug: 'juicy-cheese-burger',
-  image: '/meals/burger.png',
-  description:
-    'A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.',
-  instructions: `
+const dummyMeals: Meal[] = [
+  {
+    title: 'Juicy Cheese Burger',
+    slug: 'juicy-cheese-burger',
+    image: '/meals/burger.png',
+    description: 'A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.',
+    instructions: `
       1. Prepare the patty:
          Mix 200g of ground beef with salt and pepper. Form into a patty.
 
@@ -29,15 +28,14 @@ const dummyMeals: Meal[] = [{
       4. Serve:
          Complete the assembly with the top bun and serve hot.
     `,
-  creator: 'John Doe',
-  creator_email: 'johndoe@example.com',
-},
+    creator: 'John Doe',
+    creator_email: 'johndoe@example.com',
+  },
   {
     title: 'Spicy Curry',
     slug: 'spicy-curry',
     image: '/meals/curry.png',
-    description:
-      'A rich and spicy curry, infused with exotic spices and creamy coconut milk.',
+    description: 'A rich and spicy curry, infused with exotic spices and creamy coconut milk.',
     instructions: `
       1. Chop vegetables:
          Cut your choice of vegetables into bite-sized pieces.
@@ -61,8 +59,7 @@ const dummyMeals: Meal[] = [{
     title: 'Homemade Dumplings',
     slug: 'homemade-dumplings',
     image: '/meals/dumplings.png',
-    description:
-      'Tender dumplings filled with savory meat and vegetables, steamed to perfection.',
+    description: 'Tender dumplings filled with savory meat and vegetables, steamed to perfection.',
     instructions: `
       1. Prepare the filling:
          Mix minced meat, shredded vegetables, and spices.
@@ -83,8 +80,7 @@ const dummyMeals: Meal[] = [{
     title: 'Classic Mac n Cheese',
     slug: 'classic-mac-n-cheese',
     image: '/meals/macncheese.png',
-    description:
-      'Creamy and cheesy macaroni, a comforting classic that\'s always a crowd-pleaser.',
+    description: "Creamy and cheesy macaroni, a comforting classic that's always a crowd-pleaser.",
     instructions: `
       1. Cook the macaroni:
          Boil macaroni according to package instructions until al dente.
@@ -108,8 +104,7 @@ const dummyMeals: Meal[] = [{
     title: 'Authentic Pizza',
     slug: 'authentic-pizza',
     image: '/meals/pizza.png',
-    description:
-      'Hand-tossed pizza with a tangy tomato sauce, fresh toppings, and melted cheese.',
+    description: 'Hand-tossed pizza with a tangy tomato sauce, fresh toppings, and melted cheese.',
     instructions: `
       1. Prepare the dough:
          Knead pizza dough and let it rise until doubled in size.
@@ -130,8 +125,7 @@ const dummyMeals: Meal[] = [{
     title: 'Wiener Schnitzel',
     slug: 'wiener-schnitzel',
     image: '/meals/schnitzel.png',
-    description:
-      'Crispy, golden-brown breaded veal cutlet, a classic Austrian dish.',
+    description: 'Crispy, golden-brown breaded veal cutlet, a classic Austrian dish.',
     instructions: `
       1. Prepare the veal:
          Pound veal cutlets to an even thickness.
@@ -152,8 +146,7 @@ const dummyMeals: Meal[] = [{
     title: 'Fresh Tomato Salad',
     slug: 'fresh-tomato-salad',
     image: '/meals/tomato-salad.png',
-    description:
-      'A light and refreshing salad with ripe tomatoes, fresh basil, and a tangy vinaigrette.',
+    description: 'A light and refreshing salad with ripe tomatoes, fresh basil, and a tangy vinaigrette.',
     instructions: `
       1. Prepare the tomatoes:
         Slice fresh tomatoes and arrange them on a plate.
@@ -169,10 +162,12 @@ const dummyMeals: Meal[] = [{
     `,
     creator: 'Sophia Green',
     creator_email: 'sophiagreen@example.com',
-  }];
+  },
+];
 
 // language=SQL format=false
-db.prepare(`
+db.prepare(
+  `
   CREATE TABLE IF NOT EXISTS meals
   (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -184,10 +179,10 @@ db.prepare(`
     creator TEXT NOT NULL,
     creator_email TEXT NOT NULL
   )
-`).run();
+`
+).run();
 
 async function initData() {
-
   /*
     const result = db.prepare('SELECT COUNT(*) as count FROM meals').get() as { count: number };
   */

@@ -54,7 +54,7 @@ pnpm ts-node src/lib/database/mealsDb.ts
 ```
 
 > - Troubleshhoting
->- For get error: ``Error: Could not locate the bindings file. Tried:`` Try below command:
+> - For get error: `Error: Could not locate the bindings file. Tried:` Try below command:
 
 ```bash
 rm -rf node_modules pnpm-lock.yaml

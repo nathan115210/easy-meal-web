@@ -37,7 +37,7 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
 
     return null;
   }
-  if (!meal) return 'no matched meal found'; //TODO: fallback to [mealSlug] not-found page
+  if (!meal) return null;
 
   return (
     <>
@@ -61,6 +61,8 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
         <h2>Instructions</h2>
         <pre className={styles.pre}>{meal.instructions}</pre>
       </section>
+
+      {/*TODO: add recommened meal*/}
     </>
   );
 }

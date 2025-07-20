@@ -1,5 +1,4 @@
-
-.mealDetail {;
+.mealDetail {
   margin: var(--spacing-xl) auto;
   padding: 0 var(--spacing-md);
 
@@ -21,7 +20,6 @@
     border-radius: var(--border-radius-md);
     overflow: hidden;
     animation: slideInLeft 0.7s cubic-bezier(0.77, 0, 0.175, 1) both;
-
   }
 
   .image {
@@ -66,7 +64,6 @@
     margin: 0;
   }
 
-
   .ingredients {
     margin-top: var(--spacing-lg);
     font-size: var(--typography-font-size-base);
@@ -105,5 +102,3 @@
     }
   }
 }
-
-

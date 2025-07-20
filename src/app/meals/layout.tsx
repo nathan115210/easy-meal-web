@@ -6,9 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function MealsLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={styles['meals-layout']}>
-      {children}
-    </div>
-  );
+  return <div className={styles['meals-layout']}>{children}</div>;
 }
