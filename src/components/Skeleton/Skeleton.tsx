@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './skeleton.module.scss';
 
 type SkeletonVariant = 'section' | 'text' | 'block' | 'paragraph' | 'circle' | 'rect';
-type SkeletonSize = 'sm' | 'md' | 'lg';
+type SkeletonSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 type SkeletonProps = {
   variant?: SkeletonVariant;
@@ -12,33 +12,23 @@ type SkeletonProps = {
   style?: React.CSSProperties;
 };
 
-const SIZE_MAP: Record<SkeletonVariant, Record<SkeletonSize, number>> = {
-  section: { sm: 320, md: 480, lg: 720 },
-  text: { sm: 80, md: 120, lg: 180 },
-  block: { sm: 120, md: 200, lg: 320 },
-  paragraph: { sm: 80, md: 120, lg: 180 },
-  circle: { sm: 24, md: 40, lg: 64 },
-  rect: { sm: 60, md: 100, lg: 160 },
+const SIZE_MAP: Record<SkeletonVariant, Record<SkeletonSize, string>> = {
+  section: { sm: '2.5rem', md: '5rem', lg: '7.5rem', xl: '9rem', full: '100%' },
+  text: { sm: '2rem', md: '4rem', lg: '6rem', xl: '8rem', full: '100%' },
+  block: { sm: '3rem', md: '5rem', lg: '8rem', xl: '9.5rem', full: '100%' },
+  paragraph: { sm: '2rem', md: '4rem', lg: '6rem', xl: '8rem', full: '100%' },
+  circle: { sm: '1rem', md: '2rem', lg: '3rem', xl: '4rem', full: '100%' },
+  rect: { sm: '1.5rem', md: '3rem', lg: '5rem', xl: '10rem', full: '100%' },
 };
 
-export default function Skeleton({
-                                   variant = 'block',
-                                   size = 'md',
-                                   lines = 3,
-                                   className = '',
-                                   style = {},
-                                 }: SkeletonProps) {
+export default function Skeleton({ variant = 'block', size = 'md', lines = 3, className = '', style = {} }: SkeletonProps) {
   const resolvedSize = SIZE_MAP[variant][size];
 
   if (variant === 'paragraph') {
     return (
       <div className={`${styles['skeleton__paragraph']} ${className}`} style={style}>
         {Array.from({ length: lines }).map((_, i) => (
-          <div
-            key={i}
-            className={styles['skeleton__text']}
-            style={{ width: resolvedSize }}
-          />
+          <div key={i} className={styles['skeleton__text']} style={{ width: resolvedSize }}></div>
         ))}
       </div>
     );
@@ -51,10 +41,7 @@ export default function Skeleton({
   if (variant === 'rect') skeletonClass = styles['skeleton__rect'];
   if (variant === 'section') skeletonClass = styles['skeleton__section'];
 
-  const dimensionProps =
-    variant === 'circle'
-      ? { width: resolvedSize, height: resolvedSize }
-      : { width: resolvedSize };
+  const dimensionProps = variant === 'circle' ? { width: resolvedSize, height: resolvedSize } : { width: resolvedSize };
 
   return (
     <div
@@ -63,6 +50,6 @@ export default function Skeleton({
         ...dimensionProps,
         ...style,
       }}
-    />
+    ></div>
   );
 }

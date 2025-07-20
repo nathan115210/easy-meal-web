@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
+import { convertSlugToTitle } from '@/lib/utils/helpers';
+import styles from './page.module.scss';
 
 type MealDetailsLayoutProps = PropsWithChildren<{
   params: Promise<{ mealSlug: string }>;
@@ -7,17 +9,12 @@ type MealDetailsLayoutProps = PropsWithChildren<{
 
 export async function generateMetadata({ params }: { params: Promise<{ mealSlug: string }> }): Promise<Metadata> {
   const { mealSlug } = await params;
+  const mealTitle = convertSlugToTitle(mealSlug);
   return {
-    title: `Easy meal - ${mealSlug}`,
+    title: `Easy meal - ${mealTitle}`,
   };
 }
 
-export default async function MealDetailsLayout({ children, params }: MealDetailsLayoutProps) {
-  const { mealSlug } = await params;
-  return (
-    <div>
-      <h1>Meal Details: {mealSlug}</h1>
-      {children}
-    </div>
-  );
+export default async function MealDetailsLayout({ children }: MealDetailsLayoutProps) {
+  return <article className={styles.mealDetail}>{children}</article>;
 }
