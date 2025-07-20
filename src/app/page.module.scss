@@ -5,131 +5,48 @@
   background: var(--neutral-100);
 }
 
-.loading-header {
+
+.not-found {
+  min-height: 75vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  border-bottom: 1px solid var(--neutral-200);
-  background: var(--white);
-}
-
-.loading-logo {
-  width: 128px;
-  height: 32px;
-}
-
-.loading-nav {
-  display: flex;
-  gap: var(--spacing-md);
-}
-
-.loading-nav-link {
-  width: 64px;
-  height: 24px;
-}
-
-.loading-actions {
-  display: flex;
-  gap: var(--spacing-sm);
-}
-
-.loading-main {
-  flex-grow: 1;
-  padding: var(--spacing-xl) var(--spacing-xl);
+  justify-content: center;
   background: var(--neutral-100);
-}
 
-.loading-hero {
-  width: 100%;
-  max-width: 100%;
-  height: 192px;
-  border-radius: var(--border-radius-lg);
-  margin-bottom: var(--spacing-xl);
-}
-
-.loading-card-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
+  &__card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: var(--spacing-xl) var(--spacing-xxl);
+    text-align: center;
+    max-width: 400px;
   }
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
+
+  &__heading {
+    font-size: var(--typography-headings-h1);
+    font-weight: var(--typography-font-weight-bold);
+    color: var(--brand-color);
+    margin-bottom: var(--spacing-lg);
   }
-}
 
-.loading-card {
-  background: var(--white);
-  border-radius: var(--border-radius-lg);
-  box-shadow: 0 2px 8px var(--neutral-200);
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.loading-card-image {
-  width: 100%;
-  height: 160px;
-  border-radius: var(--border-radius-md);
-}
-
-.loading-card-title {
-  width: 75%;
-  height: 24px;
-}
-
-.loading-card-desc {
-  width: 50%;
-  height: 16px;
-}
-
-.loading-footer {
-  padding: var(--spacing-xl) var(--spacing-xl);
-  border-top: 1px solid var(--neutral-200);
-  background: var(--white);
-}
-
-.loading-footer-inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-xl);
+  &__message {
+    font-size: var(--typography-font-size-lg);
+    color: var(--neutral-600);
+    margin-bottom: var(--spacing-xl);
   }
-}
 
-.loading-footer-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
+  &__cta {
+    display: inline-block;
+    background: var(--brand-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-pill);
+    font-weight: var(--typography-font-weight-bold);
+    text-decoration: none;
+    transition: background 0.2s;
 
-.loading-footer-logo {
-  width: 128px;
-  height: 32px;
-}
-
-.loading-footer-social {
-  display: flex;
-  gap: var(--spacing-xs);
-}
-
-.loading-footer-links {
-  display: flex;
-  gap: var(--spacing-lg);
-}
-
-.loading-footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  min-width: 64px;
+    &:hover {
+      background: var(--brand-color-700);
+    }
+  }
 }

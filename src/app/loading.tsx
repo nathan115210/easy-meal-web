@@ -4,9 +4,6 @@ import LoadingMainSection from '@/components/LoadingCmponents/LoadingMainSection
 export default function LoadingPage() {
   return (
     <div className={'loading-page'}>
-      {/*
-      <LoadingMainHeader />
-*/}
       <LoadingMainSection />
     </div>
   );
