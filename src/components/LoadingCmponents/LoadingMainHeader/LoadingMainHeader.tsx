@@ -11,12 +11,7 @@ export default function LoadingMainHeader() {
       {/* Nav links */}
       <nav className={styles.nav}>
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton
-            key={i}
-            variant="text"
-            size="sm"
-            className={styles['nav-link']}
-          />
+          <Skeleton key={i} variant="text" size="sm" className={styles['nav-link']} />
         ))}
       </nav>
 
@@ -25,5 +20,6 @@ export default function LoadingMainHeader() {
         <Skeleton variant="circle" size="md" />
         <Skeleton variant="circle" size="md" />
       </div>
-    </header>);
+    </header>
+  );
 }

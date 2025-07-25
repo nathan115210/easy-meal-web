@@ -16,9 +16,7 @@ async function fetchMeals(): Promise<Meal[]> {
 
 async function Meals() {
   const meals = await fetchMeals();
-  console.log('meals', meals);
   const mealItems = extractMealItems(meals);
-
   return <Grid items={mealItems} heading="All Meals" enableFeatured={false} />;
 }
 

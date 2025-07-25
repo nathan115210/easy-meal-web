@@ -15,7 +15,7 @@ export default function MainHeader() {
       </Link>
       <nav className={styles.nav} aria-label={navAriaLabel}>
         {navLinks.map((link, index) => {
-          return <NavLink key={`${index}-${link.label}`} href={link.href} ariaLabel={link.ariaLabel} label={link.label} />;
+          return <NavLink key={`${index}-${link.label}`} href={link.href} ariaLabel={link.ariaLabel} label={link.label} variant={link.variant} />;
         })}
       </nav>
     </header>

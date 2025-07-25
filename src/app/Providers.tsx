@@ -7,9 +7,5 @@ import { ReactNode, useState } from 'react';
 export function Providers({ children }: { children: ReactNode }) {
   // ensure a single client per session
   const [client] = useState(() => new QueryClient());
-  return (
-    <QueryClientProvider client={client}>
-      {children}
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
