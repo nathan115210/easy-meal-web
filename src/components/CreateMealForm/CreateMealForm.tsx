@@ -1,11 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import styles from './createMealForm.module.scss';
 import { Meal } from '@/types/meals';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
 import ImagePicker from '@/components/ImagePicker/ImagePicker';
 import { useRouter } from 'next/navigation';
+import createMealAction from './createMealAction';
 
 function CreateMealForm() {
   const [form, setForm] = useState<Omit<Meal, 'slug'>>({
@@ -16,9 +17,9 @@ function CreateMealForm() {
     creator: '',
     creator_email: '',
   });
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   function handleChange<K extends keyof Meal>(field: K, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -26,41 +27,23 @@ function CreateMealForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
     setError(null);
 
     const formData = new FormData(e.currentTarget);
-    // Ensure image is a File
     const imageInput = e.currentTarget.elements.namedItem('image') as HTMLInputElement;
     if (imageInput?.files?.[0]) {
       formData.set('image', imageInput.files[0]);
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-    try {
-      const res = await fetch(`${baseUrl}/api/meals`, {
-        method: 'POST',
-        body: formData,
-      });
-      if (!res.ok) {
-        throw new Error(`Error: ${res.status}`);
+    startTransition(async () => {
+      try {
+        await createMealAction(formData);
+        router.push('/meals');
+      } catch (error) {
+        console.error('Error during form submission:', error);
+        setError('An error occurred while submitting the form.');
       }
-      setForm({
-        title: '',
-        image: '',
-        description: '',
-        instructions: '',
-        creator: '',
-        creator_email: '',
-      });
-
-      router.push('/meals');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred while creating the meal.');
-    } finally {
-      setLoading(false);
-    }
+    });
   }
 
   return (
@@ -84,7 +67,6 @@ function CreateMealForm() {
           <label htmlFor={key} className={styles.label}>
             {label}
           </label>
-          {}
           {type === 'textarea' ? (
             <textarea id={key} name={key} value={form[key]} onChange={(e) => handleChange(key, e.target.value)} className={styles.textarea} required />
           ) : (
@@ -95,8 +77,8 @@ function CreateMealForm() {
 
       <ImagePicker label={'Meal Image'} name={'image'} draggable />
 
-      <Cta type={CtaType.Submit} className={styles.button} disabled={loading}>
-        {loading ? 'Saving...' : 'Save Meal'}
+      <Cta type={CtaType.Submit} className={styles.button} disabled={isPending}>
+        {isPending ? 'Saving...' : 'Save Meal'}
       </Cta>
     </form>
   );
