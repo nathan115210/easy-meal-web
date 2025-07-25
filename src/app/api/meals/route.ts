@@ -2,7 +2,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
 import Database from 'better-sqlite3';
-import { convertTitleToSlug } from '@/lib/utils/helpers';
+import { convertStrToSlug } from '@/lib/utils/helpers';
+import { uploadImageToCloudinary } from '@/lib/utils/uploadImageToCloudinary';
+import { Meal } from '@/types/meals';
 
 const dir = 'database';
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
@@ -14,8 +16,21 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Database not found' }, { status: 500 });
   }
   try {
-    const meals = db.prepare('SELECT * FROM meals ORDER BY id DESC').all();
-    return NextResponse.json(meals);
+    const meals = db.prepare('SELECT * FROM meals ORDER BY id DESC').all() as Meal[];
+    // Filter out meals with missing images
+    const filteredMeals = await Promise.all(
+      meals.map(async (meal: Meal) => {
+        try {
+          const res = await fetch(meal.image, { method: 'HEAD' });
+          return res.ok ? meal : null;
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    const validMeals = filteredMeals.filter(Boolean);
+    return NextResponse.json(validMeals);
   } catch (error) {
     let message = 'Unknown error';
     if (typeof error === 'object' && error !== null && 'message' in error) {
@@ -30,35 +45,21 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const image = formData.get('image') as File;
     const title = formData.get('title') as string;
-    const slug = convertTitleToSlug(title);
+    const slug = convertStrToSlug(title);
     const description = formData.get('description') as string;
     const instructions = formData.get('instructions') as string;
     const creator = formData.get('creator') as string;
     const creator_email = formData.get('creator_email') as string;
+    const imageExtension = image?.name?.split('.').pop();
 
-    const extension = image?.name?.split('.').pop();
-    if (!extension) {
-      return NextResponse.json({ error: 'Unknown image issue, maybe wrong size' }, { status: 400 });
+    if (!image || !image.name || !image.type.startsWith('image/') || !imageExtension) {
+      return NextResponse.json({ error: 'Invalid image file' }, { status: 400 });
     }
-    const imageFileName = `${slug}.${extension}`;
-    const publicDir = path.resolve(process.cwd(), 'public/meals');
-    const imagePath = path.join(publicDir, imageFileName);
 
-    if (fs.existsSync(imagePath)) {
-      return NextResponse.json({ error: 'Image already exists' }, { status: 400 });
-    }
-    const stream = fs.createWriteStream(imagePath);
-    const bufferedImage = await image.arrayBuffer();
-    stream.write(Buffer.from(bufferedImage), (error) => {
-      if (error) {
-        console.error('Error writing image file:', error);
-        return NextResponse.json({ error: 'Failed to save image' }, { status: 500 });
-      }
-      stream.end();
-    });
+    const buffer = Buffer.from(await image.arrayBuffer());
+    const mealImageUrl = await uploadImageToCloudinary(buffer, slug);
 
-    const mealImage = `/meals/${imageFileName}`;
-    const newMeal = { title, slug, image: mealImage, description, instructions, creator, creator_email };
+    const newMeal = { title, slug, image: mealImageUrl, description, instructions, creator, creator_email };
     db.prepare(
       `
         INSERT INTO meals
@@ -69,6 +70,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(newMeal, { status: 201 });
   } catch (error) {
+    console.error('POST /api/meals error:', error);
     let message = 'Unknown error';
     if (typeof error === 'object' && error !== null && 'message' in error) {
       message = String((error as { message: unknown }).message);

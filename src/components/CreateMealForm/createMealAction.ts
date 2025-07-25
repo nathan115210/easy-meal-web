@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 export default async function createMealAction(formData: FormData) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -12,8 +10,6 @@ export default async function createMealAction(formData: FormData) {
     });
     if (!res.ok) {
       throw new Error(`Error: ${res.status}`);
-    } else {
-      redirect('/meals');
     }
   } catch (error) {
     console.error('Failed to create meal:', error);

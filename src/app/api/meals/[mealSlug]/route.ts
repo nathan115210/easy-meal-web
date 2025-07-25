@@ -9,7 +9,6 @@ const dbPath = path.join(dbDir, 'meals.db');
 const db = new Database(dbPath, { verbose: console.log });
 
 export async function GET(_req: NextRequest, { params }: { params: { mealSlug: string } }) {
-  console.log('GET', params);
   if (!fs.existsSync(dbDir)) {
     return NextResponse.json({ error: 'Database not found' }, { status: 500 });
   }

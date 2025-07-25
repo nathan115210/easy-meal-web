@@ -22,6 +22,7 @@ function CreateMealForm() {
   const [isPending, startTransition] = useTransition();
 
   function handleChange<K extends keyof Meal>(field: K, value: string) {
+    //TODO: use zod validation here
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -38,6 +39,9 @@ function CreateMealForm() {
     startTransition(async () => {
       try {
         await createMealAction(formData);
+        //TODO: fix this cache thing
+        /*  //revalidate the /meals path to ensure the new meal is reflected
+          revalidatePath('/meals');*/
         router.push('/meals');
       } catch (error) {
         console.error('Error during form submission:', error);
