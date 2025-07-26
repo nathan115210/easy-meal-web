@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import Database from 'better-sqlite3';
 import { convertStrToSlug } from '@/lib/utils/helpers';
 import { uploadImageToCloudinary } from '@/lib/utils/uploadImageToCloudinary';
-import { Meal } from '@/types/meals';
 import { filterMeals } from '@/lib/utils/filterMeals';
+import { convertMealDbToMeal, type MealDbRowType } from '@/lib/utils/convertMealDbToMeal';
 
 const dir = 'database';
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
@@ -17,7 +17,12 @@ export async function GET(_req: NextRequest) {
     return NextResponse.json({ error: 'Database not found' }, { status: 500 });
   }
   try {
-    const meals = db.prepare('SELECT * FROM meals ORDER BY id DESC').all() as Meal[];
+    const mealsDbData = db.prepare('SELECT * FROM meals ORDER BY id DESC').all() as MealDbRowType[];
+
+    const meals = await Promise.all(
+      // Convert the ingredients string to MealIngredient[]
+      mealsDbData.map(convertMealDbToMeal)
+    );
     // Filter out meals with missing images
     const filteredMeals = await filterMeals(meals);
 
@@ -49,13 +54,33 @@ export async function POST(req: NextRequest) {
 
     const buffer = Buffer.from(await image.arrayBuffer());
     const mealImageUrl = await uploadImageToCloudinary(buffer, slug);
-
-    const newMeal = { title, slug, image: mealImageUrl, description, instructions, creator, creator_email };
+    const newMeal = {
+      title,
+      slug,
+      image: mealImageUrl,
+      description,
+      instructions,
+      creator,
+      creator_email,
+    };
     db.prepare(
       `
-        INSERT INTO meals
-          (title, slug, image, description, instructions, creator, creator_email)
-        VALUES (@title, @slug, @image, @description, @instructions, @creator, @creator_email) RETURNING *;
+        INSERT INTO meals (slug,
+                           title,
+                           image,
+                           description,
+                           ingredients,
+                           instructions,
+                           creator,
+                           creator_email)
+        VALUES (@slug,
+                @title,
+                @image,
+                @description,
+                @ingredients,
+                @instructions,
+                @creator,
+                @creator_email)
       `
     ).run(newMeal);
 
