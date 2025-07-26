@@ -33,12 +33,13 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   });
   if (isLoading) return <MealDetailSkeleton />;
   if (error) {
+    console.error('Error fetching meal:', error);
     notFound();
 
     return null;
   }
   if (!meal) return null;
-
+  
   return (
     <>
       <div className={styles.imageHeaderRow}>

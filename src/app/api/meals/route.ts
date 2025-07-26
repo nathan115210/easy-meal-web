@@ -5,12 +5,13 @@ import Database from 'better-sqlite3';
 import { convertStrToSlug } from '@/lib/utils/helpers';
 import { uploadImageToCloudinary } from '@/lib/utils/uploadImageToCloudinary';
 import { Meal } from '@/types/meals';
+import { filterMeals } from '@/lib/utils/filterMeals';
 
 const dir = 'database';
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
 const db = new Database(dbPath);
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   // Return failure if the database does not exist
   if (!fs.existsSync(dir)) {
     return NextResponse.json({ error: 'Database not found' }, { status: 500 });
@@ -18,19 +19,9 @@ export async function GET(req: NextRequest) {
   try {
     const meals = db.prepare('SELECT * FROM meals ORDER BY id DESC').all() as Meal[];
     // Filter out meals with missing images
-    const filteredMeals = await Promise.all(
-      meals.map(async (meal: Meal) => {
-        try {
-          const res = await fetch(meal.image, { method: 'HEAD' });
-          return res.ok ? meal : null;
-        } catch {
-          return null;
-        }
-      })
-    );
+    const filteredMeals = await filterMeals(meals);
 
-    const validMeals = filteredMeals.filter(Boolean);
-    return NextResponse.json(validMeals);
+    return NextResponse.json(filteredMeals);
   } catch (error) {
     let message = 'Unknown error';
     if (typeof error === 'object' && error !== null && 'message' in error) {
