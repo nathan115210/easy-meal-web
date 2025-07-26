@@ -39,28 +39,41 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
     return null;
   }
   if (!meal) return null;
-  
+  const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
+  console.log('meal', meal);
   return (
     <>
       <div className={styles.imageHeaderRow}>
         <div className={styles.imageWrapper}>
-          <Image src={meal.image} alt={meal.title} fill className={styles.image} />
+          <Image src={image} alt={title} fill className={styles.image} />
         </div>
 
         <header className={styles.header}>
-          <h1 className={styles.title}>{meal.title}</h1>
+          <h1 className={styles.title}>{title}</h1>
           <p className={styles.creator}>
-            By <a href={`mailto:${meal.creator_email}`}>{meal.creator}</a>
+            By <a href={`mailto:${creator_email}`}>{creator}</a>
           </p>
           <section className={styles.summary}>
-            <p>{meal.description}</p>
+            <p>{description}</p>
           </section>
         </header>
       </div>
-
+      {Array.isArray(ingredients) && ingredients.length > 0 && (
+        <section className={styles.ingredients}>
+          <h2>Ingredients</h2>
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li key={index} className={styles.ingredientItem}>
+                <span>{ingredient.text}</span>
+                <span>{ingredient.amount}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section className={styles.instructions}>
         <h2>Instructions</h2>
-        <pre className={styles.pre}>{meal.instructions}</pre>
+        <pre className={styles.pre}>{instructions}</pre>
       </section>
 
       {/*TODO: add recommened meal*/}
