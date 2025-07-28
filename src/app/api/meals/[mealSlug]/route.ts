@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
 import Database from 'better-sqlite3';
 import { filterSingleMeal } from '@/lib/utils/filterMeals';
-import { convertMealDbToMeal, type MealDbRowType } from '@/lib/utils/convertMealDbToMeal';
+import { type MealDbRowType, mealDbToMealData } from '@/lib/utils/mealDataHelpers';
 
 const dbDir = path.resolve(process.cwd(), 'database');
 const dbPath = path.join(dbDir, 'meals.db');
@@ -22,7 +22,7 @@ export async function GET(_req: NextRequest, { params }: { params: { mealSlug: s
     return NextResponse.json({ error: `Meal "${mealSlug}" not found` }, { status: 404 });
   }
 
-  const meal = convertMealDbToMeal(mealDbData);
+  const meal = mealDbToMealData(mealDbData);
 
   const filteredMeal = await filterSingleMeal(meal);
   return NextResponse.json({ meal: filteredMeal });

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import MealDetailSkeleton from '@/components/LoadingCmponents/LoadingMealDetails/LoadingMealDetails';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import { isValidIngredients } from '@/lib/utils/helpers';
 
 async function getMealBySlug(slug: string): Promise<Meal> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -40,7 +41,6 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   }
   if (!meal) return null;
   const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
-  console.log('meal', meal);
   return (
     <>
       <div className={styles.imageHeaderRow}>
@@ -58,7 +58,7 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
           </section>
         </header>
       </div>
-      {Array.isArray(ingredients) && ingredients.length > 0 && (
+      {isValidIngredients(ingredients) && (
         <section className={styles.ingredients}>
           <h2>Ingredients</h2>
           <ul>

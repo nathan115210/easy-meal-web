@@ -5,7 +5,7 @@ import Database from 'better-sqlite3';
 import { convertStrToSlug } from '@/lib/utils/helpers';
 import { uploadImageToCloudinary } from '@/lib/utils/uploadImageToCloudinary';
 import { filterMeals } from '@/lib/utils/filterMeals';
-import { convertMealDbToMeal, type MealDbRowType } from '@/lib/utils/convertMealDbToMeal';
+import { type MealDbRowType, mealDbToMealData } from '@/lib/utils/mealDataHelpers';
 
 const dir = 'database';
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
@@ -18,10 +18,9 @@ export async function GET(_req: NextRequest) {
   }
   try {
     const mealsDbData = db.prepare('SELECT * FROM meals ORDER BY id DESC').all() as MealDbRowType[];
-
     const meals = await Promise.all(
       // Convert the ingredients string to MealIngredient[]
-      mealsDbData.map(convertMealDbToMeal)
+      mealsDbData.map(mealDbToMealData)
     );
     // Filter out meals with missing images
     const filteredMeals = await filterMeals(meals);
@@ -43,6 +42,7 @@ export async function POST(req: NextRequest) {
     const title = formData.get('title') as string;
     const slug = convertStrToSlug(title);
     const description = formData.get('description') as string;
+    const ingredients = formData.get('ingredients') as string;
     const instructions = formData.get('instructions') as string;
     const creator = formData.get('creator') as string;
     const creator_email = formData.get('creator_email') as string;
@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
       slug,
       image: mealImageUrl,
       description,
+      ingredients,
       instructions,
       creator,
       creator_email,

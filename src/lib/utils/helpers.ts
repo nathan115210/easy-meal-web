@@ -1,5 +1,6 @@
 import slugify from 'slugify';
 import pinyin from 'pinyin';
+import type { MealIngredient } from '@/types/meals';
 
 export const convertSlugToTitle = (slug: string): string => {
   // Convert slug to title by replacing hyphens with spaces and capitalizing each word
@@ -38,4 +39,20 @@ export const convertStrToSlug = (inputStr: string): string => {
   }
 
   return slug;
+};
+
+export const isValidIngredients = (ingredients: unknown[]): Boolean => {
+  if (!Array.isArray(ingredients) || ingredients.length === 0) return false;
+  return ingredients.every((ingredient) => {
+    let obj = ingredient;
+    if (typeof ingredient === 'string') return false;
+    return (
+      typeof obj === 'object' &&
+      obj !== null &&
+      typeof (obj as MealIngredient).text === 'string' &&
+      (obj as MealIngredient).text.trim() !== '' &&
+      typeof (obj as MealIngredient).amount === 'string' &&
+      (obj as MealIngredient).amount.trim() !== ''
+    );
+  });
 };
