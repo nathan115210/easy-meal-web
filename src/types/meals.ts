@@ -4,7 +4,7 @@ export interface Meal {
   image: string;
   description: string;
   ingredients: MealIngredient[];
-  instructions: string;
+  instructions: MealInstruction[];
   creator: string;
   creator_email: string;
 }
@@ -12,4 +12,9 @@ export interface Meal {
 export interface MealIngredient {
   text: string;
   amount: string;
+}
+
+export interface MealInstruction {
+  image?: string;
+  text: string;
 }

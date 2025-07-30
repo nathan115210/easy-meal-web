@@ -7,14 +7,15 @@ import { CtaType } from '@/components/Cta/ctaType';
 import ImagePicker from '@/components/ImagePicker/ImagePicker';
 import { useRouter } from 'next/navigation';
 import createMealAction from './createMealAction';
-import SortableList from '@/components/SortableList/SortableList';
+import IngredientsList from '@/components/CreateMealForm/IngredientsList/IngredientsList';
+import InstructionsList from '@/components/CreateMealForm/InstructionsList/InstructionsList';
 
 function CreateMealForm() {
   const [form, setForm] = useState<Omit<Meal, 'slug'>>({
     title: '',
     image: '',
     description: '',
-    instructions: '',
+    instructions: [{ text: '' }],
     ingredients: [{ text: '', amount: '' }],
     creator: '',
     creator_email: '',
@@ -38,6 +39,9 @@ function CreateMealForm() {
     const imageInput = e.currentTarget.elements.namedItem('image') as HTMLInputElement;
     if (imageInput?.files?.[0]) {
       formData.set('image', imageInput.files[0]);
+    } else {
+      setError('Please add the meal image.');
+      return;
     }
 
     if (isValidIngredients(form.ingredients)) {
@@ -98,18 +102,19 @@ function CreateMealForm() {
         <label htmlFor={'intendeds'} className={styles.label}>
           Intendeds
         </label>
-        <SortableList id={'intendeds'} onChange={(ingredients) => handleChange('ingredients', ingredients)} />
+        <IngredientsList id={'intendeds'} onChange={(ingredients) => handleChange('ingredients', ingredients)} />
       </div>
 
       <div className={styles.field}>
         <label htmlFor={'instructions'} className={styles.label}>
           Instructions
         </label>
-        <textarea id={'instructions'} name={'instructions'} value={form['instructions']} onChange={(e) => handleChange('instructions', e.target.value)} className={styles.input} required />
+        <InstructionsList id={'instructions'} />
       </div>
 
-      <ImagePicker label={'Meal Image'} name={'image'} draggable />
+      <ImagePicker label={'Meal Image'} name={'image'} draggable isRequired />
 
+      {/*//TODO: Disabled the button before all required fields filled*/}
       <Cta type={CtaType.Submit} className={styles.button} disabled={isPending}>
         {isPending ? 'Saving...' : 'Save Meal'}
       </Cta>

@@ -1,15 +1,17 @@
-import React, { type Dispatch, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './imagePicker.module.scss';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
 import ImagePreview from '@/components/ImagePicker/ImagePreview';
-import { DragNDropIcon, PlusIcon } from './ImagePickerIcons';
+import { handleDrop, previewImageDispatch } from '@/lib/utils/ImagePickerHelpers';
+import { PlusIcon } from '../Svg/Svg';
 
 type ImagePickerProps = {
-  label: string;
+  label?: string;
   name: string;
   defaultFile?: File | null;
   draggable?: boolean;
+  isRequired?: boolean;
 };
 
 // TODO-1: should support upload multiple images
@@ -21,9 +23,11 @@ type ImagePickerProps = {
 // TODO-7: should support image cropping before upload
 // TODO-8: should support image resizing before upload
 // Reference: https://ant.design/components/upload#upload-demo-drag
-function ImagePicker({ defaultFile, label, name, draggable }: ImagePickerProps) {
+function ImagePicker({ defaultFile, label, name, draggable = true, isRequired = false }: ImagePickerProps) {
   const [preview, setPreview] = useState<string | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [showWarning, setShowWarning] = useState<boolean>(false);
+
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     previewImageDispatch(defaultFile, setPreview);
@@ -32,48 +36,42 @@ function ImagePicker({ defaultFile, label, name, draggable }: ImagePickerProps) 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     previewImageDispatch(file, setPreview);
+    if (isRequired && !file) {
+      setShowWarning(true);
+    } else {
+      setShowWarning(false);
+    }
   };
 
   return (
     <div className={styles.imagePicker}>
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
       <div className={styles.pickerContainer}>
-        <input id={name} ref={inputRef} type="file" accept="image/png, image/jpeg" name={name} onChange={handleFileChange} className={styles.input} />
+        <input id={name} ref={imageInputRef} type="file" accept="image/png, image/jpeg" name={name} onChange={handleFileChange} className={styles.input} required={isRequired} />
         {draggable ? (
-          <div draggable={draggable} className={styles.dragZone} onClick={() => inputRef.current?.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e, setPreview)}>
-            <span role="img" aria-label="inbox" className="anticon anticon-inbox">
-              <DragNDropIcon />
-            </span>
-            <p>Click or drag file to this area to upload</p>
+          <div draggable className={styles.dragZone} onClick={() => imageInputRef.current?.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e, setPreview)}>
+            {preview ? (
+              <ImagePreview previewImageUrl={preview} />
+            ) : (
+              <div className={styles['dragZone-placeholder']}>
+                <span role="img" aria-label="inbox" className="anticon anticon-inbox">
+                  <PlusIcon />
+                </span>
+                <p>Click or drag file to this area to upload</p>
+              </div>
+            )}
           </div>
         ) : (
-          <Cta type={CtaType.Button} onClick={() => inputRef.current?.click()}>
+          <Cta type={CtaType.Button} onClick={() => imageInputRef.current?.click()}>
             <PlusIcon />
             Upload
           </Cta>
         )}
+
+        {showWarning && <div className={styles.warningText}>Please select an image. This field is required.</div>}
       </div>
-      {preview && <ImagePreview previewImageUrl={preview} />}
     </div>
   );
 }
 
 export default ImagePicker;
-
-// helper
-
-const previewImageDispatch = (file: File | undefined | null, previewSetter: Dispatch<React.SetStateAction<string | null>>) => {
-  if (file) {
-    const fileReader = new FileReader();
-    fileReader.onload = () => previewSetter(fileReader.result as string);
-    fileReader.readAsDataURL(file);
-  } else {
-    previewSetter(null);
-  }
-};
-
-const handleDrop = (event: React.DragEvent<HTMLDivElement>, previewSetter: Dispatch<React.SetStateAction<string | null>>) => {
-  event.preventDefault();
-  const file = event.dataTransfer.files?.[0] || null;
-  previewImageDispatch(file, previewSetter);
-};

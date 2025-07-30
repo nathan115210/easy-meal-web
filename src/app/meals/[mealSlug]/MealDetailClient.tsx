@@ -41,6 +41,7 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   }
   if (!meal) return null;
   const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
+  console.log('instructions', instructions);
   return (
     <>
       <div className={styles.imageHeaderRow}>
@@ -73,7 +74,21 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
       )}
       <section className={styles.instructions}>
         <h2>Instructions</h2>
-        <pre className={styles.pre}>{instructions}</pre>
+        <ol>
+          {instructions.map((instruction, index) => (
+            <li key={index} className={styles.instructionItem}>
+              {instruction.image && (
+                <div className={styles.instructionImageWrapper}>
+                  <Image src={instruction.image} alt={`Step ${index + 1}`} width={100} height={100} className={styles.instructionImage} />
+                </div>
+              )}
+              <div className={styles.instructionTextWrapper}>
+                <span className={styles.stepNumber}>Step {index + 1}</span>
+                <p className={styles.instructionItemText}>{instruction.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/*TODO: add recommened meal*/}

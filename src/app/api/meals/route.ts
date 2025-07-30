@@ -22,6 +22,7 @@ export async function GET(_req: NextRequest) {
       // Convert the ingredients string to MealIngredient[]
       mealsDbData.map(mealDbToMealData)
     );
+    
     // Filter out meals with missing images
     const filteredMeals = await filterMeals(meals);
 
