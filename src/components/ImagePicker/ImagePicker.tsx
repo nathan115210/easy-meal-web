@@ -3,13 +3,13 @@ import styles from './imagePicker.module.scss';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
 import ImagePreview from '@/components/ImagePicker/ImagePreview';
-import { handleDrop, previewImageDispatch } from '@/lib/utils/ImagePickerHelpers';
 import { PlusIcon } from '../Svg/Svg';
 
 type ImagePickerProps = {
   label?: string;
   name: string;
-  defaultFile?: File | null;
+  value?: File | string | null; // Accepts File, URL, or null
+  onChange?: (file: File | string | null) => void;
   draggable?: boolean;
   isRequired?: boolean;
 };
@@ -23,19 +23,26 @@ type ImagePickerProps = {
 // TODO-7: should support image cropping before upload
 // TODO-8: should support image resizing before upload
 // Reference: https://ant.design/components/upload#upload-demo-drag
-function ImagePicker({ defaultFile, label, name, draggable = true, isRequired = false }: ImagePickerProps) {
+function ImagePicker({ value, onChange, label, name, draggable = true, isRequired = false }: ImagePickerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState<boolean>(false);
-
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    previewImageDispatch(defaultFile, setPreview);
-  }, [defaultFile]);
+    if (typeof value === 'string') {
+      setPreview(value);
+    } else if (value instanceof File) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(value);
+    } else {
+      setPreview(null);
+    }
+  }, [value]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    previewImageDispatch(file, setPreview);
+    if (onChange) onChange(file);
     if (isRequired && !file) {
       setShowWarning(true);
     } else {
@@ -49,7 +56,17 @@ function ImagePicker({ defaultFile, label, name, draggable = true, isRequired = 
       <div className={styles.pickerContainer}>
         <input id={name} ref={imageInputRef} type="file" accept="image/png, image/jpeg" name={name} onChange={handleFileChange} className={styles.input} required={isRequired} />
         {draggable ? (
-          <div draggable className={styles.dragZone} onClick={() => imageInputRef.current?.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e, setPreview)}>
+          <div
+            draggable
+            className={styles.dragZone}
+            onClick={() => imageInputRef.current?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const file = e.dataTransfer.files?.[0] || null;
+              if (onChange) onChange(file);
+            }}
+          >
             {preview ? (
               <ImagePreview previewImageUrl={preview} />
             ) : (
@@ -67,7 +84,6 @@ function ImagePicker({ defaultFile, label, name, draggable = true, isRequired = 
             Upload
           </Cta>
         )}
-
         {showWarning && <div className={styles.warningText}>Please select an image. This field is required.</div>}
       </div>
     </div>

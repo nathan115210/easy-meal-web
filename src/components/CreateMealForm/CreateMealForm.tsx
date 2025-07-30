@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useTransition } from 'react';
 import styles from './createMealForm.module.scss';
-import { Meal, MealIngredient } from '@/types/meals';
+import { Meal, MealIngredient, MealInstruction } from '@/types/meals';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
 import ImagePicker from '@/components/ImagePicker/ImagePicker';
@@ -24,7 +24,7 @@ function CreateMealForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  function handleChange<K extends keyof Meal>(field: K, value: string | MealIngredient[]) {
+  function handleChange<K extends keyof Meal>(field: K, value: string | MealIngredient[] | MealInstruction[]) {
     //TODO: use zod validation here
     setForm((prev) => ({ ...prev, [field]: value }));
   }
@@ -44,12 +44,21 @@ function CreateMealForm() {
       return;
     }
 
+    // Set ingredients in formData
     if (isValidIngredients(form.ingredients)) {
-      // Set ingredients in formData
       formData.set('ingredients', JSON.stringify(form.ingredients));
     } else {
       setError('Please provide valid ingredients with text and amount.');
       return;
+    }
+
+    // Set Instructions in formData
+
+    if (form.instructions.length === 0 || form.instructions.some((instruction) => instruction.text.trim() === '')) {
+      setError('Please provide at least one instruction.');
+      return;
+    } else {
+      formData.set('instructions', JSON.stringify(form.instructions));
     }
 
     startTransition(async () => {
@@ -58,7 +67,6 @@ function CreateMealForm() {
         //TODO: fix this cache thing
         /*  //revalidate the /meals path to ensure the new meal is reflected
           revalidatePath('/meals');*/
-        //TODO: add back before merge
         router.push('/meals');
       } catch (error) {
         console.error('Error during form submission:', error);
@@ -109,10 +117,25 @@ function CreateMealForm() {
         <label htmlFor={'instructions'} className={styles.label}>
           Instructions
         </label>
-        <InstructionsList id={'instructions'} />
+        <InstructionsList id={'instructions'} onChange={(instructions) => handleChange('instructions', instructions)} />
       </div>
 
-      <ImagePicker label={'Meal Image'} name={'image'} draggable isRequired />
+      <ImagePicker
+        label={'Meal Image'}
+        name={'image'}
+        draggable
+        isRequired
+        value={form.image}
+        onChange={(newImage) => {
+          if (newImage instanceof File) {
+            const reader = new FileReader();
+            reader.onload = () => handleChange('image', reader.result as string);
+            reader.readAsDataURL(newImage);
+          } else {
+            handleChange('image', newImage || '');
+          }
+        }}
+      />
 
       {/*//TODO: Disabled the button before all required fields filled*/}
       <Cta type={CtaType.Submit} className={styles.button} disabled={isPending}>

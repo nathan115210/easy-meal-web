@@ -41,7 +41,7 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   }
   if (!meal) return null;
   const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
-  console.log('instructions', instructions);
+  
   return (
     <>
       <div className={styles.imageHeaderRow}>

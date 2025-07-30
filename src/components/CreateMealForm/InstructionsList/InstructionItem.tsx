@@ -35,7 +35,20 @@ export default function InstructionItem({ id, item, onChange, onDelete, stepNumb
         </div>
         <IconButton iconName={IconName.close} onClick={onDelete} />
       </div>
-      <ImagePicker name={`${item.text}-image`} draggable />
+      <ImagePicker
+        name={`${item.text}-image`}
+        draggable
+        value={item.image}
+        onChange={(newImage) => {
+          if (newImage instanceof File) {
+            const reader = new FileReader();
+            reader.onload = () => onChange('image', reader.result as string);
+            reader.readAsDataURL(newImage);
+          } else {
+            onChange('image', newImage || '');
+          }
+        }}
+      />
 
       <textarea id={'instructions'} name={'instructions'} value={item.text} onChange={(e) => onChange('text', e.target.value)} className={styles['input-text']} required />
     </div>
