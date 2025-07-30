@@ -7,6 +7,7 @@ import Image from 'next/image';
 import MealDetailSkeleton from '@/components/LoadingCmponents/LoadingMealDetails/LoadingMealDetails';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import { isValidIngredients } from '@/lib/utils/helpers';
 
 async function getMealBySlug(slug: string): Promise<Meal> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -39,28 +40,55 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
     return null;
   }
   if (!meal) return null;
+  const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
   
   return (
     <>
       <div className={styles.imageHeaderRow}>
         <div className={styles.imageWrapper}>
-          <Image src={meal.image} alt={meal.title} fill className={styles.image} />
+          <Image src={image} alt={title} fill className={styles.image} />
         </div>
 
         <header className={styles.header}>
-          <h1 className={styles.title}>{meal.title}</h1>
+          <h1 className={styles.title}>{title}</h1>
           <p className={styles.creator}>
-            By <a href={`mailto:${meal.creator_email}`}>{meal.creator}</a>
+            By <a href={`mailto:${creator_email}`}>{creator}</a>
           </p>
           <section className={styles.summary}>
-            <p>{meal.description}</p>
+            <p>{description}</p>
           </section>
         </header>
       </div>
-
+      {isValidIngredients(ingredients) && (
+        <section className={styles.ingredients}>
+          <h2>Ingredients</h2>
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li key={index} className={styles.ingredientItem}>
+                <span>{ingredient.text}</span>
+                <span>{ingredient.amount}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section className={styles.instructions}>
         <h2>Instructions</h2>
-        <pre className={styles.pre}>{meal.instructions}</pre>
+        <ol>
+          {instructions.map((instruction, index) => (
+            <li key={index} className={styles.instructionItem}>
+              {instruction.image && (
+                <div className={styles.instructionImageWrapper}>
+                  <Image src={instruction.image} alt={`Step ${index + 1}`} width={100} height={100} className={styles.instructionImage} />
+                </div>
+              )}
+              <div className={styles.instructionTextWrapper}>
+                <span className={styles.stepNumber}>Step {index + 1}</span>
+                <p className={styles.instructionItemText}>{instruction.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/*TODO: add recommened meal*/}

@@ -1,0 +1,66 @@
+.instructionsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-gap-md);
+
+  .instructionsListItem {
+    display: flex;
+    touch-action: none;
+
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+
+    .header {
+      border: 2px solid var(--neutral-500);
+      background-color: var(--neutral-500);
+      display: flex;
+      border-radius: var(--border-radius-md);
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      .controllers {
+        display: flex;
+        width: 100%;
+
+        .stepNumber {
+          font-weight: bold;
+          flex: 1;
+          text-align: center;
+        }
+      }
+    }
+
+
+    .input {
+      &-image {
+        display: none;
+      }
+
+      &-text {
+        width: 100%;
+        padding: var(--spacing-sm);
+        border: 1px solid var(--neutral-300);
+        border-radius: var(--border-radius-md);
+        font-size: var(--typography-font-size-base);
+        background: var(--white);
+        color: var(--neutral-900);
+        transition: border-color 0.2s;
+        resize: vertical;
+
+        &:focus {
+          border-color: var(--primary-400);
+          outline: none;
+        }
+      }
+    }
+
+  }
+
+  &--add-more {
+    width: 100%;
+  }
+}

@@ -3,7 +3,18 @@ export interface Meal {
   slug: string;
   image: string;
   description: string;
-  instructions: string;
+  ingredients: MealIngredient[];
+  instructions: MealInstruction[];
   creator: string;
   creator_email: string;
+}
+
+export interface MealIngredient {
+  text: string;
+  amount: string;
+}
+
+export interface MealInstruction {
+  image?: string;
+  text: string;
 }

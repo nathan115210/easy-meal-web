@@ -8,9 +8,9 @@ cloudinary.config({
 
 const CLOUDINARY_UPLOAD_FOLDER = process.env.CLOUDINARY_UPLOAD_FOLDER!;
 
-export async function uploadImageToCloudinary(buffer: Buffer, slug: string): Promise<string> {
+export async function uploadImageToCloudinary(buffer: Buffer, slug: string, customFolderName?: string): Promise<string> {
   //"easy-meal/my-slug"
-  const publicId = `${CLOUDINARY_UPLOAD_FOLDER}/${slug}`;
+  const publicId = `${customFolderName || CLOUDINARY_UPLOAD_FOLDER}/${slug}`;
   return new Promise<string>((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(

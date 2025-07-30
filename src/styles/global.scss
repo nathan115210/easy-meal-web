@@ -91,3 +91,11 @@ ol {
     grid-template-rows: auto 1fr auto;
   }
 }
+
+//Global warning text styles
+.warning-text {
+  color: var(--danger);
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-bold);
+  margin-top: var(--spacing-sm);
+}

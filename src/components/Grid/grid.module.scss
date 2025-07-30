@@ -114,15 +114,22 @@ $card-border-radius: 12px;
       border-bottom-left-radius: $card-border-radius;
       border-bottom-right-radius: $card-border-radius;
 
+
       &-title {
         font-size: 1rem;
-        color: black;
+        color: var(--white);
       }
 
       &-desc {
         font-size: 1rem;
-        color: var(---black);
-        color: black;
+        color: var(--white);
+        max-height: 10rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; // number of lines to show
+        -webkit-box-orient: vertical;
+        white-space: normal;
       }
     }
   }

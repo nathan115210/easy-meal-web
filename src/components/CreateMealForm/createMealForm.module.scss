@@ -61,6 +61,7 @@
   background: var(--white);
   color: var(--neutral-900);
   transition: border-color 0.2s;
+  resize: vertical;
 }
 
 .input:focus,

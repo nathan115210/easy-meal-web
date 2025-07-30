@@ -57,7 +57,7 @@ pnpm ts-node src/lib/database/mealsDb.ts
 > - For get error: `Error: Could not locate the bindings file. Tried:` Try below command:
 
 ```bash
-rm -rf node_modules pnpm-lock.yaml
+rm -rf node_modules pnpm-lock.yaml database
 pnpm install
 npm rebuild better-sqlite3 --build-from-source
 pnpm ts-node src/lib/database/mealsDb.ts
