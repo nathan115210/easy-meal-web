@@ -1,24 +1,12 @@
 'use client';
 
-import { Meal } from '@/types/meals';
 import { useQuery } from '@tanstack/react-query';
 import styles from './page.module.scss';
 import Image from 'next/image';
 import MealDetailSkeleton from '@/components/LoadingCmponents/LoadingMealDetails/LoadingMealDetails';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { isValidIngredients } from '@/lib/utils/helpers';
-
-async function getMealBySlug(slug: string): Promise<Meal> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/meals/${slug}`);
-
-  if (!res.ok) throw new Error(`Failed to fetch meal with slug: ${slug}`);
-  const jsonData = await res.json();
-
-  if (!jsonData.meal) throw new Error(`Meal with slug "${slug}" not found`);
-  return jsonData.meal as Meal;
-}
+import { getMealBySlug, isValidIngredients } from '@/lib/utils/helpers';
 
 export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   const {
@@ -41,7 +29,7 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   }
   if (!meal) return null;
   const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
-  
+
   return (
     <>
       <div className={styles.imageHeaderRow}>
