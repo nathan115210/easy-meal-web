@@ -25,7 +25,7 @@ export default function RecentViewedPage() {
         if (raw) {
           const viewedList = JSON.parse(raw) as RecentView[];
           // filter out the current meal slug
-          const filteredList: RecentView[] = viewedList.filter((item) => item.mealSlug !== currentSlug && !!item.mealSlug).map((item) => item);
+          const filteredList: RecentView[] = viewedList.filter((item) => item.mealSlug !== currentSlug && !!item.mealSlug);
 
           if (filteredList.length > 0) {
             // Sort by viewedAt descending and extract mealSlugs
@@ -59,14 +59,6 @@ export default function RecentViewedPage() {
         if (e.key === KEY) load();
       };
       window.addEventListener('storage', onStorage);
-
-      return () => {
-        if (bc && onMessage) {
-          bc.removeEventListener('message', onMessage);
-          bc.close();
-        }
-        if (onStorage) window.removeEventListener('storage', onStorage);
-      };
     }
     return () => {
       // If we created a BroadcastChannel and attached a message handler,

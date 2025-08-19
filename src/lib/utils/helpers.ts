@@ -94,7 +94,7 @@ export async function getMealsBySlugs(slugs: string[]): Promise<Meal[]> {
 }
 
 export const extractMealItems = (meals: Meal[], cardDirection?: CardProps['direction']): CardProps[] => {
-  if (!!meals.length) {
+  if (meals.length > 0) {
     return meals.map((meal) => ({
       id: meal.slug,
       title: meal.title,
