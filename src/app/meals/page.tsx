@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
-import Grid, { GridItemProps } from '@/components/Grid/Grid';
+import Grid from '@/components/Grid/Grid';
 import styles from './meals.module.scss';
 import { Meal } from '@/types/meals';
 import LoadingCardGrid from '@/components/LoadingCmponents/LoadingMainHeader/LoadingCardGrid/LoadingCardGrid';
+import { extractMealItems } from '@/lib/utils/helpers';
 
 async function fetchMeals(): Promise<Meal[]> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -31,18 +32,3 @@ export default async function MealsPage() {
     </section>
   );
 }
-
-// helpers
-const extractMealItems = (meals: Meal[]): GridItemProps[] => {
-  if (!!meals.length) {
-    return meals.map((meal) => ({
-      id: meal.slug,
-      title: meal.title,
-      description: meal.description,
-      imageUrl: meal.image,
-      href: `/meals/${meal.slug}`,
-    }));
-  } else {
-    return [] as GridItemProps[];
-  }
-};

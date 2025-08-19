@@ -1,11 +1,13 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { convertSlugToTitle } from '@/lib/utils/helpers';
 import styles from './page.module.scss';
 
+/*
 type MealDetailsLayoutProps = PropsWithChildren<{
   params: Promise<{ mealSlug: string }>;
 }>;
+*/
 
 export async function generateMetadata({ params }: { params: Promise<{ mealSlug: string }> }): Promise<Metadata> {
   const { mealSlug } = await params;
@@ -15,6 +17,16 @@ export async function generateMetadata({ params }: { params: Promise<{ mealSlug:
   };
 }
 
-export default async function MealDetailsLayout({ children }: MealDetailsLayoutProps) {
-  return <article className={styles.mealDetail}>{children}</article>;
+export default async function MealDetailsLayout({
+  children,
+  recentViewed, //parallel route slot
+}: {
+  children: ReactNode;
+  recentViewed: ReactNode;
+}) {
+  return (
+    <article className={styles.mealDetail}>
+      {children} {recentViewed}
+    </article>
+  );
 }

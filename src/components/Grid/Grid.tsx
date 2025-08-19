@@ -4,19 +4,11 @@ import Image from 'next/image';
 import Cta from '@/components/Cta/Cta';
 import { CtaVariants } from '@/components/Cta/ctaType';
 import styles from './grid.module.scss';
-import GridCard from '@/components/Grid/GridCard';
-
-export interface GridItemProps {
-  id: string;
-  title: string;
-  imageUrl: string;
-  description?: string;
-  href?: string;
-}
+import Card, { type CardProps } from '@/components/Card/Card';
 
 export interface GridProps {
   heading?: string;
-  items: GridItemProps[];
+  items: CardProps[];
   featuredId?: string;
   enableFeatured?: boolean;
 }
@@ -26,8 +18,8 @@ const Grid: FC<GridProps> = ({ items, featuredId, heading, enableFeatured = true
     featuredItem,
     otherItems,
   }: {
-    featuredItem: GridItemProps | null;
-    otherItems: GridItemProps[];
+    featuredItem: CardProps | null;
+    otherItems: CardProps[];
   } = useMemo(() => {
     if (!enableFeatured) return { featuredItem: null, otherItems: items };
     const featuredItem = items.find((item) => item.id === featuredId) || items[0];
@@ -75,7 +67,7 @@ const Grid: FC<GridProps> = ({ items, featuredId, heading, enableFeatured = true
         {otherItems.map((item) => {
           const { id, title, imageUrl, description, href } = item;
 
-          return <GridCard key={id} id={id} title={title} imageUrl={imageUrl} description={description} href={href} />;
+          return <Card key={id} id={id} title={title} imageUrl={imageUrl} description={description} href={href} />;
         })}
       </ul>
     </section>
