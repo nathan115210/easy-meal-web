@@ -46,6 +46,7 @@ pnpm dev
 ```
 
 ### Running the Init Script for Database Setup
+##TODO: remove - START
 
 To compile & execute your TypeScript DB script with pnpm:
 
@@ -62,6 +63,31 @@ pnpm install
 npm rebuild better-sqlite3 --build-from-source
 pnpm ts-node src/lib/database/mealsDb.ts
 ```
+##TODO: remove - END
+
+
+### working with Prisma ORM
+1. shema file: `prisma/schema.prisma`
+2. generate Prisma client: //TODO: create npm script for this
+```bash
+npx prisma db push
+npx prisma generate
+```
+3. run migrations: //TODO: create npm script for this
+```bash
+npx prisma migrate dev --name init
+```     
+4. Visually browse/edit your data
+```bash
+npx prisma studio
+```
+
+### Running the App
+```bash
+pnpm install
+pnpm dev
+```
+
 
 ## TODO
 
