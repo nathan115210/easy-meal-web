@@ -11,7 +11,6 @@ export default function RecentViewRecorder({ mealSlug }: { mealSlug: string }) {
 
     const t = setTimeout(() => {
       addRecentMeal({ mealSlug });
-      console.log('called after 300ms', mealSlug);
     }, 2000);
     return () => clearTimeout(t);
   }, [mealSlug]);

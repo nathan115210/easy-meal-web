@@ -17,8 +17,7 @@ export default function RecentViewedPage() {
   useEffect(() => {
     const KEY = process.env.NEXT_PUBLIC_RECENT_VIEWS_STORAGE_KEY || '';
     if (!KEY) {
-      throw new Error('Environment variable RECENT_VIEWS_STORAGE_KEY is not defined');
-      return;
+      throw new Error('Environment variable NEXT_PUBLIC_RECENT_VIEWS_STORAGE_KEY is not defined');
     }
     const load = () => {
       try {
@@ -69,7 +68,21 @@ export default function RecentViewedPage() {
         if (onStorage) window.removeEventListener('storage', onStorage);
       };
     }
-    return () => bc?.close();
+    return () => {
+      // If we created a BroadcastChannel and attached a message handler,
+      // explicitly remove the listener before closing the channel.
+      // This ensures the handler is fully detached and avoids memory leaks.
+      if (bc && onMessage) {
+        bc.removeEventListener('message', onMessage);
+        bc.close(); // free resources (browser keeps a system-level pipe open otherwise)
+      }
+
+      // If we fell back to the 'storage' event, remove that listener as well.
+      // Without this, React’s Fast Refresh or remounting could lead to duplicate calls.
+      if (onStorage) {
+        window.removeEventListener('storage', onStorage);
+      }
+    };
   }, [currentSlug]);
 
   useEffect(() => {

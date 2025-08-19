@@ -8,7 +8,7 @@ export type RecentView = {
 export function addRecentMeal({ mealSlug }: { mealSlug: string }) {
   const KEY = process.env.NEXT_PUBLIC_RECENT_VIEWS_STORAGE_KEY || '';
   if (!KEY) {
-    throw new Error('Environment variable RECENT_VIEWS_STORAGE_KEY is not defined');
+    throw new Error('Environment variable NEXT_PUBLIC_RECENT_VIEWS_STORAGE_KEY is not defined');
   }
 
   const MAX_ITEMS = 12;
