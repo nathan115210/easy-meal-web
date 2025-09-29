@@ -5,7 +5,6 @@ import type { Meal } from '@/types/meals';
 
 const dir = 'database';
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
-// Create the database directory if it doesn't exist
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 const db = new Database(dbPath, { verbose: console.log });
 
@@ -36,12 +35,13 @@ const dummyMeals: Meal[] = [
       },
       {
         image: '/meal-placeholder.png',
-        text: 'Assemble the burger: Toast the burger bun halves. Place lettuce and tomato on the bottom half. Add the cooked patty and top with a slice of cheese.',
+        text: 'Assemble the burger: Toast the bun. Add lettuce, tomato, patty, cheese.',
       },
-      { image: '/meal-placeholder.png', text: 'Serve: Complete the assembly with the top bun and serve hot.' },
+      { image: '/meal-placeholder.png', text: 'Serve: Add top bun and serve hot.' },
     ],
     creator: 'John Doe',
     creator_email: 'johndoe@example.com',
+    category: ['cheese'],
   },
   {
     title: 'Spicy Curry',
@@ -57,32 +57,21 @@ const dummyMeals: Meal[] = [
       { text: 'Pepper', amount: 'to taste' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Chop vegetables: Cut your choice of vegetables into bite-sized pieces.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Sauté vegetables: In a pan with oil, sauté the vegetables until they start to soften.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Add curry paste: Stir in 2 tablespoons of curry paste and cook for another minute.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Simmer with coconut milk: Pour in 500ml of coconut milk and bring to a simmer. Let it cook for about 15 minutes.',
-      },
-      { image: '/meal-placeholder.png', text: 'Serve: Enjoy this creamy curry with rice or bread.' },
+      { image: '/meal-placeholder.png', text: 'Chop vegetables.' },
+      { image: '/meal-placeholder.png', text: 'Sauté vegetables in oil.' },
+      { image: '/meal-placeholder.png', text: 'Add curry paste and cook 1 min.' },
+      { image: '/meal-placeholder.png', text: 'Simmer with coconut milk ~15 min.' },
+      { image: '/meal-placeholder.png', text: 'Serve with rice.' },
     ],
     creator: 'Max Schwarz',
     creator_email: 'max@example.com',
+    category: ['cheese'],
   },
   {
     title: 'Homemade Dumplings',
     slug: 'homemade-dumplings',
     image: '/meals/dumplings.png',
-    description: 'Tender dumplings filled with savory meat and vegetables, steamed to perfection.',
+    description: 'Tender dumplings with savory filling, steamed to perfection.',
     ingredients: [
       { text: 'Minced meat', amount: '200g' },
       { text: 'Shredded vegetables', amount: '100g' },
@@ -90,31 +79,20 @@ const dummyMeals: Meal[] = [
       { text: 'Dumpling wrappers', amount: '12' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Prepare the filling: Mix minced meat, shredded vegetables, and spices.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Fill the dumplings: Place a spoonful of filling in the center of each dumpling wrapper. Wet the edges and fold to seal.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Steam the dumplings: Arrange dumplings in a steamer. Steam for about 10 minutes.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Serve: Enjoy these dumplings hot, with a dipping sauce of your choice.',
-      },
+      { image: '/meal-placeholder.png', text: 'Mix filling.' },
+      { image: '/meal-placeholder.png', text: 'Fill and seal wrappers.' },
+      { image: '/meal-placeholder.png', text: 'Steam ~10 min.' },
+      { image: '/meal-placeholder.png', text: 'Serve hot.' },
     ],
     creator: 'Emily Chen',
     creator_email: 'emilychen@example.com',
+    category: ['cheese'],
   },
   {
     title: 'Classic Mac n Cheese',
     slug: 'classic-mac-n-cheese',
     image: '/meals/macncheese.png',
-    description: "Creamy and cheesy macaroni, a comforting classic that's always a crowd-pleaser.",
+    description: 'Creamy cheesy macaroni comfort dish.',
     ingredients: [
       { text: 'Macaroni', amount: '250g' },
       { text: 'Butter', amount: '2 tbsp' },
@@ -125,31 +103,20 @@ const dummyMeals: Meal[] = [
       { text: 'Parsley', amount: '1 tbsp (optional)' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Prepare the filling: Mix minced meat, shredded vegetables, and spices.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Fill the dumplings: Place a spoonful of filling in the center of each dumpling wrapper. Wet the edges and fold to seal.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Steam the dumplings: Arrange dumplings in a steamer. Steam for about 10 minutes.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Serve: Enjoy these dumplings hot, with a dipping sauce of your choice.',
-      },
+      { image: '/meal-placeholder.png', text: 'Cook pasta.' },
+      { image: '/meal-placeholder.png', text: 'Make roux with butter+flour, add milk.' },
+      { image: '/meal-placeholder.png', text: 'Melt in cheese, combine pasta.' },
+      { image: '/meal-placeholder.png', text: 'Top with breadcrumbs, bake briefly.' },
     ],
     creator: 'Laura Smith',
     creator_email: 'laurasmith@example.com',
+    category: ['cheese'],
   },
   {
     title: 'Authentic Pizza',
     slug: 'authentic-pizza',
     image: '/meals/pizza.png',
-    description: 'Hand-tossed pizza with a tangy tomato sauce, fresh toppings, and melted cheese.',
+    description: 'Hand-tossed pizza with fresh toppings.',
     ingredients: [
       { text: 'Pizza dough', amount: '1 ball' },
       { text: 'Tomato sauce', amount: '100g' },
@@ -158,31 +125,20 @@ const dummyMeals: Meal[] = [
       { text: 'Basil leaves', amount: 'a few' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Prepare the filling: Mix minced meat, shredded vegetables, and spices.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Fill the dumplings: Place a spoonful of filling in the center of each dumpling wrapper. Wet the edges and fold to seal.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Steam the dumplings: Arrange dumplings in a steamer. Steam for about 10 minutes.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Serve: Enjoy these dumplings hot, with a dipping sauce of your choice.',
-      },
+      { image: '/meal-placeholder.png', text: 'Stretch dough.' },
+      { image: '/meal-placeholder.png', text: 'Add sauce and toppings.' },
+      { image: '/meal-placeholder.png', text: 'Bake at high heat.' },
+      { image: '/meal-placeholder.png', text: 'Garnish with basil.' },
     ],
     creator: 'Mario Rossi',
     creator_email: 'mariorossi@example.com',
+    category: ['cheese'],
   },
   {
     title: 'Wiener Schnitzel',
     slug: 'wiener-schnitzel',
     image: '/meals/schnitzel.png',
-    description: 'Crispy, golden-brown breaded veal cutlet, a classic Austrian dish.',
+    description: 'Crispy breaded veal cutlet.',
     ingredients: [
       { text: 'Veal cutlets', amount: '2' },
       { text: 'Flour', amount: '50g' },
@@ -190,35 +146,22 @@ const dummyMeals: Meal[] = [
       { text: 'Breadcrumbs', amount: '100g' },
       { text: 'Oil', amount: 'for frying' },
       { text: 'Lemon', amount: '1 slice' },
-      { text: 'Potato salad', amount: '1 serving' },
-      { text: 'Greens', amount: '1 serving' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Prepare the filling: Mix minced meat, shredded vegetables, and spices.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Fill the dumplings: Place a spoonful of filling in the center of each dumpling wrapper. Wet the edges and fold to seal.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Steam the dumplings: Arrange dumplings in a steamer. Steam for about 10 minutes.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Serve: Enjoy these dumplings hot, with a dipping sauce of your choice.',
-      },
+      { image: '/meal-placeholder.png', text: 'Prepare breading stations.' },
+      { image: '/meal-placeholder.png', text: 'Coat cutlets flour, egg, crumbs.' },
+      { image: '/meal-placeholder.png', text: 'Fry until golden.' },
+      { image: '/meal-placeholder.png', text: 'Serve with lemon.' },
     ],
     creator: 'Franz Huber',
     creator_email: 'franzhuber@example.com',
+    category: ['vegan'],
   },
   {
     title: 'Fresh Tomato Salad',
     slug: 'fresh-tomato-salad',
     image: '/meals/tomato-salad.png',
-    description: 'A light and refreshing salad with ripe tomatoes, fresh basil, and a tangy vinaigrette.',
+    description: 'Refreshing tomato basil salad.',
     ingredients: [
       { text: 'Fresh tomatoes', amount: '2' },
       { text: 'Basil', amount: 'a handful' },
@@ -228,29 +171,18 @@ const dummyMeals: Meal[] = [
       { text: 'Balsamic vinegar', amount: '1 tbsp' },
     ],
     instructions: [
-      {
-        image: '/meal-placeholder.png',
-        text: 'Prepare the filling: Mix minced meat, shredded vegetables, and spices.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Fill the dumplings: Place a spoonful of filling in the center of each dumpling wrapper. Wet the edges and fold to seal.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Steam the dumplings: Arrange dumplings in a steamer. Steam for about 10 minutes.',
-      },
-      {
-        image: '/meal-placeholder.png',
-        text: 'Serve: Enjoy these dumplings hot, with a dipping sauce of your choice.',
-      },
+      { image: '/meal-placeholder.png', text: 'Slice tomatoes.' },
+      { image: '/meal-placeholder.png', text: 'Add basil and season.' },
+      { image: '/meal-placeholder.png', text: 'Dress with oil & vinegar.' },
+      { image: '/meal-placeholder.png', text: 'Toss and serve.' },
     ],
     creator: 'Sophia Green',
     creator_email: 'sophiagreen@example.com',
+    category: ['vegan'],
   },
 ];
 
-// language=SQL format=false
+// language=SQL
 db.prepare(
   `
   CREATE TABLE IF NOT EXISTS meals
@@ -259,6 +191,10 @@ db.prepare(
     slug TEXT NOT NULL UNIQUE,
     title TEXT NOT NULL,
     image TEXT NOT NULL,
+    category
+    TEXT
+    NOT
+    NULL,
     description TEXT NOT NULL,
     ingredients TEXT NOT NULL,
     instructions TEXT NOT NULL,
@@ -273,6 +209,7 @@ async function initData() {
     INSERT INTO meals (slug,
                        title,
                        image,
+                       category,
                        description,
                        ingredients,
                        instructions,
@@ -281,15 +218,18 @@ async function initData() {
     VALUES (@slug,
             @title,
             @image,
+            @category,
             @description,
             @ingredients,
             @instructions,
             @creator,
             @creator_email)
   `);
+
   for (const meal of dummyMeals) {
     stmt.run({
       ...meal,
+      category: JSON.stringify(meal.category),
       ingredients: JSON.stringify(meal.ingredients),
       instructions: JSON.stringify(meal.instructions),
     });

@@ -20,13 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<{ mealSlug:
 export default async function MealDetailsLayout({
   children,
   recentViewed, //parallel route slot
+  popular, //parallel route slot
 }: {
   children: ReactNode;
   recentViewed: ReactNode;
+  popular: ReactNode;
 }) {
   return (
     <article className={styles.mealDetail}>
-      {children} {recentViewed}
+      {children} {recentViewed} {popular}
     </article>
   );
 }

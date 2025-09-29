@@ -9,7 +9,6 @@ import type { RecentView } from '@/lib/utils/recentView';
 export default function RecentViewedPage() {
   const pathname = usePathname();
   const currentSlug = pathname?.split('/').pop() ?? '';
-  console.log('currentSlug', currentSlug);
   const [recentViewedMealsSlugs, setRecentViewedMealsSlugs] = React.useState<string[]>([]);
   const [recentViewedMeals, setRecentViewedMeals] = useState<Meal[]>([]);
 
@@ -99,7 +98,7 @@ export default function RecentViewedPage() {
   }, [currentSlug, recentViewedMealsSlugs]);
 
   return (
-    <section>
+    <section id={'recently-viewed-meals'}>
       <CardList items={extractMealItems(recentViewedMeals)} heading="Recently viewed" />
     </section>
   );
