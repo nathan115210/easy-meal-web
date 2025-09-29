@@ -7,6 +7,7 @@ import MealDetailSkeleton from '@/components/LoadingCmponents/LoadingMealDetails
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { getMealBySlug, isValidIngredients } from '@/lib/utils/helpers';
+import { Chip, ChipColor } from '@/components/Chip/Chip';
 
 export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   const {
@@ -16,19 +17,21 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
   } = useQuery({
     queryKey: ['meal', mealSlug],
     queryFn: () => getMealBySlug(mealSlug),
-    staleTime: 1000 * 60 * 5, // 5 minutes freshness
+    staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
     retry: false,
   });
+
   if (isLoading) return <MealDetailSkeleton />;
   if (error) {
     console.error('Error fetching meal:', error);
     notFound();
-
-    return null;
   }
   if (!meal) return null;
-  const { image, description, title, instructions, ingredients, creator, creator_email } = meal;
+
+  const { image, description, title, instructions, ingredients, creator, creator_email, category } = meal;
+
+  const categories: string[] = normalizeCategories(category);
 
   return (
     <>
@@ -45,41 +48,75 @@ export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
           <section className={styles.summary}>
             <p>{description}</p>
           </section>
+          {categories.length > 0 && (
+            <ul className={styles.categories}>
+              {categories.map((item, index) => {
+                const categoryColor: ChipColor = index % 1 === 0 ? 'primary' : 'secondary';
+                const categoryLabel = item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+                return (
+                  <li key={`${categoryLabel}-${index}`} className={styles.categoryItem}>
+                    <Chip label={categoryLabel} color={categoryColor} size="sm" />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </header>
       </div>
+
       {isValidIngredients(ingredients) && (
         <section className={styles.ingredients}>
           <h2>Ingredients</h2>
           <ul>
-            {ingredients.map((ingredient, index) => (
-              <li key={index} className={styles.ingredientItem}>
-                <span>{ingredient.text}</span>
-                <span>{ingredient.amount}</span>
-              </li>
-            ))}
+            {ingredients.map((ingredient) => {
+              const key = `${ingredient.text}-${ingredient.amount}`;
+              return (
+                <li key={key} className={styles.ingredientItem}>
+                  <span>{ingredient.text}</span>
+                  <span>{ingredient.amount}</span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}
+
       <section className={styles.instructions}>
         <h2>Instructions</h2>
         <ol>
-          {instructions.map((instruction, index) => (
-            <li key={index} className={styles.instructionItem}>
-              {instruction.image && (
-                <div className={styles.instructionImageWrapper}>
-                  <Image src={instruction.image} alt={`Step ${index + 1}`} width={100} height={100} className={styles.instructionImage} />
+          {instructions.map((instruction) => {
+            const key = instruction.image ? `${instruction.image}-${instruction.text}` : instruction.text;
+            return (
+              <li key={key} className={styles.instructionItem}>
+                {instruction.image && (
+                  <div className={styles.instructionImageWrapper}>
+                    <Image src={instruction.image} alt={`Instruction: ${instruction.text.slice(0, 40)}`} width={100} height={100} className={styles.instructionImage} />
+                  </div>
+                )}
+                <div className={styles.instructionTextWrapper}>
+                  <span className={styles.stepNumber}>Step</span>
+                  <p className={styles.instructionItemText}>{instruction.text}</p>
                 </div>
-              )}
-              <div className={styles.instructionTextWrapper}>
-                <span className={styles.stepNumber}>Step {index + 1}</span>
-                <p className={styles.instructionItemText}>{instruction.text}</p>
-              </div>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ol>
       </section>
-
-      {/*TODO: add recommened meal*/}
     </>
+  );
+}
+
+// helper
+
+//Normalize and dedupe categories
+function normalizeCategories(raw: string[] | null | undefined): string[] {
+  if (!Array.isArray(raw)) return [];
+  return Array.from(
+    new Set(
+      raw
+        .filter((c): c is string => typeof c === 'string')
+        .map((c) => c.trim())
+        .filter((c) => c.length > 0)
+    )
   );
 }

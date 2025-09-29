@@ -15,19 +15,16 @@ async function fetchMeals(): Promise<Meal[]> {
   return res.json();
 }
 
-async function Meals() {
+export default async function MealsPage() {
   const meals = await fetchMeals();
   const mealItems = extractMealItems(meals);
-  return <Grid items={mealItems} heading="All Meals" enableFeatured={false} />;
-}
 
-export default async function MealsPage() {
   return (
     <section className={styles.mealsPage}>
       <h1 className={styles.mealsHeading}>Our Meals</h1>
       <p className={styles.mealsDescription}>Discover delicious, healthy meals crafted for every lifestyle.</p>
       <Suspense fallback={<LoadingCardGrid />}>
-        <Meals />
+        <Grid items={mealItems} heading="All Meals" enableFeatured={false} />
       </Suspense>
     </section>
   );
