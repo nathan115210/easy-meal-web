@@ -43,3 +43,6 @@ next-env.d.ts
 
 /database/*.sqlite
 /database/*.db
+
+# JetBrains IDEs
+.idea/
