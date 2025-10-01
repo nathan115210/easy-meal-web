@@ -17,7 +17,7 @@ export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
 
   const { image, description, title, instructions, ingredients, creator, creator_email, category } = meal;
   const categories: string[] = normalizeCategories(category);
-  console.log('image', image);
+
   return (
     <>
       <div className={styles.imageHeaderRow}>

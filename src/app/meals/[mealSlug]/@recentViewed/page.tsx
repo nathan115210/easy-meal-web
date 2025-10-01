@@ -97,7 +97,7 @@ export default function RecentViewedPage() {
       abort = true;
     };
   }, [currentSlug, recentViewedMealsSlugs]);
-  console.log('recentViewedMeals', recentViewedMeals);
+
   return (
     <section id={'recently-viewed-meals'}>
       <CardList items={extractMealItems(recentViewedMeals)} heading="Recently viewed" />

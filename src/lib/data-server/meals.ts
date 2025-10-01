@@ -16,7 +16,7 @@ export async function getMealBySlug(slug: string): Promise<Meal | null> {
       revalidate: 300,
       tags: [`meal:${slug}`],
     });
-    const meal = (data as any)?.meal ?? (data as any);
+    const meal = isWrappedMeal(data) ? data.meal : data;
     return meal as Meal;
   } catch {
     return null;
@@ -26,4 +26,9 @@ export async function getMealBySlug(slug: string): Promise<Meal | null> {
 export async function getAllMealSlugs(): Promise<string[]> {
   const meals = await getMeals();
   return meals.map((m) => m.slug);
+}
+
+// helpers
+function isWrappedMeal(obj: MealOrWrapped): obj is { meal: Meal } {
+  return typeof obj === 'object' && obj !== null && 'meal' in obj;
 }

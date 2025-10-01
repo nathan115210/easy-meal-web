@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Database from 'better-sqlite3';
 import { type MealDbRowType, mealDbToMealData } from '@/lib/utils/mealDataHelpers';
 import { filterMeals } from '@/lib/utils/filterMeals';
+import { Meal } from '@/types/meals';
 
 export const runtime = 'nodejs';
 
@@ -40,10 +41,9 @@ export async function POST(req: NextRequest) {
 
     // Preserve the original order
     const map = new Map(meals.map((m) => [m.slug, m]));
-    const ordered = slugs.map((s) => map.get(s)).filter(Boolean);
-
+    const orderedMeals = slugs.map((s) => map.get(s)).filter((m): m is Meal => m !== undefined);
     // Filter meals asynchronously and preserve order
-    const filteredMeals = await filterMeals(meals);
+    const filteredMeals = await filterMeals(orderedMeals);
 
     return new NextResponse(JSON.stringify(filteredMeals), {
       headers: {

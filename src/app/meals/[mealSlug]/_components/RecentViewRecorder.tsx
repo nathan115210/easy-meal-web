@@ -8,7 +8,7 @@ export default function RecentViewRecorder({ mealSlug }: { mealSlug: string }) {
     // TODO: call addRecentMeal() after user scrolled for 300ms
     // to avoid recording meals that are not actually viewed
     if (!mealSlug) return; // skip if no mealSlug provided
-    
+
     const t = setTimeout(() => {
       addRecentMeal({ mealSlug });
     }, 2000);
