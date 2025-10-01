@@ -1,3 +1,5 @@
+'use client';
+
 import React, { forwardRef, KeyboardEvent, MouseEvent } from 'react';
 import Link from 'next/link';
 import cls from './chip.module.scss';

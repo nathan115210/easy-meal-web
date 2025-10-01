@@ -1,38 +1,23 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
 import styles from './page.module.scss';
 import Image from 'next/image';
-import MealDetailSkeleton from '@/components/LoadingCmponents/LoadingMealDetails/LoadingMealDetails';
-import { notFound } from 'next/navigation';
 import React from 'react';
-import { getMealBySlug, isValidIngredients } from '@/lib/utils/helpers';
+import { isValidIngredients } from '@/lib/utils/helpers';
 import { Chip, ChipColor } from '@/components/Chip/Chip';
+import { getMealBySlug } from '@/lib/data-server/meals';
+import { notFound } from 'next/navigation';
 
-export default function MealDetailClient({ mealSlug }: { mealSlug: string }) {
-  const {
-    data: meal,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['meal', mealSlug],
-    queryFn: () => getMealBySlug(mealSlug),
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
-    retry: false,
-  });
+export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
+  if (!mealSlug) return; // skip if no mealSlug provided
 
-  if (isLoading) return <MealDetailSkeleton />;
-  if (error) {
-    console.error('Error fetching meal:', error);
+  const meal = await getMealBySlug(mealSlug);
+
+  if (!meal) {
     notFound();
   }
-  if (!meal) return null;
 
   const { image, description, title, instructions, ingredients, creator, creator_email, category } = meal;
-
   const categories: string[] = normalizeCategories(category);
-
+  console.log('image', image);
   return (
     <>
       <div className={styles.imageHeaderRow}>
