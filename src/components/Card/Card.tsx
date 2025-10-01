@@ -15,6 +15,7 @@ export interface CardProps {
 
 const Card: FC<CardProps> = ({ href, title, imageUrl, description, direction = 'column' }) => {
   const cardClassName = direction === 'row' ? `${styles.card} ${styles.card_row}` : styles.card;
+
   return (
     <div className={cardClassName}>
       <div className={styles['image-container']}>

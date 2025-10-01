@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
           const buffer = Buffer.from(base64Data, 'base64');
           imageUrl = await uploadImageToCloudinary(buffer, `${slug}-step-${item.text.slice(0, 10).replace(/\s+/g, '-')}`);
         }
-        console.log('imageUrl', imageUrl);
+
         return {
           text: item.text,
           image: imageUrl,

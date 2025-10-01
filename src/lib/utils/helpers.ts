@@ -58,41 +58,6 @@ export const isValidIngredients = (ingredients: unknown[]): Boolean => {
   });
 };
 
-export async function getMealBySlug(slug: string): Promise<Meal> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/meals/${slug}`);
-  if (!res.ok) throw new Error(`Failed to fetch meal with slug: ${slug}`);
-  const jsonData = await res.json();
-  if (!jsonData.meal) throw new Error(`Meal with slug "${slug}" not found`);
-  return jsonData.meal as Meal;
-}
-
-export async function getMealsBySlugs(slugs: string[]): Promise<Meal[]> {
-  if (!Array.isArray(slugs) || slugs.length === 0) {
-    return [] as Meal[];
-  } else {
-    const uniqueSlugs = Array.from(new Set(slugs)); // Ensure slugs are unique
-    const fetch = await Promise.all(
-      uniqueSlugs.map(async (slug) => {
-        try {
-          return await getMealBySlug(slug);
-        } catch (error) {
-          console.error(`Error fetching meal with slug "${slug}":`, error);
-          return null; // Return null for failed fetches
-        }
-      })
-    );
-
-    const mealsMap = new Map<string, Meal>();
-    fetch.forEach((meal) => {
-      if (meal) {
-        mealsMap.set(meal.slug, meal);
-      }
-    });
-    return slugs.map((s) => mealsMap.get(s)).filter(Boolean) as Meal[];
-  }
-}
-
 export const extractMealItems = (meals: Meal[], cardDirection?: CardProps['direction']): CardProps[] => {
   if (meals.length > 0) {
     return meals.map((meal) => ({

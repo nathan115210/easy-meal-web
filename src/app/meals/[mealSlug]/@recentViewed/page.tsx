@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Meal } from '@/types/meals';
-import { extractMealItems, getMealsBySlugs } from '@/lib/utils/helpers';
+import { extractMealItems } from '@/lib/utils/helpers';
 import CardList from '@/components/CardList/CardList';
 import type { RecentView } from '@/lib/utils/recentView';
+import { getMealsBySlugsClient } from '@/lib/data-client/meals';
 
 export default function RecentViewedPage() {
   const pathname = usePathname();
@@ -86,7 +87,7 @@ export default function RecentViewedPage() {
           setRecentViewedMeals([]);
           return;
         }
-        const data = await getMealsBySlugs(slugs);
+        const data = await getMealsBySlugsClient(slugs);
         if (!abort) setRecentViewedMeals(data);
       } catch {
         if (!abort) setRecentViewedMeals([]);
