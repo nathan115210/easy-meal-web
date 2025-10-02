@@ -21,7 +21,13 @@ const SIZE_MAP: Record<SkeletonVariant, Record<SkeletonSize, string>> = {
   rect: { sm: '1.5rem', md: '3rem', lg: '5rem', xl: '10rem', full: '100%' },
 };
 
-export default function Skeleton({ variant = 'block', size = 'md', lines = 3, className = '', style = {} }: SkeletonProps) {
+export default function Skeleton({
+  variant = 'block',
+  size = 'md',
+  lines = 3,
+  className = '',
+  style = {},
+}: SkeletonProps) {
   const resolvedSize = SIZE_MAP[variant][size];
 
   if (variant === 'paragraph') {
@@ -41,7 +47,8 @@ export default function Skeleton({ variant = 'block', size = 'md', lines = 3, cl
   if (variant === 'rect') skeletonClass = styles['skeleton__rect'];
   if (variant === 'section') skeletonClass = styles['skeleton__section'];
 
-  const dimensionProps = variant === 'circle' ? { width: resolvedSize, height: resolvedSize } : { width: resolvedSize };
+  const dimensionProps =
+    variant === 'circle' ? { width: resolvedSize, height: resolvedSize } : { width: resolvedSize };
 
   return (
     <div

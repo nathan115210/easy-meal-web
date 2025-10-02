@@ -16,7 +16,13 @@ interface InstructionItemProps {
   stepNumber: number;
 }
 
-export default function InstructionItem({ id, item, onChange, onDelete, stepNumber }: InstructionItemProps) {
+export default function InstructionItem({
+  id,
+  item,
+  onChange,
+  onDelete,
+  stepNumber,
+}: InstructionItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
@@ -50,7 +56,14 @@ export default function InstructionItem({ id, item, onChange, onDelete, stepNumb
         }}
       />
 
-      <textarea id={'instructions'} name={'instructions'} value={item.text} onChange={(e) => onChange('text', e.target.value)} className={styles['input-text']} required />
+      <textarea
+        id={'instructions'}
+        name={'instructions'}
+        value={item.text}
+        onChange={(e) => onChange('text', e.target.value)}
+        className={styles['input-text']}
+        required
+      />
     </div>
   );
 }

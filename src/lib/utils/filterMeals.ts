@@ -14,14 +14,14 @@ export const filterSingleMeal = async (meal: Meal): Promise<Meal> => {
     const res = await fetch(meal.image, { method: 'HEAD' });
     if (!res.ok) {
       // If the image does not exist, replace with placeholder
-      const { image, ...rest } = meal;
+      const { image: _image, ...rest } = meal;
       return { ...rest, image: mealPlaceholder };
     }
     // If the image exists, return the meal as is
     return meal;
   } catch {
     // On fetch error, also use the placeholder image
-    const { image, ...rest } = meal;
+    const { image: _image, ...rest } = meal;
     return { ...rest, image: mealPlaceholder };
   }
 };

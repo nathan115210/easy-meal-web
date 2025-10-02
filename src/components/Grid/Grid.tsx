@@ -48,12 +48,20 @@ const Grid: FC<GridProps> = ({ items, featuredId, heading, enableFeatured = true
                                 width={400}
                                 height={300}
                             />*/}
-              <Image className={styles['grid__card-image']} src={featuredItem.imageUrl} alt={featuredItem.title} width={400} height={300} />
+              <Image
+                className={styles['grid__card-image']}
+                src={featuredItem.imageUrl}
+                alt={featuredItem.title}
+                width={400}
+                height={300}
+              />
             </div>
           )}
           <div className={styles.grid__featured_content}>
             <h3 className={styles.grid__featured_title}>{featuredItem.title}</h3>
-            {featuredItem.description && <p className={styles.grid__featured_desc}>{featuredItem.description}</p>}
+            {featuredItem.description && (
+              <p className={styles.grid__featured_desc}>{featuredItem.description}</p>
+            )}
             {featuredItem.href && (
               <Cta href={featuredItem.href} variant={CtaVariants.Primary}>
                 Learn More
@@ -67,7 +75,16 @@ const Grid: FC<GridProps> = ({ items, featuredId, heading, enableFeatured = true
         {otherItems.map((item) => {
           const { id, title, imageUrl, description, href } = item;
 
-          return <Card key={id} id={id} title={title} imageUrl={imageUrl} description={description} href={href} />;
+          return (
+            <Card
+              key={id}
+              id={id}
+              title={title}
+              imageUrl={imageUrl}
+              description={description}
+              href={href}
+            />
+          );
         })}
       </ul>
     </section>

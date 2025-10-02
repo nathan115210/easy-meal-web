@@ -1,6 +1,10 @@
 node_modules
 .next
-dist
 build
+public
+.idea
+.out
+package-lock.json
+pnpm-lock.yaml
 # Ignore the SQLite database
 src/lib/database/mealsDb.ts

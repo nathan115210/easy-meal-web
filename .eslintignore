@@ -1,0 +1,8 @@
+node_modules
+.next
+.out
+.idea
+public
+
+#TODO: Ignore all database files. can be removed after switching to a proper database
+database/*.db

@@ -42,10 +42,10 @@ export const convertStrToSlug = (inputStr: string): string => {
   return slug;
 };
 
-export const isValidIngredients = (ingredients: unknown[]): Boolean => {
+export const isValidIngredients = (ingredients: unknown[]) => {
   if (!Array.isArray(ingredients) || ingredients.length === 0) return false;
   return ingredients.every((ingredient) => {
-    let obj = ingredient;
+    const obj = ingredient;
     if (typeof ingredient === 'string') return false;
     return (
       typeof obj === 'object' &&
@@ -58,7 +58,10 @@ export const isValidIngredients = (ingredients: unknown[]): Boolean => {
   });
 };
 
-export const extractMealItems = (meals: Meal[], cardDirection?: CardProps['direction']): CardProps[] => {
+export const extractMealItems = (
+  meals: Meal[],
+  cardDirection?: CardProps['direction']
+): CardProps[] => {
   if (meals.length > 0) {
     return meals.map((meal) => ({
       id: meal.slug,

@@ -10,7 +10,6 @@
     flex-direction: column;
     gap: var(--spacing-xs);
 
-
     .header {
       border: 2px solid var(--neutral-500);
       background-color: var(--neutral-500);
@@ -34,7 +33,6 @@
       }
     }
 
-
     .input {
       &-image {
         display: none;
@@ -57,7 +55,6 @@
         }
       }
     }
-
   }
 
   &--add-more {

@@ -29,11 +29,25 @@ export default function Cta({
   className = '',
   ...rest
 }: CtaProps) {
-  const classes = [styles.cta, styles[`cta--${variant}`], styles[`cta--${size}`], disabled ? styles['cta--disabled'] : '', className].filter(Boolean).join(' ');
+  const classes = [
+    styles.cta,
+    styles[`cta--${variant}`],
+    styles[`cta--${size}`],
+    disabled ? styles['cta--disabled'] : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   if (!href) {
     return (
-      <button type={type} onClick={onClick as React.MouseEventHandler<HTMLButtonElement>} disabled={disabled} className={classes} {...rest}>
+      <button
+        type={type}
+        onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
+        disabled={disabled}
+        className={classes}
+        {...rest}
+      >
         {children}
       </button>
     );

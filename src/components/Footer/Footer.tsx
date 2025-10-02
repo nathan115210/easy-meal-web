@@ -8,7 +8,10 @@ export default function Footer() {
       <div className={styles.footer__inner}>
         <div className={styles.footer__col}>
           <h4>About Easy Meal</h4>
-          <p>Easy Meal helps you discover recipes, plan your week, and shop with ease. Built with home cooks in mind.</p>
+          <p>
+            Easy Meal helps you discover recipes, plan your week, and shop with ease. Built with
+            home cooks in mind.
+          </p>
         </div>
 
         <div className={styles.footer__col}>

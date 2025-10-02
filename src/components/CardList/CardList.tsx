@@ -7,7 +7,7 @@ interface CardListProps {
   items: CardProps[];
 }
 
-const CardList = ({ heading, items }: { heading?: string; items: CardProps[] }) => {
+const CardList = ({ heading, items }: CardListProps) => {
   if (items.length === 0) return null;
   return (
     <div className={styles.cardList}>

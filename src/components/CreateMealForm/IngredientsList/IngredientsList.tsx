@@ -1,6 +1,13 @@
 'use client';
 import type { MealIngredient } from '@/types/meals';
-import { closestCenter, DndContext, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
+import {
+  closestCenter,
+  DndContext,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import IngredientItem from '@/components/CreateMealForm/IngredientsList/IngredientItem';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -26,20 +33,40 @@ export default function IngredientsList({ id, onChange }: IngredientsListProps) 
     })
   );
   const hook = useSortableList<MealIngredient>(createEmptyIngredient, onChange);
-  const { items, mounted, warningMessage, handleOnDragEnd, handleChange, handleAdd, handleDelete } = hook;
+  const { items, mounted, warningMessage, handleOnDragEnd, handleChange, handleAdd, handleDelete } =
+    hook;
 
   if (!mounted) return null;
 
   return (
     <div className={styles.ingredientsList} id={id}>
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleOnDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
-        <SortableContext items={items.map((item) => item.id)} strategy={verticalListSortingStrategy}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleOnDragEnd}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+      >
+        <SortableContext
+          items={items.map((item) => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
           {items.map((item, index) => (
-            <IngredientItem key={item.id} id={item.id} item={item} onChange={(field, value) => handleChange(index, field, value)} onDelete={() => handleDelete(index)} />
+            <IngredientItem
+              key={item.id}
+              id={item.id}
+              item={item}
+              onChange={(field, value) => handleChange(index, field, value)}
+              onDelete={() => handleDelete(index)}
+            />
           ))}
         </SortableContext>
 
-        <Cta className={styles['ingredientsList--add-more']} variant={CtaVariants.Ghost} size={CtaSizes.Small} onClick={handleAdd}>
+        <Cta
+          className={styles['ingredientsList--add-more']}
+          variant={CtaVariants.Ghost}
+          size={CtaSizes.Small}
+          onClick={handleAdd}
+        >
           {' '}
           Add Ingredient
         </Cta>

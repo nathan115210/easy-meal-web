@@ -5,7 +5,12 @@
 }
 .mealsPage {
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, var(--brand-color-100), var(--brand-color-300) 70%, var(--brand-color-400));
+  background: linear-gradient(
+    135deg,
+    var(--brand-color-100),
+    var(--brand-color-300) 70%,
+    var(--brand-color-400)
+  );
   min-height: 100vh;
   display: flex;
   flex-direction: column;

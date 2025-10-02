@@ -26,7 +26,9 @@ const CommunityPage = () => (
   <main className={styles.communityPage}>
     <section className={styles.introCard}>
       <h1 className={styles.heading}>Welcome to the Community</h1>
-      <p className={styles.description}>Connect with fellow home cooks, share tips, and discover new recipes. Join the conversation!</p>
+      <p className={styles.description}>
+        Connect with fellow home cooks, share tips, and discover new recipes. Join the conversation!
+      </p>
       <a className={styles.cta} href="/signup">
         Join Now
       </a>
@@ -58,7 +60,13 @@ const CommunityPage = () => (
     <section className={styles.spotlight}>
       <h2 className={styles.sectionHeading}>Member Spotlight</h2>
       <div className={styles.memberCard}>
-        <Image src={memberSpotlight.avatar} alt={memberSpotlight.name} width={64} height={64} className={styles.avatar} />
+        <Image
+          src={memberSpotlight.avatar}
+          alt={memberSpotlight.name}
+          width={64}
+          height={64}
+          className={styles.avatar}
+        />
         <div>
           <h3>{memberSpotlight.name}</h3>
           <p>{memberSpotlight.bio}</p>

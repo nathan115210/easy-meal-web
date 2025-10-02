@@ -33,9 +33,23 @@ export default function IngredientItem({ id, item, onChange, onDelete }: Ingredi
       </span>
       <div className={styles['ingredientsList-item--fields']}>
         <div className={styles.inlineFields}>
-          <input className={styles.field} value={item.text ?? ''} onChange={(e) => onChange('text', e.target.value)} placeholder="Ingredient" required />
+          <input
+            className={styles.field}
+            value={item.text ?? ''}
+            onChange={(e) => onChange('text', e.target.value)}
+            placeholder="Ingredient"
+            required
+          />
 
-          <input className={styles.field} type={'text'} value={item.amount ?? ''} onChange={(e) => onChange('amount', e.target.value)} placeholder="Amount" readOnly={isAsNeeded} required />
+          <input
+            className={styles.field}
+            type={'text'}
+            value={item.amount ?? ''}
+            onChange={(e) => onChange('amount', e.target.value)}
+            placeholder="Amount"
+            readOnly={isAsNeeded}
+            required
+          />
         </div>
       </div>
 

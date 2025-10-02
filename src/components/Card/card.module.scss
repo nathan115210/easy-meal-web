@@ -1,14 +1,14 @@
 $card-border-radius: 12px;
 
-
 .card {
   background-color: white;
   border-radius: $card-border-radius;
   /*padding: 1rem;*/
   text-align: center;
   cursor: pointer;
-  transition: border-color 0.2s,
-  box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,6 @@ $card-border-radius: 12px;
 
       .card_image {
         border-top-right-radius: unset;
-
       }
     }
 
@@ -48,7 +47,6 @@ $card-border-radius: 12px;
       border-bottom-left-radius: unset;
       justify-content: space-around;
       align-items: flex-start;
-
     }
 
     .card_cta {
@@ -88,7 +86,6 @@ $card-border-radius: 12px;
     justify-content: center;
     border-bottom-left-radius: $card-border-radius;
     border-bottom-right-radius: $card-border-radius;
-
 
     &-title {
       font-size: 1rem;

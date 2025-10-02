@@ -7,7 +7,7 @@ export interface Meal {
   instructions: MealInstruction[];
   creator: string;
   creator_email: string;
-  category: string[];
+  category?: string[];
 }
 
 export interface MealIngredient {
