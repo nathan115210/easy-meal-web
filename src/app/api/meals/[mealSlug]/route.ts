@@ -16,7 +16,9 @@ export async function GET(_req: NextRequest, { params }: { params: { mealSlug: s
 
   const { mealSlug } = await params;
 
-  const mealDbData = db.prepare('SELECT * FROM meals WHERE slug = ?').get(mealSlug) as MealDbRowType | undefined;
+  const mealDbData = db.prepare('SELECT * FROM meals WHERE slug = ?').get(mealSlug) as
+    | MealDbRowType
+    | undefined;
 
   if (!mealDbData) {
     return NextResponse.json({ error: `Meal "${mealSlug}" not found` }, { status: 404 });

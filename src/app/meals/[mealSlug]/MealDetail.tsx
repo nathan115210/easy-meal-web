@@ -15,7 +15,8 @@ export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
     notFound();
   }
 
-  const { image, description, title, instructions, ingredients, creator, creator_email, category } = meal;
+  const { image, description, title, instructions, ingredients, creator, creator_email, category } =
+    meal;
   const categories: string[] = normalizeCategories(category);
 
   return (
@@ -70,12 +71,20 @@ export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
         <h2>Instructions</h2>
         <ol>
           {instructions.map((instruction) => {
-            const key = instruction.image ? `${instruction.image}-${instruction.text}` : instruction.text;
+            const key = instruction.image
+              ? `${instruction.image}-${instruction.text}`
+              : instruction.text;
             return (
               <li key={key} className={styles.instructionItem}>
                 {instruction.image && (
                   <div className={styles.instructionImageWrapper}>
-                    <Image src={instruction.image} alt={`Instruction: ${instruction.text.slice(0, 40)}`} width={100} height={100} className={styles.instructionImage} />
+                    <Image
+                      src={instruction.image}
+                      alt={`Instruction: ${instruction.text.slice(0, 40)}`}
+                      width={100}
+                      height={100}
+                      className={styles.instructionImage}
+                    />
                   </div>
                 )}
                 <div className={styles.instructionTextWrapper}>

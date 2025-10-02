@@ -19,7 +19,13 @@ const Card: FC<CardProps> = ({ href, title, imageUrl, description, direction = '
   return (
     <div className={cardClassName}>
       <div className={styles['image-container']}>
-        <Image src={imageUrl} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className={styles['card_image']} />
+        <Image
+          src={imageUrl}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className={styles['card_image']}
+        />
       </div>
       <div className={styles['card_content']}>
         <h3 className={styles['card_content-title']}>{title}</h3>

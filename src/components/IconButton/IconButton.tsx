@@ -1,5 +1,11 @@
 import Cta, { type CtaProps } from '@/components/Cta/Cta';
-import { AsteriskIcon, CloseIcon, HamburgerIcon, PenIcon, UpDwnArrowIcon } from '@/components/Svg/Svg';
+import {
+  AsteriskIcon,
+  CloseIcon,
+  HamburgerIcon,
+  PenIcon,
+  UpDwnArrowIcon,
+} from '@/components/Svg/Svg';
 import { ReactNode } from 'react';
 import styles from './iconButton.module.scss';
 

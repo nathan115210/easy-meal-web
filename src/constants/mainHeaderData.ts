@@ -19,7 +19,12 @@ export const mainHeaderData: MainHeaderData = {
     { href: '/', label: 'Home', ariaLabel: 'Go to Home page' },
     { href: '/meals', label: 'Meals', ariaLabel: 'Go to Meals page' },
     { href: '/community', label: 'Community', ariaLabel: 'Go to Community page' },
-    { href: '/create-meal', label: 'Create', ariaLabel: 'Go to Create meal page', variant: CtaVariants.Secondary },
+    {
+      href: '/create-meal',
+      label: 'Create',
+      ariaLabel: 'Go to Create meal page',
+      variant: CtaVariants.Secondary,
+    },
   ],
   navAriaLabel: 'Main navigation',
 };

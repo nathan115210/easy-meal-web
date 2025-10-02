@@ -9,7 +9,12 @@ interface ImagePreviewProps {
 export default function ImagePreview({ previewImageUrl }: ImagePreviewProps) {
   return (
     <div className={styles.preview}>
-      <Image src={previewImageUrl} alt="Selected image preview" fill style={{ objectFit: 'cover' }} />
+      <Image
+        src={previewImageUrl}
+        alt="Selected image preview"
+        fill
+        style={{ objectFit: 'cover' }}
+      />
     </div>
   );
 }

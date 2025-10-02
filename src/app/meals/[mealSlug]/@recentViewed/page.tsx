@@ -25,11 +25,15 @@ export default function RecentViewedPage() {
         if (raw) {
           const viewedList = JSON.parse(raw) as RecentView[];
           // filter out the current meal slug
-          const filteredList: RecentView[] = viewedList.filter((item) => item.mealSlug !== currentSlug && !!item.mealSlug);
+          const filteredList: RecentView[] = viewedList.filter(
+            (item) => item.mealSlug !== currentSlug && !!item.mealSlug
+          );
 
           if (filteredList.length > 0) {
             // Sort by viewedAt descending and extract mealSlugs
-            const sortedMeals = filteredList.sort((a, b) => b.viewedAt - a.viewedAt).map((item) => item.mealSlug);
+            const sortedMeals = filteredList
+              .sort((a, b) => b.viewedAt - a.viewedAt)
+              .map((item) => item.mealSlug);
             setRecentViewedMealsSlugs(sortedMeals);
           }
         }

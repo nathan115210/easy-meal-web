@@ -23,7 +23,14 @@ type ImagePickerProps = {
 // TODO-7: should support image cropping before upload
 // TODO-8: should support image resizing before upload
 // Reference: https://ant.design/components/upload#upload-demo-drag
-function ImagePicker({ value, onChange, label, name, draggable = true, isRequired = false }: ImagePickerProps) {
+function ImagePicker({
+  value,
+  onChange,
+  label,
+  name,
+  draggable = true,
+  isRequired = false,
+}: ImagePickerProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -54,7 +61,16 @@ function ImagePicker({ value, onChange, label, name, draggable = true, isRequire
     <div className={styles.imagePicker}>
       {label && <label htmlFor={name}>{label}</label>}
       <div className={styles.pickerContainer}>
-        <input id={name} ref={imageInputRef} type="file" accept="image/png, image/jpeg" name={name} onChange={handleFileChange} className={styles.input} required={isRequired} />
+        <input
+          id={name}
+          ref={imageInputRef}
+          type="file"
+          accept="image/png, image/jpeg"
+          name={name}
+          onChange={handleFileChange}
+          className={styles.input}
+          required={isRequired}
+        />
         {draggable ? (
           <div
             draggable
@@ -84,7 +100,9 @@ function ImagePicker({ value, onChange, label, name, draggable = true, isRequire
             Upload
           </Cta>
         )}
-        {showWarning && <div className={styles.warningText}>Please select an image. This field is required.</div>}
+        {showWarning && (
+          <div className={styles.warningText}>Please select an image. This field is required.</div>
+        )}
       </div>
     </div>
   );

@@ -9,7 +9,10 @@ function getBaseURL() {
   return url || 'http://localhost:3000';
 }
 
-export default async function apiFetchServer<T>(path: string, opts?: { revalidate?: number; tags?: string[] }) {
+export default async function apiFetchServer<T>(
+  path: string,
+  opts?: { revalidate?: number; tags?: string[] }
+) {
   const res = await fetch(new URL(path, getBaseURL()), {
     // Enable ISR + tag-based revalidation on the *fetch* cache
     next: { revalidate: opts?.revalidate ?? 300, tags: opts?.tags },

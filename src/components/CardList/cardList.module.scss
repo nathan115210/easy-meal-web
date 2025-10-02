@@ -35,7 +35,6 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
 
-
     /* Hide scrollbars without affecting layout width */
     scrollbar-width: none; /* Firefox */
     &::-webkit-scrollbar {
@@ -54,10 +53,11 @@
     }
 
     &__item {
-      flex: 0 0 calc(
-              (100% - (2 * var(--spacing-md)) - ((var(--visible) - 1) * var(--gap) * 2) - var(--peek))
-              / var(--visible)
-      );
+      flex: 0 0
+        calc(
+          (100% - (2 * var(--spacing-md)) - ((var(--visible) - 1) * var(--gap) * 2) - var(--peek)) /
+            var(--visible)
+        );
       box-sizing: border-box;
       min-width: 0;
       scroll-snap-align: var(--snap);

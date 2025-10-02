@@ -9,7 +9,11 @@ type MealDetailsLayoutProps = PropsWithChildren<{
 }>;
 */
 
-export async function generateMetadata({ params }: { params: Promise<{ mealSlug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ mealSlug: string }>;
+}): Promise<Metadata> {
   const { mealSlug } = await params;
   const mealTitle = convertSlugToTitle(mealSlug);
   return {

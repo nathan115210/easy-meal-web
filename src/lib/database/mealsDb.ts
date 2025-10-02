@@ -13,7 +13,8 @@ const dummyMeals: Meal[] = [
     title: 'Juicy Cheese Burger',
     slug: 'juicy-cheese-burger',
     image: '/meals/burger.png',
-    description: 'A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.',
+    description:
+      'A mouth-watering burger with a juicy beef patty and melted cheese, served in a soft bun.',
     ingredients: [
       { text: 'Ground beef', amount: '200g' },
       { text: 'Salt', amount: 'to taste' },

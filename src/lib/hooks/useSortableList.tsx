@@ -3,7 +3,10 @@ import { DragEndEvent } from '@dnd-kit/core';
 import { useEffect, useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 
-export function useSortableList<T extends object>(createEmptyItem: () => T, onChange?: (items: T[]) => void) {
+export function useSortableList<T extends object>(
+  createEmptyItem: () => T,
+  onChange?: (items: T[]) => void
+) {
   const [mounted, setMounted] = useState(false);
   const [items, setItems] = useState(() => [{ ...createEmptyItem(), id: crypto.randomUUID() }]);
   const [warningMessage, setWarningMessage] = useState<string | null>(null);
@@ -23,8 +26,12 @@ export function useSortableList<T extends object>(createEmptyItem: () => T, onCh
     }
   };
 
-  const handleChange = (index: number, field: keyof T, value: any) => {
+  const handleChange = (index: number, field: keyof T, value: unknown) => {
     const updated = [...items];
+    // use 'any' here to allow dynamic assignment to a field whose key is only known at runtime.
+    // 'unknown' does not support dynamic property assignment without explicit type assertions.
+    // Using a type-safe alternative would reduce the hook's flexibility for generic use.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (updated[index] as any)[field] = value;
     setItems(updated);
     onChange?.(updated.map(({ id, ...rest }) => rest as T));

@@ -7,7 +7,9 @@ export default async function MealsPage() {
   return (
     <section className={styles.mealsPage}>
       <h1 className={styles.mealsHeading}>Our Meals</h1>
-      <p className={styles.mealsDescription}>Discover delicious, healthy meals crafted for every lifestyle.</p>
+      <p className={styles.mealsDescription}>
+        Discover delicious, healthy meals crafted for every lifestyle.
+      </p>
       <Suspense fallback={<LoadingCardGrid />}>
         <MealsGridList />
       </Suspense>

@@ -16,7 +16,13 @@ export interface NavLinkProps {
 export default function NavLink({ href, label, ariaLabel, variant }: NavLinkProps) {
   const currentPath = usePathname();
   return (
-    <Cta href={href} variant={variant || CtaVariants.Ghost} className={`${styles.navLink} ${currentPath === href ? styles['navLink_active'] : ''}`} aria-label={ariaLabel} hasIcon={false}>
+    <Cta
+      href={href}
+      variant={variant || CtaVariants.Ghost}
+      className={`${styles.navLink} ${currentPath === href ? styles['navLink_active'] : ''}`}
+      aria-label={ariaLabel}
+      hasIcon={false}
+    >
       {label}
     </Cta>
   );

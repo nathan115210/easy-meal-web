@@ -10,7 +10,10 @@ export default function MealsErrorPage() {
   return (
     <section className={styles['meals-error']}>
       <h1 className={styles['meals-error__title']}>Meal Loading Error</h1>
-      <p className={styles['meals-error__description']}>We couldn&#39;t load the meals for this page. Please check your connection or try refreshing. You can also return to the Home page.</p>
+      <p className={styles['meals-error__description']}>
+        We couldn&#39;t load the meals for this page. Please check your connection or try
+        refreshing. You can also return to the Home page.
+      </p>
       <Cta href="/" variant={CtaVariants.Ghost} className={styles['meals-error__button']}>
         Back to Meals
       </Cta>

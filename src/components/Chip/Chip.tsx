@@ -24,7 +24,12 @@ export interface ChipProps {
   prefetch?: boolean;
 }
 
-function handleKey(e: KeyboardEvent, onClick?: ChipProps['onClick'], onDelete?: ChipProps['onDelete'], disabled?: boolean) {
+function handleKey(
+  e: KeyboardEvent,
+  onClick?: ChipProps['onClick'],
+  onDelete?: ChipProps['onDelete'],
+  disabled?: boolean
+) {
   if (disabled) return;
   if ((e.key === 'Enter' || e.key === ' ') && onClick) {
     e.preventDefault();
@@ -37,11 +42,35 @@ function handleKey(e: KeyboardEvent, onClick?: ChipProps['onClick'], onDelete?: 
 }
 
 export const Chip = forwardRef<HTMLElement, ChipProps>(function Chip(
-  { label, color = 'primary', variant = 'filled', size = 'md', onClick, onDelete, disabled, leadingIcon, className, id, href, prefetch, 'aria-label': ariaLabel },
+  {
+    label,
+    color = 'primary',
+    variant = 'filled',
+    size = 'md',
+    onClick,
+    onDelete,
+    disabled,
+    leadingIcon,
+    className,
+    id,
+    href,
+    prefetch,
+    'aria-label': ariaLabel,
+  },
   ref
 ) {
   const clickable = (!!onClick || !!href) && !disabled;
-  const baseClass = [cls.chip, cls[`c_${color}`], cls[`v_${variant}`], cls[`s_${size}`], disabled ? cls.disabled : '', clickable ? cls.clickable : '', className || ''].filter(Boolean).join(' ');
+  const baseClass = [
+    cls.chip,
+    cls[`c_${color}`],
+    cls[`v_${variant}`],
+    cls[`s_${size}`],
+    disabled ? cls.disabled : '',
+    clickable ? cls.clickable : '',
+    className || '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   const inner = (
     <>

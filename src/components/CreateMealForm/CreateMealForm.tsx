@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useTransition } from 'react';
 import styles from './createMealForm.module.scss';
-import { Meal, MealIngredient, MealInstruction } from '@/types/meals';
+import { Meal, MealIngredient } from '@/types/meals';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
 import ImagePicker from '@/components/ImagePicker/ImagePicker';
@@ -10,22 +10,28 @@ import createMealAction from './createMealAction';
 import IngredientsList from '@/components/CreateMealForm/IngredientsList/IngredientsList';
 import InstructionsList from '@/components/CreateMealForm/InstructionsList/InstructionsList';
 
+// Extracted initial form state for clarity and maintainability
+const initialFormState: Omit<Meal, 'slug'> = {
+  title: '',
+  image: '',
+  description: '',
+  instructions: [{ text: '' }],
+  ingredients: [{ text: '', amount: '' }],
+  creator: '',
+  creator_email: '',
+  category: ['uncategorized'],
+};
+
 function CreateMealForm() {
-  const [form, setForm] = useState<Omit<Meal, 'slug'>>({
-    title: '',
-    image: '',
-    description: '',
-    instructions: [{ text: '' }],
-    ingredients: [{ text: '', amount: '' }],
-    creator: '',
-    creator_email: '',
-  });
+  const [form, setForm] = useState<Omit<Meal, 'slug'>>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  function handleChange<K extends keyof Meal>(field: K, value: string | MealIngredient[] | MealInstruction[]) {
-    //TODO: use zod validation here
+  function handleChange<K extends keyof typeof initialFormState>(
+    field: K,
+    value: (typeof initialFormState)[K]
+  ) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -53,8 +59,10 @@ function CreateMealForm() {
     }
 
     // Set Instructions in formData
-
-    if (form.instructions.length === 0 || form.instructions.some((instruction) => instruction.text.trim() === '')) {
+    if (
+      form.instructions.length === 0 ||
+      form.instructions.some((instruction) => instruction.text.trim() === '')
+    ) {
       setError('Please provide at least one instruction.');
       return;
     } else {
@@ -64,9 +72,6 @@ function CreateMealForm() {
     startTransition(async () => {
       try {
         await createMealAction(formData);
-        //TODO: fix this cache thing
-        /*  //revalidate the /meals path to ensure the new meal is reflected
-          revalidatePath('/meals');*/
         router.push('/meals');
       } catch (error) {
         console.error('Error during form submission:', error);
@@ -80,49 +85,77 @@ function CreateMealForm() {
       <h2 className={styles.heading}>Add a New Meal</h2>
       {error && <p className={styles.error}>{error}</p>}
 
-      {/*//TODO: Prefill the user info from user information if login*/}
       <div className={styles.inlineFields}>
-        {creatorInfoFields.slice(0, 2).map(({ key, label, type }) => (
+        {creatorInfoFields.map(({ key, label, type }) => (
           <div key={key} className={styles.field}>
             <label htmlFor={key} className={styles.label}>
               {label}
             </label>
-            <input id={key} name={key} type={type} value={form[key]} onChange={(e) => handleChange(key, e.target.value)} className={styles.input} required />
+            <input
+              id={key}
+              name={key}
+              type={type}
+              value={form[key]}
+              onChange={(e) => handleChange(key, e.target.value)}
+              className={styles.input}
+              required
+            />
           </div>
         ))}
       </div>
 
-      <div key={'title'} className={styles.field}>
-        <label htmlFor={'title'} className={styles.label}>
+      <div className={styles.field}>
+        <label htmlFor="title" className={styles.label}>
           Title
         </label>
-        <input id={'title'} name={'title'} type={'text'} value={form['title']} onChange={(e) => handleChange('title', e.target.value)} className={styles.input} required />
+        <input
+          id="title"
+          name="title"
+          type="text"
+          value={form.title}
+          onChange={(e) => handleChange('title', e.target.value)}
+          className={styles.input}
+          required
+        />
       </div>
 
       <div className={styles.field}>
-        <label htmlFor={'description'} className={styles.label}>
+        <label htmlFor="description" className={styles.label}>
           Description
         </label>
-        <textarea id={'description'} name={'description'} value={form['description']} onChange={(e) => handleChange('description', e.target.value)} className={styles.input} required />
+        <textarea
+          id="description"
+          name="description"
+          value={form.description}
+          onChange={(e) => handleChange('description', e.target.value)}
+          className={styles.input}
+          required
+        />
       </div>
 
       <div>
-        <label htmlFor={'intendeds'} className={styles.label}>
-          Intendeds
+        <label htmlFor="ingredients" className={styles.label}>
+          Ingredients
         </label>
-        <IngredientsList id={'intendeds'} onChange={(ingredients) => handleChange('ingredients', ingredients)} />
+        <IngredientsList
+          id="ingredients"
+          onChange={(ingredients) => handleChange('ingredients', ingredients)}
+        />
       </div>
 
       <div className={styles.field}>
-        <label htmlFor={'instructions'} className={styles.label}>
+        <label htmlFor="instructions" className={styles.label}>
           Instructions
         </label>
-        <InstructionsList id={'instructions'} onChange={(instructions) => handleChange('instructions', instructions)} />
+        <InstructionsList
+          id="instructions"
+          onChange={(instructions) => handleChange('instructions', instructions)}
+        />
       </div>
 
       <ImagePicker
-        label={'Meal Image'}
-        name={'image'}
+        label="Meal Image"
+        name="image"
         draggable
         isRequired
         value={form.image}
@@ -137,7 +170,6 @@ function CreateMealForm() {
         }}
       />
 
-      {/*//TODO: Disabled the button before all required fields filled*/}
       <Cta type={CtaType.Submit} className={styles.button} disabled={isPending}>
         {isPending ? 'Saving...' : 'Save Meal'}
       </Cta>
@@ -152,11 +184,10 @@ const creatorInfoFields = [
   { key: 'creator_email', label: 'Your Email', type: 'email' },
 ] as const;
 
-// Helpers
-
+// Helper for ingredient validation
 export const isValidIngredients = (ingredients: MealIngredient[]) => {
-  // Check if ingredients array is valid
   if (!Array.isArray(ingredients) || ingredients.length === 0) return false;
-  // Check if each ingredient has non-empty text and amount
-  return ingredients.every((ingredient) => ingredient.text.trim() !== '' && ingredient.amount.trim() !== '');
+  return ingredients.every(
+    (ingredient) => ingredient.text.trim() !== '' && ingredient.amount.trim() !== ''
+  );
 };
