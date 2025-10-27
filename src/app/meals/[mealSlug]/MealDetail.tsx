@@ -70,7 +70,7 @@ export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
       <section className={styles.instructions}>
         <h2>Instructions</h2>
         <ol>
-          {instructions.map((instruction) => {
+          {instructions.map((instruction, index) => {
             const key = instruction.image
               ? `${instruction.image}-${instruction.text}`
               : instruction.text;
@@ -88,7 +88,7 @@ export default async function MealDetail({ mealSlug }: { mealSlug: string }) {
                   </div>
                 )}
                 <div className={styles.instructionTextWrapper}>
-                  <span className={styles.stepNumber}>Step</span>
+                  <span className={styles.stepNumber}>Step {` ${index + 1}`}</span>
                   <p className={styles.instructionItemText}>{instruction.text}</p>
                 </div>
               </li>
