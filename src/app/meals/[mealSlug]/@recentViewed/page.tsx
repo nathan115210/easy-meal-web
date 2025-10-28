@@ -47,19 +47,19 @@ export default function RecentViewedPage() {
     load(); // initial load
 
     let bc: BroadcastChannel | null = null;
-    let onStorage: ((this: Window, ev: StorageEvent) => void) | null = null;
-    let onMessage: EventListener | null = null;
+    let onStorage: ((e: StorageEvent) => void) | null = null;
+    let onMessage: ((e: MessageEvent) => void) | null = null;
 
     if (typeof BroadcastChannel !== 'undefined') {
       bc = new BroadcastChannel(KEY);
-      onMessage = (e: Event) => {
-        const data = (e as MessageEvent).data;
+      onMessage = (e: MessageEvent) => {
+        const data = e.data;
         console.log('[BC] received', data);
         load();
       };
       bc.addEventListener('message', onMessage);
     } else {
-      onStorage = function (this: Window, e: StorageEvent) {
+      onStorage = function (e: StorageEvent) {
         if (e.key === KEY) load();
       };
       window.addEventListener('storage', onStorage);

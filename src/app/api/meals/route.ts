@@ -24,7 +24,7 @@ export async function GET(_req: NextRequest) {
       ...meal,
       category: Array.isArray(meal.category)
         ? meal.category
-        : typeof meal.category === 'string' && meal.category.length > 0
+        : typeof meal.category === 'string'
           ? JSON.parse(meal.category)
           : [],
     }));

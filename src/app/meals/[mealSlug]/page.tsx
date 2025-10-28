@@ -3,9 +3,6 @@ import MealDetail from '@/app/meals/[mealSlug]/MealDetail';
 import RecentViewRecorder from '@/app/meals/[mealSlug]/_components/RecentViewRecorder';
 import { getAllMealSlugs } from '@/lib/data-server/meals';
 
-export const revalidate = 300; // route-level ISR (safe even with per-fetch ISR)
-export const dynamicParams = true; // allow fallback for new slugs after build
-
 export async function generateStaticParams() {
   try {
     const slugs = await getAllMealSlugs();

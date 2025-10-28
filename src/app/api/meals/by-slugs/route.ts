@@ -8,7 +8,7 @@ import { type MealDbRowType, mealDbToMealData } from '@/lib/utils/mealDataHelper
 import { filterMeals } from '@/lib/utils/filterMeals';
 import { Meal } from '@/types/meals';
 
-export const runtime = 'nodejs';
+//export const runtime = 'nodejs';
 
 const dbPath = path.resolve(process.cwd(), 'database', 'meals.db');
 

@@ -1,6 +1,3 @@
-import type { GridItemProps } from '@/components/Grid/Grid';
-import { CarouselItemProps } from '@/components/Carousel/CarouselItem';
-
 export const introSectionContent: {
   heading: string;
   description: string;
@@ -25,42 +22,7 @@ export const introSectionContent: {
   },
 };
 
-export const carouselItems: CarouselItemProps[] = [
-  {
-    title: 'Smart Recipe Search',
-    imageUrl: '/intro-image.png',
-    altText: 'Smart Recipe Search',
-    description:
-      'Filter by ingredient, cuisine, diet, or cook time—and get top-rated matches based on your pantry.',
-    href: '/learn-more-1',
-  },
-  {
-    title: 'Weekly Planner & Reminders',
-    imageUrl: '/bowl-inllustration.png',
-    altText: 'Weekly Planner & Reminders',
-    description:
-      'Drag-and-drop meals into your calendar and set alerts so you’re never scrambling at dinner time.',
-    href: '/learn-more-2',
-  },
-  {
-    title: 'One-Click Shopping Lists',
-    imageUrl: '/bowl-inllustration.png',
-    altText: 'One-Click Shopping Lists',
-    description:
-      'Auto-generate aisle-grouped lists from your plan—no duplicates, ready to print or share.',
-    href: '/learn-more-2',
-  },
-  {
-    title: 'Community Reviews & Tips',
-    imageUrl: '/bowl-inllustration.png',
-    altText: 'Community Reviews & Tips',
-    description:
-      'Drag-and-drop meals into your calendar and set alerts so you’re never scrambling at dinner time.',
-    href: '/learn-more-2',
-  },
-];
-
-export const featureGridItems: GridItemProps[] = [
+export const featureGridItems = [
   {
     id: 'shopping',
     title: 'One-Click Shopping Lists',
