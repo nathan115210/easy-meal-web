@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './imagePicker.module.scss';
 import Cta from '@/components/Cta/Cta';
 import { CtaType } from '@/components/Cta/ctaType';
@@ -31,21 +31,22 @@ function ImagePicker({
   draggable = true,
   isRequired = false,
 }: ImagePickerProps) {
-  const [preview, setPreview] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState<boolean>(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (typeof value === 'string') {
-      setPreview(value);
-    } else if (value instanceof File) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result as string);
-      reader.readAsDataURL(value);
-    } else {
-      setPreview(null);
-    }
+  const preview = useMemo(() => {
+    if (typeof value === 'string') return value;
+    if (value instanceof File) return URL.createObjectURL(value);
+
+    return null;
   }, [value]);
+
+  // Revoke blob URLs to prevent memory leaks
+  useEffect(() => {
+    if (value instanceof File && preview) {
+      return () => URL.revokeObjectURL(preview);
+    }
+  }, [value, preview]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;

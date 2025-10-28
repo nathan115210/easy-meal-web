@@ -1,37 +1,40 @@
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
-import {FlatCompat} from '@eslint/eslintrc';
+// eslint.config.mjs
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export default defineConfig([
+  // Global ignores (applies to every config)
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    '.idea/**',
+    'public/**', // Next.js outputs static assets here
+    'database/**/*.db',
+    'next-env.d.ts',
+  ]),
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+  // Next.js presets (flat exports)
+  ...nextVitals,
+  ...nextTs,
 
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
-  // global rules (applied after the presets)
+  // Turn off rules that conflict with Prettier
+  eslintConfigPrettier,
+
+  // Your project rules
   {
     rules: {
-      // allow dropping a prop while using the rest operator, and allow _-prefixed vars/args
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        {
-          ignoreRestSiblings: true,
-          varsIgnorePattern: '^_',
-          argsIgnorePattern: '^_',
-        },
+        { ignoreRestSiblings: true, varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
       ],
     },
   },
-  // optional: per-file override (turns the rule off only for that file)
+  // Per-file override
   {
     files: ['src/lib/utils/filterMeals.ts'],
-    rules: {
-      '@typescript-eslint/no-unused-vars': 'off',
-    },
+    rules: { '@typescript-eslint/no-unused-vars': 'off' },
   },
-];
-
-export default eslintConfig;
+]);
