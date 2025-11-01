@@ -1,0 +1,47 @@
+@use '@/styles/tokens/colors' as *;
+@use '@/styles/tokens/spacing' as *;
+@use '@/styles/tokens/border-radius' as *;
+@use '@/styles/tokens/mixins' as *;
+
+.bottomNavigation {
+  height: 100%;
+  width: 100%;
+  &-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: auto;
+    min-width: 100%;
+    overflow-x: scroll;
+    background: $color-background;
+    //padding: pxToRem(12);
+    padding: pxToRem(8) pxToRem(16);
+    li {
+      list-style: none;
+      height: 100%;
+    }
+    &-item {
+      width: 100%;
+      min-width: pxToRem(112);
+      height: 100%;
+      padding: 0 pxToRem(8);
+      color: $color-foreground;
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+      gap: pxToRem(6);
+      &.active {
+        background: $color-primary;
+        color: $color-primary-foreground;
+        border-radius: $radius-xl;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  @include desktop {
+    display: none;
+  }
+}

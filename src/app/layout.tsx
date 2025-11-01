@@ -1,11 +1,9 @@
+import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import '@styles/global.scss';
-import MainHeader from '../components/MainHeader/MainHeader';
-import Footer from '@/components/Footer/Footer';
-import React, { Suspense } from 'react';
-import LoadingMainHeader from '@/components/LoadingCmponents/LoadingMainHeader/LoadingMainHeader';
-import { Providers } from './Providers';
+import '@styles/globals.scss';
+import layout_styles from './layout.module.scss';
+import Navigation from '@/components/navigation/Navigation';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -21,25 +19,19 @@ export const metadata: Metadata = {
   title: 'Easy meal',
   description: 'Discover and share easy, delicious recipes for every meal.',
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} 
-            ${geistMono.variable}`}
-      >
-        <Providers>
-          {/*TODO: this suspense will only work when header suspense. For example when getting user data from api / local*/}
-          <Suspense fallback={<LoadingMainHeader />}>
-            <MainHeader />
-          </Suspense>
-          {children}
-          <Footer />
-        </Providers>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${layout_styles.root}`}>
+        <div className={layout_styles.nav}>
+          <Navigation />
+        </div>
+        <main className={layout_styles.main}>{children}</main>
       </body>
     </html>
   );
