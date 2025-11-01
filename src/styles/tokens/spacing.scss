@@ -1,0 +1,14 @@
+@use 'sass:math';
+
+@function pxToRem($value) {
+  $remValue: math.div($value, 16) + rem;
+  @return $remValue;
+}
+
+/*Side navigation*/
+$side-navigation-width: pxToRem(219); // 219px
+$side-navigation-collapsed-width: pxToRem(64); // 64px
+
+/*Bottom navigation*/
+
+$bottom-navigation-height: pxToRem(64); // 64px
