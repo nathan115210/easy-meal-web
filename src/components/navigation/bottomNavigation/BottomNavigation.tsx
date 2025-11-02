@@ -4,8 +4,9 @@ import styles from './bottomNavigation.module.scss';
 import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import Link from 'next/link';
 import useIsActive from '@/utils/hooks/useIsActive';
+import { memo } from 'react';
 
-export default function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
+function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
   const isActiveItem = useIsActive();
   return (
     <nav className={styles.bottomNavigation}>
@@ -27,3 +28,6 @@ export default function BottomNavigation({ items }: { items: NavigationItemPros[
     </nav>
   );
 }
+
+
+export default memo(BottomNavigation);
