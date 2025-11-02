@@ -5,9 +5,15 @@ import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import Link from 'next/link';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { memo } from 'react';
+import { DynamicIcon } from 'lucide-react/dynamic';
+import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import { deviceMediaQueries } from '@/utils/constants';
 
 function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
   const isActiveItem = useIsActive();
+  const isDesktop = useDeviceType(deviceMediaQueries.desktop);
+  if (isDesktop) return null;
+  
   return (
     <nav className={styles.bottomNavigation}>
       <ul className={styles['bottomNavigation-list']}>
@@ -18,7 +24,7 @@ function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
           return (
             <li key={index}>
               <Link href={item.href} className={itemClass}>
-                {item.icon}
+                <DynamicIcon name={item.icon} />
                 {item.label}
               </Link>
             </li>
@@ -28,6 +34,5 @@ function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
     </nav>
   );
 }
-
 
 export default memo(BottomNavigation);

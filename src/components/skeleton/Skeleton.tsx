@@ -2,9 +2,6 @@ import React from 'react';
 import styles from './skeleton.module.scss';
 
 type Size = number | string;
-type CSSVar = string | number | undefined;
-
-export type DeviceType = 'mobile' | 'tablet' | 'desktop'; // (if you need it elsewhere)
 
 export type SkeletonProps = {
   variant?: 'rect' | 'text' | 'circle' | 'pill';
@@ -40,9 +37,9 @@ export default function Skeleton({
 }: SkeletonProps) {
   const baseStyle: React.CSSProperties = {
     ...style,
-    ['--sk-width' as any]: toCssSize(width),
-    ['--sk-height' as any]: toCssSize(height),
-    ['--sk-radius' as any]: variant === 'circle' ? '9999px' : toCssSize(radius),
+    ['--sk-width' as string]: toCssSize(width),
+    ['--sk-height' as string]: toCssSize(height),
+    ['--sk-radius' as string]: variant === 'circle' ? '9999px' : toCssSize(radius),
   };
 
   if (variant === 'text') {
@@ -56,7 +53,7 @@ export default function Skeleton({
             <span
               key={i}
               className={cx(styles.skeleton, shimmer && styles.shimmer, styles.textLine)}
-              style={{ ['--sk-line-width' as any]: lineWidth }}
+              style={{ ['--sk-line-width' as string]: lineWidth }}
             />
           );
         })}

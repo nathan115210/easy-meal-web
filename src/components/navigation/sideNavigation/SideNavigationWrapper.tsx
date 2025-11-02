@@ -1,11 +1,16 @@
-import React, { lazy, Suspense } from 'react';
+'use client';
+
+import React, { Suspense } from 'react';
 import type { SideNavigationProps } from '@/components/navigation/sideNavigation/SideNavigation';
 import styles from './sideNavigation.module.scss';
+import dynamic from 'next/dynamic';
 import SideNavigationSkeleton from '@/components/navigation/sideNavigation/SideNavigationSkeleton';
 
-const SideNavigation = lazy(() => import('./SideNavigation'));
+const SideNavigation = dynamic(
+  () => import('@/components/navigation/sideNavigation/SideNavigation')
+);
 
-export default async function SideNavigationWrapper({
+export default function SideNavigationWrapper({
   mainNavItems,
   shortcutItems,
 }: SideNavigationProps) {

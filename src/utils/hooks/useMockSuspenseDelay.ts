@@ -1,9 +1,9 @@
 let delayDone = false;
 let delayPromise: Promise<void> | null = null;
 
-export default function useMockSuspenseDelay(ms = 9000000) {
+export default function useMockSuspenseDelay(ms = 19000000) {
   if (typeof window === 'undefined' || delayDone) return;
-
+  console.log('Delaying for suspense...');
   if (!delayPromise) {
     delayPromise = new Promise<void>((resolve) => {
       setTimeout(() => {

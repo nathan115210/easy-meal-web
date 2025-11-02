@@ -1,4 +1,3 @@
-// File: 'src/components/navigation/sideNavigation/SideNavigation.tsx'
 'use client';
 
 import styles from './sideNavigation.module.scss';
@@ -7,6 +6,9 @@ import Image from 'next/image';
 import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import { memo } from 'react';
 import useIsActive from '@/utils/hooks/useIsActive';
+import { DynamicIcon } from 'lucide-react/dynamic';
+import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import { deviceMediaQueries } from '@/utils/constants';
 
 export interface SideNavigationProps {
   mainNavItems: NavigationItemPros[];
@@ -15,6 +17,9 @@ export interface SideNavigationProps {
 
 function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {
   const isActiveItem = useIsActive();
+  const isDesktop = useDeviceType(deviceMediaQueries.desktop);
+  if (!isDesktop) return null;
+
   return (
     <aside className={styles.sideNavigation}>
       <Link href={'/'} className={styles.logo}>
@@ -28,7 +33,7 @@ function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {
           return (
             <li key={index}>
               <Link href={item.href} className={itemClass}>
-                {item.icon}
+                <DynamicIcon name={item.icon} />
                 {item.label}
               </Link>
             </li>
@@ -46,7 +51,7 @@ function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {
               return (
                 <li key={index}>
                   <Link href={item.href} className={itemClass}>
-                    {item.icon}
+                    <DynamicIcon name={item.icon} />
                     {item.label}
                   </Link>
                 </li>

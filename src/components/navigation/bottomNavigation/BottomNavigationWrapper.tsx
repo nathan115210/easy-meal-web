@@ -1,11 +1,16 @@
-import React, { lazy, Suspense } from 'react';
+'use client';
+
+import React, { Suspense } from 'react';
 import styles from './bottomNavigation.module.scss';
 import type { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import dynamic from 'next/dynamic';
 import BottomNavigationSkeleton from '@/components/navigation/bottomNavigation/BottomNavigationSkeleton';
 
-const BottomNavigation = lazy(() => import('./BottomNavigation'));
+const BottomNavigation = dynamic(
+  () => import('@/components/navigation/bottomNavigation/BottomNavigation')
+);
 
-export default async function BottomNavigationWrapper({ items }: { items: NavigationItemPros[] }) {
+export default function BottomNavigationWrapper({ items }: { items: NavigationItemPros[] }) {
   return (
     <div className={styles.bottomNavigationWrapper}>
       <Suspense fallback={<BottomNavigationSkeleton />}>
