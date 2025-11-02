@@ -1,8 +1,8 @@
 import type { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import { Clock, Home, Settings, Star, User } from 'lucide-react';
-import BottomNavigation from '@/components/navigation/BottomNavigation';
-import SideNavigation from '@/components/navigation/SideNavigation';
 import { Fragment } from 'react';
+import SideNavigationWrapper from '@/components/navigation/sideNavigation/SideNavigationWrapper';
+import BottomNavigationWrapper from '@/components/navigation/bottomNavigation/BottomNavigationWrapper';
 
 const navigationData: NavigationItemPros[] = [
   { label: 'Home', href: '/', icon: <Home /> },
@@ -14,11 +14,12 @@ const shortcutData: NavigationItemPros[] = [
   { label: 'Dinner in 30', href: '/dinner', icon: <Clock /> },
   { label: 'Top Rated', href: '/top-rated', icon: <Star /> },
 ];
+
 export default function Navigation() {
   return (
     <Fragment>
-      <SideNavigation mainNavItems={navigationData} shortcutItems={shortcutData} />
-      <BottomNavigation items={navigationData} />
+      <SideNavigationWrapper mainNavItems={navigationData} shortcutItems={shortcutData} />
+      <BottomNavigationWrapper items={navigationData} />
     </Fragment>
   );
 }

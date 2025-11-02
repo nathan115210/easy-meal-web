@@ -3,16 +3,15 @@
 import styles from './bottomNavigation.module.scss';
 import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import useIsActive from '@/utils/hooks/useIsActive';
 
 export default function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
-  const pathname = usePathname();
-
+  const isActiveItem = useIsActive();
   return (
     <nav className={styles.bottomNavigation}>
       <ul className={styles['bottomNavigation-list']}>
         {items.map((item, index: number) => {
-          const isActive = pathname === item.href;
+          const isActive = isActiveItem(item.href);
           const itemClass = `${styles['bottomNavigation-list-item']} ${isActive ? styles.active : ''}`;
 
           return (

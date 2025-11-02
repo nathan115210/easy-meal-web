@@ -1,20 +1,20 @@
+// File: 'src/components/navigation/sideNavigation/SideNavigation.tsx'
 'use client';
 
 import styles from './sideNavigation.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import {NavigationItemPros} from '@/components/navigation/navigationTypes';
-import {usePathname} from 'next/navigation';
+import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { memo } from 'react';
+import useIsActive from '@/utils/hooks/useIsActive';
 
-export default function SideNavigation({
-  mainNavItems,
-  shortcutItems,
-}: {
+export interface SideNavigationProps {
   mainNavItems: NavigationItemPros[];
   shortcutItems?: NavigationItemPros[];
-}) {
-  const pathname = usePathname();
+}
 
+function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {
+  const isActiveItem = useIsActive();
   return (
     <aside className={styles.sideNavigation}>
       <Link href={'/'} className={styles.logo}>
@@ -22,7 +22,8 @@ export default function SideNavigation({
       </Link>
       <ul className={styles.navigationList}>
         {mainNavItems.map((item, index) => {
-          const isActive = pathname === item.href;
+          const isActive = isActiveItem(item.href);
+
           const itemClass = `${styles.navigationListItem} ${isActive ? styles.active : ''}`;
           return (
             <li key={index}>
@@ -39,7 +40,8 @@ export default function SideNavigation({
           <h2>Shortcuts</h2>
           <ul className={styles.navigationList}>
             {shortcutItems.map((item, index) => {
-              const isActive = pathname === item.href;
+              const isActive = isActiveItem(item.href);
+
               const itemClass = `${styles.navigationListItem} ${isActive ? styles.active : ''}`;
               return (
                 <li key={index}>
@@ -56,3 +58,5 @@ export default function SideNavigation({
     </aside>
   );
 }
+
+export default memo(SideNavigation);

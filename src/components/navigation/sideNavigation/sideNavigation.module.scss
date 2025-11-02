@@ -3,10 +3,20 @@
 @use '@/styles/tokens/mixins' as *;
 @use '@/styles/tokens/border-radius' as *;
 
-.sideNavigation {
+.sideNavigationWrapper {
   display: none;
 
   @include desktop {
+    display: block;
+  }
+
+  .logo {
+    padding: pxToRem(8);
+    padding-inline-start: 0;
+    max-height: pxToRem(70);
+  }
+
+  .sideNavigation {
     display: flex;
     width: 100%;
     height: 100vh;
@@ -15,14 +25,6 @@
 
     flex-direction: column;
     gap: pxToRem(16);
-    .logo {
-      padding: pxToRem(8);
-      padding-inline-start: 0;
-      max-height: pxToRem(70);
-      display: flex;
-      /*align-items: center;
-      justify-content: center;*/
-    }
   }
 
   .navigationList {
@@ -53,5 +55,15 @@
       font-weight: 500;
       color: $color-sidebar-foreground;
     }
+  }
+
+  .skeletonContainer {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    padding: pxToRem(20);
+    border-inline-end: 1px solid $color-sidebar-primary;
+    flex-direction: column;
+    gap: pxToRem(16);
   }
 }
