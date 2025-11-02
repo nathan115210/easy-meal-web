@@ -13,7 +13,7 @@ function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
   const isActiveItem = useIsActive();
   const isDesktop = useDeviceType(deviceMediaQueries.desktop);
   if (isDesktop) return null;
-  
+
   return (
     <nav className={styles.bottomNavigation}>
       <ul className={styles['bottomNavigation-list']}>
