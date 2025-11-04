@@ -1,0 +1,34 @@
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/border-radius' as *;
+@use '@styles/tokens/spacing' as *;
+
+.wrap {
+  // Mobile: full width, 5:3 ratio
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 5 / 3;
+  overflow: hidden;
+  border-radius: $radius-xxl;
+  padding: 0;
+  flex: 0 1 auto;
+
+  @include tablet {
+    // Tablet: keep ratio, cap width
+    inline-size: min(#{pxToRem(350)}, 90vw);
+    aspect-ratio: 5 / 3;
+    flex: 0 0 auto;
+  }
+
+  @include desktop {
+    // Desktop: fixed 350x220
+    inline-size: #{pxToRem(350)};
+    block-size: #{pxToRem(220)};
+    aspect-ratio: auto;
+    flex: 0 0 #{pxToRem(350)};
+  }
+
+  .image {
+    object-fit: cover;
+    object-position: center;
+  }
+}

@@ -1,0 +1,43 @@
+@use '@styles/tokens/border-radius' as *;
+@use '@styles/tokens/spacing' as *;
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: pxToRem(8);
+
+  /* Orientation */
+  &.vertical {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &.alignStart {
+      align-items: flex-start;
+    }
+    &.alignCenter {
+      align-items: center;
+    }
+    &.alignEnd {
+      align-items: flex-end;
+    }
+  }
+
+  /* Alignment */
+  &.alignStart {
+    justify-content: flex-start;
+  }
+
+  &.alignCenter {
+    justify-content: center;
+  }
+
+  &.alignEnd {
+    justify-content: flex-end;
+  }
+
+  &.alignBetween {
+    justify-content: space-between;
+  }
+}
