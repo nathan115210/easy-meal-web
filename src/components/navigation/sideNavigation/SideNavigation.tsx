@@ -7,7 +7,7 @@ import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import { memo } from 'react';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { DynamicIcon } from 'lucide-react/dynamic';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { deviceMediaQueries } from '@/utils/constants';
 
 export interface SideNavigationProps {
@@ -17,7 +17,7 @@ export interface SideNavigationProps {
 
 function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {
   const isActiveItem = useIsActive();
-  const isDesktop = useDeviceType(deviceMediaQueries.desktop);
+  const isDesktop = useMediaQuery(deviceMediaQueries.desktop);
   if (!isDesktop) return null;
 
   return (

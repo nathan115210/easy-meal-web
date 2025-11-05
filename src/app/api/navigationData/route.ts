@@ -4,7 +4,7 @@ import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 const main: NavigationItemPros[] = [
   { label: 'Home', href: '/', icon: 'home' },
   { label: 'Profile', href: '/profile', icon: 'user' },
-  { label: 'Settings', href: '/settings', icon: 'settings' }, // fixed typo
+  { label: 'Settings', href: '/settings', icon: 'settings' },
 ];
 
 const shortcuts: NavigationItemPros[] = [

@@ -21,7 +21,7 @@ export default function Home() {
           <BaseLink href={'/google'} variant={'primary'} underline={'hover'} pressed>
             Start Planning
           </BaseLink>
-          <Button variant={'secondary'}>Browser Recipes</Button>
+          <Button variant={'secondary'}>Browse Recipes</Button>
         </ButtonGroup>
       </Banner>
     </div>

@@ -4,7 +4,7 @@ import { type CSSProperties, memo, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './imageWrapper.module.scss';
 import { deviceMediaQueries } from '@/utils/constants';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 
 export type ImageSetType = {
   mobileSrc: string;
@@ -35,8 +35,8 @@ function ImageWrapper({
 }: ImageWrapperProps) {
   const { mobileSrc, tabletSrc, desktopSrc } = imageSet;
 
-  const isDesktop = useDeviceType(deviceMediaQueries.desktop);
-  const isTablet = useDeviceType(deviceMediaQueries.tablet);
+  const isDesktop = useMediaQuery(deviceMediaQueries.desktop);
+  const isTablet = useMediaQuery(deviceMediaQueries.tablet);
 
   const currentSrc = useMemo(() => {
     if (isDesktop === true && desktopSrc) return desktopSrc;

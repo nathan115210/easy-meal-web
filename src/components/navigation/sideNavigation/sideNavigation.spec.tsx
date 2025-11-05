@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import { mockActive, resetActiveMock } from '@/utils/unit-test/mockUseIsActive';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import SideNavigation from './SideNavigation';
 import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 
@@ -26,7 +26,7 @@ vi.mock('@/utils/hooks/useMedieaQuery', () => ({
 }));
 
 type DeviceMock = ReturnType<typeof vi.fn>;
-const mockedUseDeviceType = useDeviceType as unknown as DeviceMock;
+const mockedUseDeviceType = useMediaQuery as unknown as DeviceMock;
 
 const mainNavItems: NavigationItemPros[] = [
   { label: 'Home', href: '/', icon: 'home' },

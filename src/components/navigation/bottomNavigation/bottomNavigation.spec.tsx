@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 // Use existing mocked hook helper (this hoists the vi.mock for the hook)
 import { mockActive, resetActiveMock } from '@/utils/unit-test/mockUseIsActive';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import BottomNavigation from './BottomNavigation';
 import { NavigationItemPros } from '@/components/navigation/navigationTypes';
 
@@ -17,7 +17,7 @@ vi.mock('@/utils/hooks/useMedieaQuery', () => ({
 }));
 
 type DeviceMock = ReturnType<typeof vi.fn>;
-const mockedUseDeviceType = useDeviceType as unknown as DeviceMock;
+const mockedUseDeviceType = useMediaQuery as unknown as DeviceMock;
 
 // Use simple spans for icons to avoid extra mocks
 const items: NavigationItemPros[] = [

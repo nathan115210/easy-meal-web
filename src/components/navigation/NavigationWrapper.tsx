@@ -1,7 +1,7 @@
 'use client';
 
 import React, { memo, ReactNode } from 'react';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import type { NavigationItemPros } from '@/components/navigation/navigationTypes';
 import SideNavigationWrapper from '@/components/navigation/sideNavigation/SideNavigationWrapper';
 import BottomNavigationWrapper from '@/components/navigation/bottomNavigation/BottomNavigationWrapper';
@@ -16,7 +16,7 @@ type Props = {
 const DESKTOP_QUERY = '(min-width: 1200px)';
 
 function NavigationWrapper({ mainNavItems, shortcutItems, placeholder = null }: Props) {
-  const isDesktop = useDeviceType(DESKTOP_QUERY);
+  const isDesktop = useMediaQuery(DESKTOP_QUERY);
 
   // Avoid flashing the wrong skeleton before we know the viewport
   if (isDesktop === null) return <>{placeholder}</>;

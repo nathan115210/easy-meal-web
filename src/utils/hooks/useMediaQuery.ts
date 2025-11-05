@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function useDeviceType(query: string) {
+export default function useMediaQuery(query: string) {
   const [matches, setMatches] = useState<boolean | null>(null);
 
   useEffect(() => {

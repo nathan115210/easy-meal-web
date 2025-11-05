@@ -6,12 +6,12 @@ import Link from 'next/link';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { memo } from 'react';
 import { DynamicIcon } from 'lucide-react/dynamic';
-import useDeviceType from '@/utils/hooks/useMedieaQuery';
+import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { deviceMediaQueries } from '@/utils/constants';
 
 function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
   const isActiveItem = useIsActive();
-  const isDesktop = useDeviceType(deviceMediaQueries.desktop);
+  const isDesktop = useMediaQuery(deviceMediaQueries.desktop);
   if (isDesktop) return null;
 
   return (
