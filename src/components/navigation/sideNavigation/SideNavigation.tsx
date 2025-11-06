@@ -3,7 +3,7 @@
 import styles from './sideNavigation.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 import { memo } from 'react';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { DynamicIcon } from 'lucide-react/dynamic';
@@ -11,8 +11,8 @@ import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { deviceMediaQueries } from '@/utils/constants';
 
 export interface SideNavigationProps {
-  mainNavItems: NavigationItemPros[];
-  shortcutItems?: NavigationItemPros[];
+  mainNavItems: NavigationItemProps[];
+  shortcutItems?: NavigationItemProps[];
 }
 
 function SideNavigation({ mainNavItems, shortcutItems }: SideNavigationProps) {

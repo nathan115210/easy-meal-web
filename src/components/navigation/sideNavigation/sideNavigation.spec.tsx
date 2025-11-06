@@ -5,7 +5,7 @@ import { render, screen, within } from '@testing-library/react';
 import { mockActive, resetActiveMock } from '@/utils/unit-test/mockUseIsActive';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import SideNavigation from './SideNavigation';
-import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 
 // Deterministic CSS classes for assertions
 vi.mock('./sideNavigation.module.scss', () => ({
@@ -28,12 +28,12 @@ vi.mock('@/utils/hooks/useMedieaQuery', () => ({
 type DeviceMock = ReturnType<typeof vi.fn>;
 const mockedUseDeviceType = useMediaQuery as unknown as DeviceMock;
 
-const mainNavItems: NavigationItemPros[] = [
+const mainNavItems: NavigationItemProps[] = [
   { label: 'Home', href: '/', icon: 'home' },
   { label: 'Profile', href: '/profile', icon: 'user' },
 ];
 
-const shortcutItems: NavigationItemPros[] = [
+const shortcutItems: NavigationItemProps[] = [
   { label: 'Settings', href: '/settings', icon: 'settings' },
 ];
 

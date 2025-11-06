@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
-import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 
-const main: NavigationItemPros[] = [
+const main: NavigationItemProps[] = [
   { label: 'Home', href: '/', icon: 'home' },
   { label: 'Profile', href: '/profile', icon: 'user' },
   { label: 'Settings', href: '/settings', icon: 'settings' },
 ];
 
-const shortcuts: NavigationItemPros[] = [
+const shortcuts: NavigationItemProps[] = [
   { label: 'Dinner in 30', href: '/dinner', icon: 'clock' },
   { label: 'Top Rated', href: '/top-rated', icon: 'star' },
 ];
@@ -15,7 +15,7 @@ const shortcuts: NavigationItemPros[] = [
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 async function getNavigationData() {
-  await sleep(5000); // keep small; 5000ms blocks SSR
+  await sleep(200); // reduced to 200ms to avoid blocking SSR
   return { main, shortcuts };
 }
 

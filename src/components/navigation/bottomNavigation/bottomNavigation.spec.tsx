@@ -8,7 +8,7 @@ import '@testing-library/jest-dom';
 import { mockActive, resetActiveMock } from '@/utils/unit-test/mockUseIsActive';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import BottomNavigation from './BottomNavigation';
-import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 
 // Mock only the device-type hook used by BottomNavigation
 vi.mock('@/utils/hooks/useMedieaQuery', () => ({
@@ -20,7 +20,7 @@ type DeviceMock = ReturnType<typeof vi.fn>;
 const mockedUseDeviceType = useMediaQuery as unknown as DeviceMock;
 
 // Use simple spans for icons to avoid extra mocks
-const items: NavigationItemPros[] = [
+const items: NavigationItemProps[] = [
   { label: 'Home', href: '/', icon: 'home' },
   { label: 'Profile', href: '/profile', icon: 'user' },
   { label: 'Settings', href: '/settings', icon: 'settings' },

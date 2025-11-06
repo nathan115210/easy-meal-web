@@ -2,13 +2,13 @@
 
 import React, { memo, ReactNode } from 'react';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
-import type { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import type { NavigationItemProps } from '@/components/navigation/navigationTypes';
 import SideNavigationWrapper from '@/components/navigation/sideNavigation/SideNavigationWrapper';
 import BottomNavigationWrapper from '@/components/navigation/bottomNavigation/BottomNavigationWrapper';
 
 type Props = {
-  mainNavItems: NavigationItemPros[];
-  shortcutItems?: NavigationItemPros[];
+  mainNavItems: NavigationItemProps[];
+  shortcutItems?: NavigationItemProps[];
   /** Optional neutral placeholder while viewport is unknown (first paint) */
   placeholder?: ReactNode;
 };

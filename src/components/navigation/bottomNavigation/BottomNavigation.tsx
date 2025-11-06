@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './bottomNavigation.module.scss';
-import { NavigationItemPros } from '@/components/navigation/navigationTypes';
+import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 import Link from 'next/link';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { memo } from 'react';
@@ -9,7 +9,7 @@ import { DynamicIcon } from 'lucide-react/dynamic';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { deviceMediaQueries } from '@/utils/constants';
 
-function BottomNavigation({ items }: { items: NavigationItemPros[] }) {
+function BottomNavigation({ items }: { items: NavigationItemProps[] }) {
   const isActiveItem = useIsActive();
   const isDesktop = useMediaQuery(deviceMediaQueries.desktop);
   if (isDesktop) return null;

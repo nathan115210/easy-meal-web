@@ -36,7 +36,7 @@ function Banner({
   return (
     <div className={bannerCls}>
       <ImageWrapper
-        className={styles.imageWrap}
+      
         ariaHidden
         alt={bannerImageAlt}
         imageSet={bannerImageSet}

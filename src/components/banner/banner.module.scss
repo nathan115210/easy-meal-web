@@ -5,27 +5,21 @@
 
 .banner {
   --banner-padding: #{pxToRem(24)} #{pxToRem(16)};
-  --banner-gap: #{pxToRem(8)};
   --banner-content-gap: #{pxToRem(8)};
 
   display: flex;
   padding: var(--banner-padding);
-  gap: var(--banner-gap);
+  gap: pxToRem(24);
   flex-direction: column;
-  //background-color: $color-muted;
+  align-items: stretch;
 
   @include tablet {
+    --banner-padding: #{pxToRem(32)} #{pxToRem(16)};
+
     flex-direction: row;
   }
 
   @include desktop {
-    flex-direction: row;
-  }
-
-  @include tablet {
-    --banner-padding: #{pxToRem(32)} #{pxToRem(24)};
-    --banner-gap: #{pxToRem(24)};
-
     flex-direction: row;
   }
 
@@ -36,9 +30,13 @@
 
     .description {
       color: $color-muted-foreground;
-      margin-block-end: pxToRem(8);
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
     }
   }
+
+
 
   /*Direction*/
   &.imageOnRight {
