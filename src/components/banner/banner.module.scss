@@ -11,7 +11,7 @@
   padding: var(--banner-padding);
   gap: pxToRem(24);
   flex-direction: column;
-  /*align-items: stretch;*/
+  width: 100%;
 
   @include tablet {
     --banner-padding: #{pxToRem(32)} #{pxToRem(16)};
@@ -37,12 +37,8 @@
 
     .description {
       color: $color-muted-foreground;
-
-      /*display: flex;
-      align-items: center;*/
     }
   }
-
   /*Direction*/
   &.imageOnRight {
     @include tablet {
