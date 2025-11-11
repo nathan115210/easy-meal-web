@@ -10,7 +10,7 @@
   .searchInput {
     padding: pxToRem(10) pxToRem(12);
     width: 100%;
-    max-width: pxToRem(380);
+    max-width: 100%;
     border: 2px solid $color-border;
     border-radius: $radius-md;
     color: $color-primary;
@@ -23,6 +23,10 @@
     &::-webkit-input-placeholder {
       color: rgba($color-muted-foreground, 0.6);
       opacity: 1;
+    }
+
+    @include desktop {
+      max-width: 75%;
     }
   }
 }

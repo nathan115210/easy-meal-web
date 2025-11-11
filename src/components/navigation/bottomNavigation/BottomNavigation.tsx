@@ -7,7 +7,7 @@ import useIsActive from '@/utils/hooks/useIsActive';
 import { memo } from 'react';
 import { DynamicIcon } from 'lucide-react/dynamic';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
-import { deviceMediaQueries } from '@/utils/constants';
+import { deviceMediaQueries } from '@/utils/constants/mediaQuery';
 
 function BottomNavigation({ items }: { items: NavigationItemProps[] }) {
   const isActiveItem = useIsActive();

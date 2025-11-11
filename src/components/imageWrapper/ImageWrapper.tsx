@@ -3,7 +3,7 @@
 import { type CSSProperties, memo, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './imageWrapper.module.scss';
-import { deviceMediaQueries } from '@/utils/constants';
+import { deviceMediaQueries } from '@/utils/constants/mediaQuery';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 
 export type ImageSetType = {
@@ -45,7 +45,7 @@ function ImageWrapper({
   }, [isDesktop, isTablet, desktopSrc, tabletSrc, mobileSrc]);
 
   const computedSizes = useMemo(
-    () => sizes ?? `${deviceMediaQueries.desktop} 350px, ${deviceMediaQueries.tablet} 350px, 100vw`,
+    () => sizes ?? `${deviceMediaQueries.desktop} 100vw, ${deviceMediaQueries.tablet} 100vw`,
     [sizes]
   );
 

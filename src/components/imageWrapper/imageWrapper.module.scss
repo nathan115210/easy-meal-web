@@ -13,18 +13,17 @@
   flex: 0 1 auto;
 
   @include tablet {
-    // Tablet: keep ratio, cap width
-    inline-size: min(#{pxToRem(350)}, 90vw);
-    aspect-ratio: 5 / 3;
+    aspect-ratio: 4 / 3;
     flex: 0 0 auto;
   }
 
   @include desktop {
     // Desktop: fixed 350x220
-    inline-size: #{pxToRem(350)};
-    block-size: #{pxToRem(220)};
-    aspect-ratio: auto;
-    flex: 0 0 #{pxToRem(350)};
+    /*inline-size: #{pxToRem(350)};
+    */
+    aspect-ratio: 1;
+    block-size: #{pxToRem(260)};
+    //flex: 0 0 auto;
   }
 
   .image {

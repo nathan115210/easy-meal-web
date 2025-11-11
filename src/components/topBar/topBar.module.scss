@@ -1,28 +1,67 @@
 @use '@/styles/tokens/spacing' as *;
 @use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/z-index' as *;
 
 .topBar {
   display: flex;
   padding: pxToRem(16);
+  position: sticky;
+  background-color: $color-background;
+  top: 0;
+  border-bottom: 2px solid $color-border;
+  z-index: zIndex('max');
+  max-height: 20rem;
 
+  /* mobile-first: allow wrapping so we can create two rows */
+  flex-wrap: wrap;
   align-items: center;
-  gap: pxToRem(24);
+  gap: pxToRem(8);
+  row-gap: pxToRem(8);
 
   .logo {
     max-height: pxToRem(27);
+
+    /* first row */
+    order: 1;
+    flex: 0 0 auto;
+
+    /* hide on desktop as before */
     @include desktop {
       display: none;
     }
   }
 
   .searchBar {
-    flex: 1 1 auto;
+    /* force full width on mobile so it wraps to second row */
+    order: 3;
+    flex: 1 1 100%;
+    min-width: 0; /* prevent overflow inside flex item */
+
+    /* restore single-row behavior on desktop */
+    @include desktop {
+      order: 0;
+      flex: 1 1 auto;
+      min-width: initial;
+    }
   }
 
   .userBtn {
-    border: 10px solid red;
+    margin-left: auto; /* push button to the far right */
+    border: 1rem solid red;
     border-radius: 50%;
     width: pxToRem(27);
     height: pxToRem(27);
+    box-sizing: border-box;
+    max-height: 100%;
+
+    /* first row, after logo */
+    order: 2;
+    flex: 0 0 auto;
+
+    @include desktop {
+      margin-left: initial; /* restore desktop layout */
+      order: 0;
+    }
   }
 }

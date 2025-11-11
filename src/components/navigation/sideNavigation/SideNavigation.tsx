@@ -8,7 +8,7 @@ import { memo } from 'react';
 import useIsActive from '@/utils/hooks/useIsActive';
 import { DynamicIcon } from 'lucide-react/dynamic';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
-import { deviceMediaQueries } from '@/utils/constants';
+import { deviceMediaQueries } from '@/utils/constants/mediaQuery';
 
 export interface SideNavigationProps {
   mainNavItems: NavigationItemProps[];

@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   sassOptions: {
     includePaths: [path.join(process.cwd(), 'src')], // enables @use 'styles/...'
   },
+
+  images: {
+    remotePatterns: [{ protocol: 'https', hostname: 'res.cloudinary.com' }],
+  },
 };
 
 export default nextConfig;

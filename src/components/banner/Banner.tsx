@@ -1,6 +1,7 @@
 import { JSX, memo, ReactNode } from 'react';
 import styles from './banner.module.scss';
 import ImageWrapper, { type ImageSetType } from '@/components/imageWrapper/ImageWrapper';
+import clsx from 'clsx';
 
 export enum BannerImagePositionType {
   LEFT = 'left',
@@ -14,8 +15,9 @@ export type BannerProps = {
   description: string;
   bannerImageSet: ImageSetType;
   imagePosition?: BannerImagePositionType;
-  bannerImageAlt?: string;
+  bannerImageAlt: string;
   children?: ReactNode;
+  className?: string;
 };
 function Banner({
   heading,
@@ -24,19 +26,21 @@ function Banner({
   description,
   imagePosition = BannerImagePositionType.LEFT,
   bannerImageAlt = 'Banner image',
+  className,
   children,
 }: BannerProps) {
   const HeadingTag = headingLevel as keyof JSX.IntrinsicElements;
 
-  const bannerCls = [
+  const bannerCls = clsx(
     styles.banner,
-    imagePosition === BannerImagePositionType.RIGHT ? styles.imageOnRight : '',
-  ].join(' ');
+    imagePosition === BannerImagePositionType.RIGHT && styles.imageOnRight,
+    className || ''
+  );
 
   return (
     <div className={bannerCls}>
       <ImageWrapper
-      
+        className={styles.imgWrapper}
         ariaHidden
         alt={bannerImageAlt}
         imageSet={bannerImageSet}

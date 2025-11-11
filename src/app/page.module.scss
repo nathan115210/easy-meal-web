@@ -1,4 +1,12 @@
+@use '@styles/tokens/colors' as *;
 .homePage {
+  .primaryBanner {
+    background-color: $color-primary;
+  }
+
+  .secondaryBanner {
+    background-color: $color-secondary;
+  }
 }
 
 /*

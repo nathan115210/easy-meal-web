@@ -1,0 +1,55 @@
+@use 'sass:math';
+
+$grid-columns: 12;
+$gutter: 16px;
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+// These will be LOCAL (scoped)
+.grid {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+  // horizontal gutters
+  margin-inline: -($gutter / 2);
+
+  // vertical gutters
+  row-gap: $gutter; // or: gap: $gutter ($gutter / 2) if you prefer
+}
+[class*='col-'] {
+  padding-inline: $gutter / 2;
+  box-sizing: border-box;
+
+  // allow content to shrink and wrap nicely
+  min-width: 0;
+  place-items: center;
+  margin-block-end: clamp(1rem, -0.7647rem + 7.8431vw, 3rem);
+}
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 math.percentage($i / $grid-columns);
+    max-width: math.percentage($i / $grid-columns);
+  }
+}
+
+@each $name, $size in $breakpoints {
+  @media (min-width: $size) {
+    @for $i from 1 through $grid-columns {
+      .col-#{$name}-#{$i} {
+        flex: 0 0 math.percentage($i / $grid-columns);
+        max-width: math.percentage($i / $grid-columns);
+      }
+    }
+  }
+}

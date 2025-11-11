@@ -109,11 +109,18 @@ const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       role={roleAttr}
       aria-pressed={ariaPressed}
     >
-      {isLoading && <span className={spinnerClass} aria-hidden="true" />}
-      {!(isLoading && iconOnly) && <span aria-hidden={isLoading || undefined}>{children}</span>}
       {isLoading && (
-        <span className={srOnlyClass} role="status" aria-live="polite">
-          {loadingText}
+        <>
+          <span className={spinnerClass} aria-hidden="true" />
+          <span className={srOnlyClass} role="status" aria-live="polite">
+            {loadingText}
+          </span>
+        </>
+      )}
+
+      {!(isLoading && iconOnly) && (
+        <span className={linkStyles['link-span']} aria-hidden={isLoading || undefined}>
+          {children}
         </span>
       )}
     </a>
