@@ -11,7 +11,7 @@ import BottomNavigation from './BottomNavigation';
 import { NavigationItemProps } from '@/components/navigation/navigationTypes';
 
 // Mock only the device-type hook used by BottomNavigation
-vi.mock('@/utils/hooks/useMedieaQuery', () => ({
+vi.mock('@/utils/hooks/useMediaQuery', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

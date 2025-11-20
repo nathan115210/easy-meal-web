@@ -1,3 +1,4 @@
+// scss
 @use 'sass:math';
 
 $grid-columns: 12;
@@ -22,13 +23,14 @@ $breakpoints: (
   flex-wrap: wrap;
 
   // horizontal gutters
-  margin-inline: -($gutter / 2);
+  margin-inline: math.div($gutter, 2);
 
   // vertical gutters
-  row-gap: $gutter; // or: gap: $gutter ($gutter / 2) if you prefer
+  row-gap: $gutter; // or: gap: $gutter math.div($gutter, 2) if you prefer
 }
+
 [class*='col-'] {
-  padding-inline: $gutter / 2;
+  padding-inline: math.div($gutter, 2);
   box-sizing: border-box;
 
   // allow content to shrink and wrap nicely
@@ -36,10 +38,11 @@ $breakpoints: (
   place-items: center;
   margin-block-end: clamp(1rem, -0.7647rem + 7.8431vw, 3rem);
 }
+
 @for $i from 1 through $grid-columns {
   .col-#{$i} {
-    flex: 0 0 math.percentage($i / $grid-columns);
-    max-width: math.percentage($i / $grid-columns);
+    flex: 0 0 math.percentage(math.div($i, $grid-columns));
+    max-width: math.percentage(math.div($i, $grid-columns));
   }
 }
 
@@ -47,8 +50,8 @@ $breakpoints: (
   @media (min-width: $size) {
     @for $i from 1 through $grid-columns {
       .col-#{$name}-#{$i} {
-        flex: 0 0 math.percentage($i / $grid-columns);
-        max-width: math.percentage($i / $grid-columns);
+        flex: 0 0 math.percentage(math.div($i, $grid-columns));
+        max-width: math.percentage(math.div($i, $grid-columns));
       }
     }
   }

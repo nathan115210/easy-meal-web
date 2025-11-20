@@ -1,7 +1,7 @@
 import NavigationWrapper from '@/components/navigation/NavigationWrapper';
+import navigationData from '@/utils/constants/navigationdata';
 
-export default async function Navigation() {
-  const navigation = await fetch('http://localhost:3000/api/navigationData');
-  const { main, shortcuts } = await navigation.json();
+export default function Navigation() {
+  const { main, shortcuts } = navigationData;
   return <NavigationWrapper mainNavItems={main} shortcutItems={shortcuts} />;
 }

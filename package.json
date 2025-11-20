@@ -14,7 +14,10 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.10",
     "clsx": "^2.1.1",
+    "graphql": "^16.12.0",
+    "graphql-yoga": "^5.16.2",
     "lucide-react": "^0.552.0",
     "next": "16.0.1",
     "react": "19.2.0",

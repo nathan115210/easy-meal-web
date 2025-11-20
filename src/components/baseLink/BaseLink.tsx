@@ -1,10 +1,10 @@
 'use client';
 
-import type { AnchorHTMLAttributes, MouseEvent } from 'react';
-import { forwardRef, memo } from 'react';
+import { AnchorHTMLAttributes, forwardRef, MouseEvent, useState } from 'react';
 import buttonStyles from '../button/button.module.scss';
 import linkStyles from './baseLink.module.scss';
 import type { ButtonVariant } from '../button/Button';
+import Link from 'next/link';
 
 type LinkVariant = 'link' | 'link-muted';
 type Underline = 'always' | 'hover' | 'none';
@@ -14,8 +14,6 @@ export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   variant?: ButtonVariant | LinkVariant; // 'link*' -> text link, others -> button look
   underline?: Underline; // only affects text-link appearance
   className?: string;
-  loading?: boolean;
-  loadingText?: string;
   pressed?: boolean; // optional toggle state
   iconOnly?: boolean; // requires aria-label when true
   disabled?: boolean; // blocks nav + interaction
@@ -28,13 +26,12 @@ const buttonVariantSet = new Set<ButtonVariant>([
   'secondary-outline',
 ]);
 
-const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function LinkComponent(
   {
     variant = 'link',
     underline = 'hover',
     className,
-    loading = false,
-    loadingText = 'Loading…',
+
     pressed,
     iconOnly = false,
     disabled = false,
@@ -47,9 +44,9 @@ const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   },
   ref
 ) {
-  const isLoading = Boolean(loading);
   const isDisabled = Boolean(disabled);
   const isButtonLike = buttonVariantSet.has(variant as ButtonVariant);
+  const [active, setActive] = useState(false);
 
   // Dev-only guard for icon-only
   if (process.env.NODE_ENV !== 'production') {
@@ -66,65 +63,52 @@ const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       : (linkStyles[`link--${variant}`] ?? linkStyles['link--link']),
     !isButtonLike ? linkStyles[`link--underline-${underline}`] : '',
     iconOnly && isButtonLike ? buttonStyles['button--icon-only'] : '',
-    isLoading ? (isButtonLike ? buttonStyles['is-loading'] : linkStyles['is-loading']) : '',
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (isDisabled || isLoading) {
+    if (isDisabled) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
     onClick?.(e);
   };
+
+  const handleMouseEnter = () => {
+    setActive(true);
+  };
   const safeRel =
     target === '_blank' ? [rel, 'noopener', 'noreferrer'].filter(Boolean).join(' ') : rel;
 
-  const hrefAttr = isDisabled || isLoading ? undefined : href;
-  const tabIndex = isDisabled || isLoading ? -1 : rest.tabIndex;
+  const tabIndex = isDisabled ? -1 : rest.tabIndex;
 
   // determine role and aria-pressed only when appropriate (avoid aria-pressed on implicit link role)
   const restRole = (rest as Record<string, unknown>).role as string | undefined;
   const roleAttr = restRole ?? (pressed !== undefined ? 'button' : undefined);
   const ariaPressed = roleAttr === 'button' ? pressed : undefined;
 
-  const spinnerClass = isButtonLike ? buttonStyles.spinner : linkStyles.spinner;
-  const srOnlyClass = isButtonLike ? buttonStyles['sr-only'] : linkStyles['sr-only'];
-
   return (
-    <a
+    <Link
       ref={ref}
       className={cls}
-      href={hrefAttr}
+      href={href}
       target={target}
       rel={safeRel}
       aria-disabled={isDisabled || undefined}
-      aria-busy={isLoading || undefined}
       onClick={handleClick}
       tabIndex={tabIndex as number | undefined}
       {...rest}
       role={roleAttr}
       aria-pressed={ariaPressed}
+      prefetch={active ? null : false}
+      onMouseEnter={handleMouseEnter}
     >
-      {isLoading && (
-        <>
-          <span className={spinnerClass} aria-hidden="true" />
-          <span className={srOnlyClass} role="status" aria-live="polite">
-            {loadingText}
-          </span>
-        </>
-      )}
-
-      {!(isLoading && iconOnly) && (
-        <span className={linkStyles['link-span']} aria-hidden={isLoading || undefined}>
-          {children}
-        </span>
-      )}
-    </a>
+      {!iconOnly && <span className={linkStyles['link-span']}>{children}</span>}
+    </Link>
   );
 });
 
-export default memo(BaseLink);
+export default BaseLink;

@@ -1,41 +1,64 @@
-import React, { ReactNode } from 'react';
-import clsx from 'clsx';
+import React, { forwardRef, HTMLAttributes } from 'react';
+import clsx from 'clsx'; //
 
-interface ContainerProps {
+//
+// Grid
+//
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   fluid?: boolean;
-  className?: string;
-  children: ReactNode;
 }
 
-export const Grid: React.FC<ContainerProps> = ({ fluid = false, className, children }) => {
-  return <div className={clsx(fluid ? 'grid-fuild' : 'grid', className)}>{children}</div>;
-};
+export const Grid = forwardRef<HTMLDivElement, ContainerProps>(
+  ({ fluid = false, className, children, ...rest }, ref) => {
+    return (
+      <div ref={ref} className={clsx(fluid ? 'grid-fluid' : 'grid', className)} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
+Grid.displayName = 'Grid';
 
-interface RowProps {
-  className?: string;
-  children: ReactNode;
-}
+//
+// Row
+//
 
-export const Row: React.FC<RowProps> = ({ className, children }) => {
-  return <div className={clsx('row', className)}>{children}</div>;
-};
+export const Row = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, children, ...rest }, ref) => {
+    return (
+      <div ref={ref} className={clsx('row', className)} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
+Row.displayName = 'Row';
 
-interface ColProps {
+//
+// Col
+//
+interface ColProps extends HTMLAttributes<HTMLDivElement> {
   sm: number;
   md?: number;
   lg?: number;
   xl?: number;
-  className?: string;
-  children: ReactNode;
 }
 
-export const Col: React.FC<ColProps> = ({ sm, md, lg, xl, className, children }) => {
-  const classes = clsx(
-    `col-sm-${sm}`,
-    md && `col-md-${md}`,
-    lg && `col-lg-${lg}`,
-    xl && `col-xl-${xl}`,
-    className
-  );
-  return <div className={classes}>{children}</div>;
-};
+export const Col = forwardRef<HTMLDivElement, ColProps>(
+  ({ sm, md, lg, xl, className, children, ...rest }, ref) => {
+    const classes = clsx(
+      `col-sm-${sm}`,
+      md && `col-md-${md}`,
+      lg && `col-lg-${lg}`,
+      xl && `col-xl-${xl}`,
+      className
+    );
+
+    return (
+      <div ref={ref} className={classes} {...rest}>
+        {children}
+      </div>
+    );
+  }
+);
+Col.displayName = 'Col';

@@ -32,8 +32,9 @@ const homePageContents: HomePageContentsProps = {
         children: 'Start Planning',
       },
       {
-        type: 'button',
+        type: 'link',
         variant: 'secondary',
+        href: '/meals',
         children: 'Browse Recipes',
       },
     ],

@@ -20,7 +20,7 @@ vi.mock('./sideNavigation.module.scss', () => ({
 }));
 
 // Mock only the device-type hook
-vi.mock('@/utils/hooks/useMedieaQuery', () => ({
+vi.mock('@/utils/hooks/useMediaQuery', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

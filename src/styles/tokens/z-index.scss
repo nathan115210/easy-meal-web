@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // ------------------------------------------
 // Z-Index System
 // ------------------------------------------
@@ -20,5 +22,5 @@ $z-index: (
 
 // Helper function to get values
 @function zIndex($name) {
-  @return map-get($z-index, $name);
+  @return map.get($z-index, $name);
 }
