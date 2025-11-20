@@ -1,0 +1,23 @@
+// Breakpoints
+$bp-tablet-min: 769px !default;
+$bp-desktop-min: 1200px !default;
+$bp-tablet-max: ($bp-desktop-min - 0.02px) !default; // 1199.98px to avoid overlap
+
+// Usage:
+// @use 'tokens/mixins' as *;
+// .some-class { @include tablet { /* tablet styles */ } }
+// .some-class { @include desktop { /* desktop styles */ } }
+
+// Tablet: 769px -> 1199.98px
+@mixin tablet {
+  @media (min-width: $bp-tablet-min) and (max-width: $bp-tablet-max) {
+    @content;
+  }
+}
+
+// Desktop: >= 1200px
+@mixin desktop {
+  @media (min-width: $bp-desktop-min) {
+    @content;
+  }
+}

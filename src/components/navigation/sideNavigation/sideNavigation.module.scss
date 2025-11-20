@@ -1,0 +1,69 @@
+@use '@/styles/tokens/spacing' as *;
+@use '@/styles/tokens/colors' as *;
+@use '@/styles/tokens/mixins' as *;
+@use '@/styles/tokens/border-radius' as *;
+
+.sideNavigationWrapper {
+  display: none;
+
+  @include desktop {
+    display: block;
+  }
+
+  .logo {
+    padding: pxToRem(8);
+    padding-inline-start: 0;
+    max-height: pxToRem(70);
+  }
+
+  .sideNavigation {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    padding: pxToRem(20);
+    border-inline-end: 1px solid $color-sidebar-primary;
+
+    flex-direction: column;
+    gap: pxToRem(16);
+  }
+
+  .navigationList {
+    margin-block-start: pxToRem(8);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(8);
+    justify-items: center;
+    .navigationListItem {
+      display: flex;
+      align-items: center;
+      gap: pxToRem(4);
+      color: $color-sidebar-foreground;
+      padding: pxToRem(10) pxToRem(12);
+      border-radius: $radius-md;
+      &.active {
+        color: $color-sidebar-primary-foreground;
+        background: $color-sidebar-primary;
+      }
+    }
+  }
+
+  .shortcutSection {
+    h2 {
+      font-size: pxToRem(16);
+      margin-block-start: pxToRem(16);
+      font-weight: 500;
+      color: $color-sidebar-foreground;
+    }
+  }
+
+  .skeletonContainer {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    padding: pxToRem(20);
+    border-inline-end: 1px solid $color-sidebar-primary;
+    flex-direction: column;
+    gap: pxToRem(16);
+  }
+}

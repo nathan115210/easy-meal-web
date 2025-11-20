@@ -1,0 +1,139 @@
+// File: `src/components/baseLink/baseLink.module.scss`
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/spacing' as *;
+
+@mixin animatedUnderline($thickness: pxToRem(2)) {
+  .link-span {
+    position: relative;
+  }
+  .link-span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    inline-size: 100%;
+    block-size: $thickness;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 240ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-span::after {
+      transition: none;
+    }
+  }
+}
+
+/* Base text-link */
+.link {
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  user-select: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font: inherit;
+  color: $color-accent;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.2em;
+  transition:
+    color 120ms ease,
+    opacity 120ms ease,
+    text-decoration-color 120ms ease;
+
+  &:hover {
+    opacity: 0.92;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  &[aria-disabled='true'] {
+    color: $color-muted-foreground;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  .link-span {
+    display: inline-flex;
+    align-items: center;
+    gap: pxToRem(6);
+  }
+
+  &--link {
+    color: $color-accent;
+  }
+
+  &--link-muted {
+    color: $color-muted-foreground;
+  }
+
+  /* Always underline (visible immediately) */
+  &--underline-always {
+    @include animatedUnderline();
+    .link-span::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Hover underline (animates left to right) */
+  &--underline-hover {
+    @include animatedUnderline();
+  }
+  &--underline-hover:hover .link-span::after {
+    transform: scaleX(1);
+  }
+
+  /* None (no underline) */
+  &--underline-none {
+    .link-span::after {
+      content: none;
+    }
+  }
+
+  /* Loading parity */
+  & .is-loading {
+    cursor: progress;
+  }
+
+  /* Spinner + SR-only */
+  & .spinner {
+    inline-size: 1em;
+    block-size: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: link-spin 0.8s linear infinite;
+  }
+
+  & .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@keyframes link-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

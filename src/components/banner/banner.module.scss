@@ -1,0 +1,51 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.banner {
+  --banner-padding: #{pxToRem(24)} #{pxToRem(16)};
+  --banner-content-gap: #{pxToRem(8)};
+
+  display: flex;
+  padding: var(--banner-padding);
+  gap: pxToRem(24);
+  flex-direction: column;
+  width: 100%;
+
+  @include tablet {
+    --banner-padding: #{pxToRem(32)} #{pxToRem(16)};
+
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .imgWrapper {
+    flex-basis: 40%;
+  }
+
+  .contentContainer {
+    display: flex;
+    flex-basis: 60%;
+    flex-direction: column;
+    gap: var(--banner-content-gap);
+
+    .description {
+      color: $color-muted-foreground;
+    }
+  }
+  /*Direction*/
+  &.imageOnRight {
+    @include tablet {
+      flex-direction: row-reverse;
+    }
+    @include desktop {
+      flex-direction: row-reverse;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use 'sass:map';
+
+// ------------------------------------------
+// Z-Index System
+// ------------------------------------------
+// Base principle:
+// Each layer range reserves space for a feature area.
+// Never use hard-coded numbers like 9999 again.
+// ------------------------------------------
+
+$z-index: (
+  'base': 0,
+  'content': 10,
+  'overlay': 50,
+  'dropdown': 100,
+  'modal': 200,
+  'toast': 300,
+  'tooltip': 400,
+  'dragging': 500,
+  'max': 9999,
+);
+
+// Helper function to get values
+@function zIndex($name) {
+  @return map.get($z-index, $name);
+}

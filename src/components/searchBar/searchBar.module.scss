@@ -1,0 +1,32 @@
+@use '@/styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.searchBar {
+  width: auto;
+  display: flex;
+
+  .searchInput {
+    padding: pxToRem(10) pxToRem(12);
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid $color-border;
+    border-radius: $radius-md;
+    color: $color-primary;
+    background-color: $color-input;
+
+    &::placeholder {
+      color: rgba($color-muted-foreground, 0.6);
+      opacity: 1; // ensure consistent contrast in Firefox/Safari
+    }
+    &::-webkit-input-placeholder {
+      color: rgba($color-muted-foreground, 0.6);
+      opacity: 1;
+    }
+
+    @include desktop {
+      max-width: 75%;
+    }
+  }
+}

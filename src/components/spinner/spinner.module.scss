@@ -1,0 +1,26 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/colors' as *;
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  font-size: 0.95rem;
+  gap: pxToRem(12);
+
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: $color-secondary-foreground;
+    border-radius: 50%;
+    width: pxToRem(36);
+    height: pxToRem(36);
+    animation: spinner 1s linear infinite;
+  }
+
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

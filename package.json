@@ -4,67 +4,49 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm format && next build",
+    "build": "pnpm run test && prettier --check . && next build",
     "start": "next start",
-    "lint": "eslint .",
-    "lint:all": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix --max-warnings=0",
-      "prettier --write"
-    ],
-    "*.{md,json,scss,yml,yaml}": [
-      "prettier --write"
-    ]
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/modifiers": "^9.0.0",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@dnd-kit/utilities": "^3.2.2",
-    "@tanstack/react-query": "^5.83.0",
-    "@types/better-sqlite3": "^7.6.13",
-    "better-sqlite3": "^12.2.0",
-    "cloudinary": "^2.7.0",
-    "next": "16.0.0",
-    "pinyin": "^4.0.0",
+    "@tanstack/react-query": "^5.90.10",
+    "clsx": "^2.1.1",
+    "graphql": "^16.12.0",
+    "graphql-yoga": "^5.16.2",
+    "lucide-react": "^0.552.0",
+    "next": "16.0.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "server-only": "^0.0.1",
-    "slugify": "^1.6.6"
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.0.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
-    "@typescript-eslint/parser": "^8.45.0",
-    "babel-plugin-react-compiler": "^1.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.1.0",
+    "@vitest/ui": "^4.0.6",
     "eslint": "^9",
-    "eslint-config-next": "^16",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react-hooks": "^6.1.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.3",
+    "eslint-config-next": "16.0.1",
+    "jsdom": "^27.1.0",
     "prettier": "3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14",
-    "sass": "^1.89.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5"
+    "sass": "^1.93.2",
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.0.6",
+    "whatwg-fetch": "^3.6.20"
   },
-  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
-  "overrides": {
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2"
-  }
+  "author": {
+    "name": "Zhao Hongyu",
+    "email": "nathan_115210@hotmail.com",
+    "url": "https://zhaohongyu.netlify.app"
+  },
+  "copyright": "Copyright © 2026 Zhao Hongyu All Rights Reserved.",
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd"
 }

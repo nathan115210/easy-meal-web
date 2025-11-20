@@ -1,0 +1,69 @@
+@use 'sass:color';
+@use '@/styles/tokens/colors' as *;
+@use '@/styles/tokens/spacing' as *;
+@use '@/styles/tokens/border-radius' as *;
+
+/* Expose theme colors as CSS custom properties */
+:root {
+  --bg: #{$color-background};
+  --fg: #{$color-foreground};
+}
+
+/* Sass fallback for older browsers */
+$sk-bg: color.mix($color-foreground, $color-background, $weight: 8%);
+$sk-sheen: rgba(255, 255, 255, 0.35);
+
+.skeleton {
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+  width: var(--sk-width, 100%);
+  height: var(--sk-height, 1rem);
+  border-radius: var(--sk-radius, 8px);
+
+  background-color: $sk-bg;
+
+  line-height: 1;
+}
+
+.skeletonGroup {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.textLine {
+  height: 1em;
+  width: var(--sk-line-width, 100%);
+  border-radius: 4px;
+}
+
+.pill {
+  border-radius: 9999px;
+}
+
+.shimmer {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      $sk-sheen 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: sk-shimmer 1.2s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes sk-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}

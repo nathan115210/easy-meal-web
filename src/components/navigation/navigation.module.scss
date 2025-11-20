@@ -1,0 +1,11 @@
+@use '@/styles/tokens/colors' as *;
+
+.navigation {
+  --color: #{$color-foreground};
+  --background-color: #{$color-background};
+
+  background: var(--background-color);
+  height: 100%;
+  min-height: 100%;
+  color: var(--color);
+}
