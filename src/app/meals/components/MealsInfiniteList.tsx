@@ -1,5 +1,7 @@
 'use client';
+
 import React, { useEffect, useRef } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import type { MealsListItem } from '@/app/meals/page';
 import { Col, Grid, Row } from '@/components/grid/Grid';
 import styles from '../page.module.scss';
@@ -7,7 +9,6 @@ import Card from '@/components/card/Card';
 import BaseLink from '@/components/baseLink/BaseLink';
 import { ALL_MEALS_QUERY } from '@/utils/lib/graphql/queries/meals-queries';
 import { graphqlFetchClient } from '@/utils/data-server/graphqlFetchClient';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import Spinner from '@/components/spinner/Spinner';
 
 type MealsInfiniteListProps = {
@@ -25,48 +26,81 @@ type MealsPagePayload = {
 
 const PAGE_SIZE = 8;
 
+/**
+ * Fetch a page of meals using the GraphQL client.
+ * - Uses TanStack Query's AbortSignal to support cancellation.
+ */
 async function fetchMealsData({
   pageParam,
   search,
   category,
+  signal,
 }: {
   pageParam?: number;
   search?: string;
   category?: string;
+  signal: AbortSignal;
 }): Promise<MealsPagePayload['meals']> {
-  const data = await graphqlFetchClient<MealsPagePayload>(ALL_MEALS_QUERY, {
-    search,
-    category,
-    limit: PAGE_SIZE,
-    offset: pageParam,
-  });
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-  await delay(500); // artificial delay for demo purposes
+  const data = await graphqlFetchClient<MealsPagePayload>(
+    ALL_MEALS_QUERY,
+    {
+      search,
+      category,
+      limit: PAGE_SIZE,
+      offset: pageParam ?? 0,
+    },
+    signal
+  );
 
   return data.meals;
 }
 
 export default function MealsInfiniteList({ search, category }: MealsInfiniteListProps) {
   const watcherRef = useRef<HTMLDivElement | null>(null);
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
     queryKey: ['meals', search, category],
-    queryFn: ({ pageParam = 0 }) =>
+
+    queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
         search,
         category,
+        signal,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage.hasMore) return undefined;
 
-      return allPages.reduce((sum, page) => sum + page.items.length, 0); // next offset = number of items we already have
+      // Next offset = number of items already loaded across all pages
+      return allPages.reduce((sum, page) => sum + page.items.length, 0);
+    },
+
+    //control "stale-while-revalidate" behavior
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false, // don't refetch when tab gains focus
+    refetchOnReconnect: true, // okay to refetch if user was offline
+    refetchOnMount: false, // when remounting, just use cache if it's there
+
+    retry: (failureCount, error) => {
+      // Don't retry if the request was aborted (user scrolled quickly)
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return false;
+      }
+
+      // Retry at most 2 times
+      return failureCount < 2;
+    },
+
+    retryDelay: (attemptIndex) => {
+      // exponential backoff
+      return Math.min(2000 * 2 ** attemptIndex, 8000);
     },
   });
 
   const items = data?.pages.flatMap((page) => page.items) ?? [];
 
-  // IntersectionObserver to trigger fetching next page
+  // IntersectionObserver to trigger fetching the next page
   useEffect(() => {
     if (!hasNextPage || !watcherRef.current) return;
 
@@ -94,10 +128,12 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  // Initial load state
   if (status === 'pending') {
     return <Spinner />;
   }
 
+  // Error state
   if (status === 'error') {
     return (
       <div className={styles.loader}>
@@ -107,6 +143,7 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
     );
   }
 
+  // No data at all
   if (!items.length) return null;
 
   return (
@@ -127,7 +164,8 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
           </Col>
         ))}
       </Row>
-      {/* watcher for infinite scroll */}
+
+      {/* Sentinel for infinite scroll */}
       <div ref={watcherRef} className={styles.sentinel} />
 
       {isFetchingNextPage && <Spinner />}

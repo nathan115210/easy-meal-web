@@ -13,7 +13,7 @@ export type SearchBarProps = {
 function SearchBar({
   action,
   inputId,
-  inputName = 'search',
+  inputName = 'q',
   defaultValue = '',
   ariaLabel,
   classname = '',

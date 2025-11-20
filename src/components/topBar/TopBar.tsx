@@ -11,7 +11,7 @@ function TopBar() {
       </Link>
       <SearchBar
         classname={styles.searchBar}
-        action={'/all-recipes'}
+        action={'/meals'}
         inputId={'search-recipes'}
         ariaLabel={'topbar-search-recipes'}
         placeholder={'Search recipes, ingredients, or diets…'}

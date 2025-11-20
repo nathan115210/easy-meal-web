@@ -2,12 +2,14 @@ import { GraphQLResponse } from '@/utils/data-server/fetchGraphQL';
 
 export async function graphqlFetchClient<T>(
   query: string,
-  variables?: Record<string, unknown>
+  variables?: Record<string, unknown>,
+  signal?: AbortSignal
 ): Promise<T> {
   const res = await fetch('/api/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, variables }),
+    signal,
   });
 
   if (!res.ok) {
