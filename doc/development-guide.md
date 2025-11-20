@@ -5,8 +5,8 @@ Meal application.
 
 # 📘 Easy Meal — Development Guide
 
-This guide explains the internal architecture, data flow, GraphQL setup, caching, and development workflow for the *
-*Easy Meal** application.
+This guide explains the internal architecture, data flow, GraphQL setup, caching, and development workflow for the \*
+\*Easy Meal\*\* application.
 
 If you're looking for installation instructions or general information, see **README.md**.
 
@@ -14,33 +14,33 @@ If you're looking for installation instructions or general information, see **RE
 
 ## Table of Contents
 
-* [Architecture Overview](#architecture-overview)
-* [Folder Structure](#folder-structure)
-* [Data Layer](#data-layer)
+- [Architecture Overview](#architecture-overview)
+- [Folder Structure](#folder-structure)
+- [Data Layer](#data-layer)
+  - [Dummy Data](#dummy-data)
+  - [Future DB Integration](#future-db-integration)
 
-    * [Dummy Data](#dummy-data)
-    * [Future DB Integration](#future-db-integration)
-* [GraphQL API](#graphql-api)
+- [GraphQL API](#graphql-api)
+  - [Why GraphQL?](#why-graphql)
+  - [Schema Definition](#schema-definition)
+  - [Resolvers](#resolvers)
+  - [GraphQL Route Handler](#graphql-route-handler)
+  - [Testing with GraphiQL](#testing-with-graphiql)
+  - [Example Queries](#example-queries)
+  - [Adding New Fields](#adding-new-fields)
+  - [Extending with Mutations](#extending-with-mutations)
 
-    * [Why GraphQL?](#why-graphql)
-    * [Schema Definition](#schema-definition)
-    * [Resolvers](#resolvers)
-    * [GraphQL Route Handler](#graphql-route-handler)
-    * [Testing with GraphiQL](#testing-with-graphiql)
-    * [Example Queries](#example-queries)
-    * [Adding New Fields](#adding-new-fields)
-    * [Extending with Mutations](#extending-with-mutations)
-* [Data Fetching in Next.js](#data-fetching-in-nextjs)
+- [Data Fetching in Next.js](#data-fetching-in-nextjs)
+  - [Direct fetch](#direct-fetch)
+  - [Using apiFetchServer](#using-apifetchserver)
 
-    * [Direct fetch](#direct-fetch)
-    * [Using apiFetchServer](#using-apifetchserver)
-* [Caching & Revalidation](#caching--revalidation)
+- [Caching & Revalidation](#caching--revalidation)
+  - [ISR](#isr)
+  - [Cache Tags](#cache-tags)
+  - [Testing Tag Revalidation](#testing-tag-revalidation)
 
-    * [ISR](#isr)
-    * [Cache Tags](#cache-tags)
-    * [Testing Tag Revalidation](#testing-tag-revalidation)
-* [Conventions & Best Practices](#conventions--best-practices)
-* [Future Improvements](#future-improvements)
+- [Conventions & Best Practices](#conventions--best-practices)
+- [Future Improvements](#future-improvements)
 
 ---
 
@@ -58,10 +58,10 @@ Next.js ISR & caching
 
 Key concepts:
 
-* UI does **not** import data directly
-* GraphQL acts as the source of truth for data contracts
-* Dummy data can be replaced with database calls transparently
-* Strong typing across all layers
+- UI does **not** import data directly
+- GraphQL acts as the source of truth for data contracts
+- Dummy data can be replaced with database calls transparently
+- Strong typing across all layers
 
 ---
 
@@ -108,8 +108,8 @@ src/utils/data/mealsData.ts
 
 Exports:
 
-* `getMealsData()`
-* `getMealBySlug()`
+- `getMealsData()`
+- `getMealBySlug()`
 
 These act as the **data source abstraction**.
 
@@ -119,9 +119,9 @@ These act as the **data source abstraction**.
 
 Switch to PostgreSQL + Prisma (or Drizzle):
 
-* Replace the repository functions only
-* No need to change GraphQL schema or UI
-* Caching & revalidation remain the same
+- Replace the repository functions only
+- No need to change GraphQL schema or UI
+- Caching & revalidation remain the same
 
 ---
 
@@ -129,10 +129,10 @@ Switch to PostgreSQL + Prisma (or Drizzle):
 
 ## Why GraphQL?
 
-* Precise field selection (no over-fetching)
-* Strongly typed schemas
-* Self-documenting API
-* Perfect match for Server Components
+- Precise field selection (no over-fetching)
+- Strongly typed schemas
+- Self-documenting API
+- Perfect match for Server Components
 
 ---
 
@@ -148,15 +148,15 @@ src/lib/graphql/schema.ts
 
 ```graphql
 type Meal {
-    title: String!
-    slug: String!
-    image: String!
-    description: String!
-    ingredients: [MealIngredient!]!
-    instructions: [MealInstruction!]!
-    creator: String!
-    creator_email: String!
-    category: [String!]
+  title: String!
+  slug: String!
+  image: String!
+  description: String!
+  ingredients: [MealIngredient!]!
+  instructions: [MealInstruction!]!
+  creator: String!
+  creator_email: String!
+  category: [String!]
 }
 ```
 
@@ -164,8 +164,8 @@ type Meal {
 
 ```graphql
 type Query {
-    meals: [Meal!]!
-    meal(slug: String!): Meal
+  meals: [Meal!]!
+  meal(slug: String!): Meal
 }
 ```
 
@@ -191,13 +191,13 @@ src/app/api/graphql/route.ts
 ```
 
 ```ts
-import { createYoga } from "graphql-yoga";
-import { schema } from "@/lib/graphql/schema";
+import { createYoga } from 'graphql-yoga';
+import { schema } from '@/lib/graphql/schema';
 
 const yogaApp = createYoga({
   schema,
-  graphqlEndpoint: "/api/graphql",
-  graphiql: process.env.NODE_ENV !== "production",
+  graphqlEndpoint: '/api/graphql',
+  graphiql: process.env.NODE_ENV !== 'production',
 });
 
 export { yogaApp as GET, yogaApp as POST };
@@ -227,26 +227,26 @@ http://localhost:3000/api/graphql
 
 ```graphql
 query {
-    meals {
-        title
-        slug
-        image
-        description
-    }
+  meals {
+    title
+    slug
+    image
+    description
+  }
 }
 ```
 
 ### Fetch a single meal:
 
 ```graphql
-query($slug: String!) {
-    meal(slug: $slug) {
-        title
-        ingredients {
-            text
-            amount
-        }
+query ($slug: String!) {
+  meal(slug: $slug) {
+    title
+    ingredients {
+      text
+      amount
     }
+  }
 }
 ```
 
@@ -269,7 +269,7 @@ Add to the schema:
 
 ```graphql
 type Mutation {
-    createMeal(data: CreateMealInput!): Meal!
+  createMeal(data: CreateMealInput!): Meal!
 }
 ```
 
@@ -279,14 +279,14 @@ Add a resolver:
 Mutation: {
   createMeal: (_parent, { data }) => {
     return createMealInDb(data);
-  }
+  };
 }
 ```
 
 Add revalidation:
 
 ```ts
-revalidateTag("meals:list", undefined);
+revalidateTag('meals:list', undefined);
 ```
 
 ---
@@ -296,8 +296,8 @@ revalidateTag("meals:list", undefined);
 ## Direct fetch
 
 ```ts
-await fetch("/api/graphql", {
-  method: "POST",
+await fetch('/api/graphql', {
+  method: 'POST',
   body: JSON.stringify({ query }),
 });
 ```
@@ -307,19 +307,19 @@ await fetch("/api/graphql", {
 ## Using apiFetchServer
 
 ```ts
-await apiFetchServer("/api/graphql", {
-  method: "POST",
+await apiFetchServer('/api/graphql', {
+  method: 'POST',
   body: { query },
   revalidate: 60,
-  tags: ["meals:list"],
+  tags: ['meals:list'],
 });
 ```
 
 Benefits:
 
-* Base URL handled automatically
-* Unified caching logic
-* Cleaner API calls
+- Base URL handled automatically
+- Unified caching logic
+- Cleaner API calls
 
 ---
 
@@ -330,7 +330,7 @@ Benefits:
 Fetch revalidation:
 
 ```ts
-revalidate: 60
+revalidate: 60;
 ```
 
 Page refetches every 60 seconds.
@@ -342,13 +342,13 @@ Page refetches every 60 seconds.
 Assign in fetch:
 
 ```ts
-tags: ["meals:list"]
+tags: ['meals:list'];
 ```
 
 Invalidate:
 
 ```ts
-revalidateTag("meals:list", undefined);
+revalidateTag('meals:list', undefined);
 ```
 
 ---
@@ -365,21 +365,20 @@ revalidateTag("meals:list", undefined);
 
 # 📐 Conventions & Best Practices
 
-* Keep schema as the main contract
-* UI never imports data directly
-* Prefer Server Components
-* Use tags for invalidation
-* Keep resolvers pure
+- Keep schema as the main contract
+- UI never imports data directly
+- Prefer Server Components
+- Use tags for invalidation
+- Keep resolvers pure
 
 ---
 
 # 🚀 Future Improvements
 
-* Add mutations
-* Add filtering & pagination
-* Add DB with Prisma
-* Add unit tests for resolvers
-* Add client-side GraphQL hooks
+- Add mutations
+- Add filtering & pagination
+- Add DB with Prisma
+- Add unit tests for resolvers
+- Add client-side GraphQL hooks
 
 ---
-
