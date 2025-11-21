@@ -7,6 +7,7 @@ import Button from '@/components/button/Button';
 export default function EmptyList({ search, category }: { search?: string; category?: string }) {
   const hasFilter = !!search || !!category;
 
+  const img = !hasFilter ? '/broken-dish.svg' : '/empty-dish.svg';
   const heading = hasFilter ? 'No matching meals found' : 'Meals unavailable';
   const content = hasFilter
     ? 'We couldn’t find any meals that match your search. Try adjusting your keywords or exploring another category.'
@@ -16,7 +17,7 @@ export default function EmptyList({ search, category }: { search?: string; categ
     <div className={styles.emptyList}>
       <h1>{heading}</h1>
       <p>{content}</p>
-      <Image src={'/empty.svg'} alt={'No more results for'} width={'300'} height={'300'}></Image>
+      <Image src={img} alt={'No more results for'} width={'300'} height={'300'}></Image>
 
       <ButtonGroup>
         {hasFilter ? (

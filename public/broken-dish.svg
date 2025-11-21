@@ -1,0 +1,136 @@
+<svg
+        width="240"
+        height="240"
+        viewBox="0 0 240 240"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="brokenDishTitle brokenDishDesc"
+>
+    <title id="brokenDishTitle">Broken plate illustration</title>
+    <desc id="brokenDishDesc">A broken plate with cracks and a subtle warning accent.</desc>
+
+    <!-- Background circle -->
+    <circle cx="120" cy="120" r="110" fill="#F5F5F7"/>
+
+    <!-- Table shadow -->
+    <ellipse cx="120" cy="176" rx="72" ry="16" fill="#E0E0E5"/>
+
+    <!-- Plate outer (broken into two main pieces) -->
+    <!-- Left piece -->
+    <path
+            d="
+      M120 48
+      A70 70 0 0 0 60 80
+      A70 70 0 0 0 54 153
+      L104 128
+      L120 115
+      Z
+    "
+            fill="#FFFFFF"
+            stroke="#D7D7DD"
+            stroke-width="4"
+    />
+
+    <!-- Right piece -->
+    <path
+            d="
+      M120 48
+      A70 70 0 0 1 180 80
+      A70 70 0 0 1 186 153
+      L136 128
+      L120 115
+      Z
+    "
+            fill="#FFFFFF"
+            stroke="#D7D7DD"
+            stroke-width="4"
+    />
+
+    <!-- Inner well fragments -->
+    <!-- Left inner -->
+    <path
+            d="
+      M120 68
+      A50 50 0 0 0 78 94
+      A50 50 0 0 0 76 138
+      L104 123
+      L120 115
+      Z
+    "
+            fill="#F9F9FB"
+            stroke="#E3E3EA"
+            stroke-width="2"
+    />
+
+    <!-- Right inner -->
+    <path
+            d="
+      M120 68
+      A50 50 0 0 1 162 94
+      A50 50 0 0 1 164 138
+      L136 123
+      L120 115
+      Z
+    "
+            fill="#F9F9FB"
+            stroke="#E3E3EA"
+            stroke-width="2"
+    />
+
+    <!-- Crack line in the middle -->
+    <path
+            d="
+      M120 60
+      L116 80
+      L122 96
+      L118 110
+      L121 124
+      L118 136
+    "
+            stroke="#D0D0D8"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+    />
+
+    <!-- Small shards / crumbs -->
+    <circle cx="94" cy="148" r="3" fill="#D0D0D8"/>
+    <circle cx="148" cy="150" r="2.5" fill="#D0D0D8"/>
+    <circle cx="132" cy="160" r="2" fill="#D0D0D8"/>
+
+    <!-- Fork (left) -->
+    <g transform="translate(60, 84)" stroke="#B8B8C3" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="52"/>
+        <line x1="-5" y1="0" x2="-5" y2="10"/>
+        <line x1="0" y1="0" x2="0" y2="10"/>
+        <line x1="5" y1="0" x2="5" y2="10"/>
+    </g>
+
+    <!-- Knife (right) -->
+    <g transform="translate(178, 88)" stroke="#B8B8C3" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="52"/>
+        <path d="M0 0 C -3 8 -3 16 0 22" fill="none"/>
+    </g>
+
+    <!-- Warning accent (small exclamation badge) -->
+    <g transform="translate(120, 178)">
+        <circle cx="0" cy="0" r="14" fill="#F97373"/>
+        <line
+                x1="0"
+                y1="-6"
+                x2="0"
+                y2="2"
+                stroke="#FFFFFF"
+                stroke-width="2.4"
+                stroke-linecap="round"
+        />
+        <circle cx="0" cy="6" r="1.7" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Decorative sparkles -->
+    <g fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round">
+        <path d="M42 70 L46 78 L54 82 L46 86 L42 94 L38 86 L30 82 L38 78 Z"/>
+        <path d="M188 52 L191 58 L197 61 L191 64 L188 70 L185 64 L179 61 L185 58 Z"/>
+    </g>
+</svg>
