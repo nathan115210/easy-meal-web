@@ -32,7 +32,7 @@ function SearchBar({
     const inputValue = e.target.value;
     setValue(inputValue);
     if (inputValue === '') {
-      router.push('/meals');
+      router.push(action);
     }
   };
   return (
