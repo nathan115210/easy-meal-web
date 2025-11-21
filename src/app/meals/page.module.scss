@@ -12,27 +12,12 @@
     --banner-padding: #{pxToRem(32)} #{pxToRem(16)};
   }
 
-  .bottomLine {
-    position: relative;
+  .emptyList{
     display: flex;
-    justify-content: center;
-    align-content: center;
-    gap: pxToRem(12);
-    color: $color-secondary-foreground;
-    padding: #{pxToRem(8)} 0;
-    font-size: pxToRem(14);
-    // horizontal gutters, aligned with grid items, col and row padding of 16px on each side
-    margin-inline: math.div(32px, 2);
-
-    &::before,
-    &::after {
-      content: '';
-      flex: 1 1 0;
-      width: 100%;
-      height: 0;
-      border-bottom: 2px dashed $color-secondary-foreground;
-      display: flex;
-      align-self: center;
-    }
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    width: 100%;
   }
 }

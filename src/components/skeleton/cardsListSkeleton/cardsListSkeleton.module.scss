@@ -1,0 +1,34 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.cardContainer {
+  --card-padding: #{pxToRem(14)};
+  --card-image--min-width: #{pxToRem(311)};
+
+  display: flex;
+  flex-direction: column;
+  padding: var(--card-padding);
+  gap: pxToRem(10);
+  background-color: $color-card;
+  border-radius: $radius-lg;
+  border: 1px solid $color-muted;
+  // Fill the column width instead of capping it
+  width: 100%;
+  max-width: none;
+
+  // Avoid odd flex-line packing; let children stack naturally
+  align-content: normal;
+
+  // If images can overflow, this helps contain them
+  overflow: hidden;
+
+  @include desktop {
+    --card-padding: #{pxToRem(20)};
+  }
+
+  .img {
+    min-width: pxToRem(281);
+  }
+}

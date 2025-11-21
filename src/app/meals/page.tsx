@@ -1,6 +1,8 @@
 import type { Meal } from '@/utils/types/meals';
 import type { Metadata } from 'next';
 import MealsInfiniteList from '@/app/meals/components/MealsInfiniteList';
+import styles from '@/app/meals/page.module.scss';
+import { Grid, Row } from '@/components/grid/Grid';
 
 export const metadata: Metadata = {
   title: 'All Meals | Meal Planner',
@@ -86,14 +88,11 @@ async function fetchInitialMeals(params: {
 export default async function AllMealsPage({ searchParams }: AllMealsPageProps) {
   const { q = '', category = '' } = (await searchParams) ?? {};
 
-  /*const { items, hasMore } = await fetchInitialMeals({
-    search: q,
-    category,
-  });*/
-
-  /* if (!items.length) {
-    return notFound();
-  }*/
-
-  return <MealsInfiniteList search={q} category={category} />;
+  return (
+    <Grid className={styles.mealsList}>
+      <Row>
+        <MealsInfiniteList search={q} category={category} />
+      </Row>
+    </Grid>
+  );
 }
