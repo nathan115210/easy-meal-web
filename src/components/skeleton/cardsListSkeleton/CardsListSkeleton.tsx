@@ -11,15 +11,6 @@ type Props = {
 export default function CardsListSkeleton({ count = 8 }: Props) {
   const items = Array.from({ length: Math.max(1, count) });
 
-  const cardStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 12,
-    padding: 12,
-    boxSizing: 'border-box',
-    width: '100%',
-  };
-
   return (
     <>
       {items.map((_, i) => (
