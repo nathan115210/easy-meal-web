@@ -3,7 +3,15 @@ import SearchBar from '@/components/searchBar/SearchBar';
 import Image from 'next/image';
 import Link from 'next/link';
 
-function TopBar() {
+function TopBar({
+  inputId = 'search-recipes',
+  ariaLabel = 'topbar-search-recipes',
+  placeholder = 'Search recipes, ingredients, or diets…',
+}: {
+  inputId?: string;
+  ariaLabel?: string;
+  placeholder?: string;
+}) {
   return (
     <div className={styles.topBar}>
       <Link href={'/'} className={styles.logo}>
@@ -11,10 +19,9 @@ function TopBar() {
       </Link>
       <SearchBar
         classname={styles.searchBar}
-        action={'/meals'}
-        inputId={'search-recipes'}
-        ariaLabel={'topbar-search-recipes'}
-        placeholder={'Search recipes, ingredients, or diets…'}
+        inputId={inputId}
+        ariaLabel={ariaLabel}
+        placeholder={placeholder}
       />
       <div className={styles.userBtn}></div>
     </div>

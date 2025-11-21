@@ -38,13 +38,6 @@ export const metadata: Metadata = {
 
 export type MealsListItem = Pick<Meal, 'title' | 'slug' | 'description' | 'image'>;
 
-export type MealsPageResult = {
-  meals: {
-    items: MealsListItem[];
-    total: number;
-    hasMore: boolean;
-  };
-};
 
 type AllMealsPageProps = {
   searchParams?: {
@@ -52,38 +45,6 @@ type AllMealsPageProps = {
     category?: string;
   };
 };
-
-/*
-async function fetchInitialMeals(params: {
-  search?: string;
-  category?: string;
-}): Promise<MealsPageResult['meals']> {
-  const gqlResponse = await apiFetchServer<GraphQLResponse<MealsPageResult>>('/api/graphql', {
-    method: 'POST',
-    body: {
-      query: ALL_MEALS_QUERY,
-      variables: {
-        search: params.search ?? null,
-        category: params.category ?? null,
-        limit: 8,
-        offset: 0,
-      },
-    },
-    tags: ['meals:list'],
-  });
-
-  if (gqlResponse.errors) {
-    console.error(gqlResponse.errors);
-    throw new Error('GraphQL error when fetching meals (initial page)');
-  }
-
-  if (!gqlResponse.data) {
-    throw new Error('Missing data from GraphQL (initial page)');
-  }
-
-  return gqlResponse.data.meals;
-}
-*/
 
 export default async function AllMealsPage({ searchParams }: AllMealsPageProps) {
   const { q = '', category = '' } = (await searchParams) ?? {};
