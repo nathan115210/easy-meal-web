@@ -17,14 +17,15 @@ function Card({ imageSet, description, heading, imageAlt, children }: CardProps)
       {imageSet && imageAlt && (
         <ImageWrapper className={styles.cardImg} imageSet={imageSet} alt={imageAlt} />
       )}
-      {/*heading*/}
-
-      {/*Content*/}
 
       {(description || children || heading) && (
         <div className={styles.content}>
+          {/*heading*/}
           {heading && <h3 className={styles.heading}>{heading}</h3>}
+
+          {/*Content*/}
           {description}
+
           {children}
         </div>
       )}

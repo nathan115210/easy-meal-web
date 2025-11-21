@@ -1,0 +1,51 @@
+<svg
+        width="240"
+        height="240"
+        viewBox="0 0 240 240"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-labelledby="emptyDishTitle emptyDishDesc"
+>
+    <title id="emptyDishTitle">Empty plate illustration</title>
+    <desc id="emptyDishDesc">An empty plate with subtle shadows and decorative sparkles.</desc>
+
+    <!-- Background circle -->
+    <circle cx="120" cy="120" r="110" fill="#F5F5F7"/>
+
+    <!-- Table shadow -->
+    <ellipse cx="120" cy="170" rx="70" ry="16" fill="#E0E0E5"/>
+
+    <!-- Plate outer -->
+    <circle cx="120" cy="115" r="70" fill="#FFFFFF"/>
+    <circle cx="120" cy="115" r="70" stroke="#D7D7DD" stroke-width="4" fill="none"/>
+
+    <!-- Plate inner well -->
+    <circle cx="120" cy="115" r="48" fill="#F9F9FB"/>
+    <circle cx="120" cy="115" r="48" stroke="#E3E3EA" stroke-width="2" fill="none"/>
+
+    <!-- Small crumbs / hints of "empty" -->
+    <circle cx="105" cy="102" r="2" fill="#D0D0D8"/>
+    <circle cx="132" cy="124" r="1.8" fill="#D0D0D8"/>
+    <circle cx="115" cy="133" r="1.5" fill="#D0D0D8"/>
+
+    <!-- Fork (left) -->
+    <g transform="translate(60, 72)" stroke="#B8B8C3" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="55"/>
+        <line x1="-5" y1="0" x2="-5" y2="10"/>
+        <line x1="0" y1="0" x2="0" y2="10"/>
+        <line x1="5" y1="0" x2="5" y2="10"/>
+    </g>
+
+    <!-- Knife (right) -->
+    <g transform="translate(180, 78)" stroke="#B8B8C3" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="0" x2="0" y2="55"/>
+        <path d="M0 0 C -3 8 -3 16 0 22" fill="none"/>
+    </g>
+
+    <!-- Sparkles / decorative accents -->
+    <g fill="none" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round">
+        <path d="M48 64 L52 72 L60 76 L52 80 L48 88 L44 80 L36 76 L44 72 Z"/>
+        <path d="M184 44 L187 50 L193 53 L187 56 L184 62 L181 56 L175 53 L181 50 Z"/>
+    </g>
+</svg>

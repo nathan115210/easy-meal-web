@@ -3,13 +3,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { MealsListItem } from '@/app/meals/page';
-import { Col, Grid, Row } from '@/components/grid/Grid';
+import { Col } from '@/components/grid/Grid';
 import styles from '../page.module.scss';
 import Card from '@/components/card/Card';
 import BaseLink from '@/components/baseLink/BaseLink';
 import { ALL_MEALS_QUERY } from '@/utils/lib/graphql/queries/meals-queries';
 import { graphqlFetchClient } from '@/utils/data-server/graphqlFetchClient';
 import Spinner from '@/components/spinner/Spinner';
+import BottomLine from '@/components/bottomLine/BottomLine';
+import EmptyList from '@/app/meals/components/EmptyList';
+import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
 
 type MealsInfiniteListProps = {
   search?: string;
@@ -130,7 +133,7 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
 
   // Initial load state
   if (status === 'pending') {
-    return <Spinner />;
+    return <CardsListSkeleton />;
   }
 
   // Error state
@@ -144,33 +147,33 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
   }
 
   // No data at all
-  if (!items.length) return null;
+  if (!items.length) return <EmptyList search={search} category={category} />;
+
+  const bottomLineText = !!search || !!category ? '🔍 That’s all we found' : '🍽️  All meals loaded';
 
   return (
-    <Grid className={styles.mealsList}>
-      <Row>
-        {items.map((meal, index) => (
-          <Col key={`${meal.slug}-${index}`} sm={12} md={6} lg={4} xl={3}>
-            <Card
-              heading={meal.title}
-              imageSet={{ mobileSrc: meal.image }}
-              imageAlt={meal.title}
-              description={meal.description}
-            >
-              <BaseLink href={`/${meal.slug}`} variant="primary" underline="hover">
-                Learn More
-              </BaseLink>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+    <>
+      {items.map((meal, index) => (
+        <Col key={`${meal.slug}-${index}`} sm={12} md={6} lg={4} xl={3}>
+          <Card
+            heading={meal.title}
+            imageSet={{ mobileSrc: meal.image }}
+            imageAlt={meal.title}
+            description={meal.description}
+          >
+            <BaseLink href={`/${meal.slug}`} variant="primary" underline="hover">
+              Learn More
+            </BaseLink>
+          </Card>
+        </Col>
+      ))}
 
       {/* Sentinel for infinite scroll */}
       <div ref={watcherRef} className={styles.sentinel} />
 
       {isFetchingNextPage && <Spinner />}
 
-      {!hasNextPage && items.length > 0 && <p className={styles.bottomLine}>No more meals</p>}
-    </Grid>
+      {!hasNextPage && items.length > 0 && <BottomLine label={bottomLineText} />}
+    </>
   );
 }
