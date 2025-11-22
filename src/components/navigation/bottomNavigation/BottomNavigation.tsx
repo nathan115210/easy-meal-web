@@ -25,7 +25,6 @@ function BottomNavigation({ items }: { items: NavigationItemProps[] }) {
             <li key={index}>
               <Link href={item.href} className={itemClass}>
                 <DynamicIcon name={item.icon} />
-                {item.label}
               </Link>
             </li>
           );

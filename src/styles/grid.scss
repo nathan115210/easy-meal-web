@@ -1,7 +1,5 @@
 @use 'sass:math';
-
-$grid-columns: 12;
-$gutter: 16px;
+@use '@/styles/tokens/spacing' as *;
 
 $breakpoints: (
   sm: 576px,
@@ -10,11 +8,10 @@ $breakpoints: (
   xl: 1200px,
 );
 
-// These will be LOCAL (scoped)
 .grid {
   width: 100%;
   margin-inline: auto;
-  padding-inline: $gutter;
+  padding-inline: $grid-gutter;
 }
 
 .row {
@@ -22,14 +19,14 @@ $breakpoints: (
   flex-wrap: wrap;
 
   // horizontal gutters
-  margin-inline: math.div($gutter, 2);
+  margin-inline: math.div($grid-gutter, 2);
 
   // vertical gutters
-  row-gap: $gutter; // or: gap: $gutter math.div($gutter, 2) if you prefer
+  row-gap: $grid-gutter;
 }
 
 [class*='col-'] {
-  padding-inline: math.div($gutter, 2);
+  padding-inline: math.div($grid-gutter, 2);
   box-sizing: border-box;
 
   // allow content to shrink and wrap nicely

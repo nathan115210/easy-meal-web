@@ -16,7 +16,7 @@
 
   // Fill the column width instead of capping it
   width: 100%;
-  max-width: none;
+  min-width: calc(100vw - $grid-gutter * 4);
 
   // Avoid odd flex-line packing; let children stack naturally
   align-content: normal;
@@ -35,8 +35,11 @@
     // use start so buttons don’t get pushed too far apart on tall cards
     justify-content: flex-start;
   }
-
+  @include tablet {
+    min-width: unset;
+  }
   @include desktop {
     --card-padding: #{pxToRem(20)};
+    min-width: unset;
   }
 }

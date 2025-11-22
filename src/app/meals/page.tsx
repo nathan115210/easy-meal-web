@@ -38,7 +38,6 @@ export const metadata: Metadata = {
 
 export type MealsListItem = Pick<Meal, 'title' | 'slug' | 'description' | 'image'>;
 
-
 type AllMealsPageProps = {
   searchParams?: {
     q?: string;
