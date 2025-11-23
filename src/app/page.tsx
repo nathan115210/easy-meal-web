@@ -6,12 +6,14 @@ import BaseLink from '@/components/baseLink/BaseLink';
 import { Col, Grid, Row } from '@/components/grid/Grid';
 import homePageContents from '@/utils/constants/homePageContents';
 import { ArrowRightIcon } from 'lucide-react';
+import TopBar from '@/components/topBar/TopBar';
 
 export default function Home() {
   const { heroBanner, featuresSection } = homePageContents;
 
   return (
     <div className={styles.homePage}>
+      <TopBar />
       <Banner
         heading={heroBanner.heading}
         description={heroBanner.description}

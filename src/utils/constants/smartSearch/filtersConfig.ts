@@ -1,0 +1,106 @@
+import type { SmartFilterConfigType } from '@/components/smartSearchOptions/SmartFilterSection';
+import smartSearchData from '@/utils/constants/smartSearch/smartSearchData';
+
+const {
+  cookTimes,
+  dietaryPreferences,
+  maxCalories,
+  difficultyLevels,
+  mealType,
+  specialTags,
+  occasionTags,
+  healthTags,
+} = smartSearchData;
+
+export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
+  {
+    key: 'existIngredients',
+    label: 'Ingredients You Have',
+    type: 'input',
+    placeholder: 'Add from pantry (e.g. eggs, milk)...',
+    ariaLabel: 'Enter ingredients you have',
+    clearable: true,
+    order: 1,
+  },
+  {
+    key: 'excludeIngredients',
+    label: 'Exclude Ingredients',
+    type: 'input',
+    placeholder: 'Type to exclude (e.g. peanuts)...',
+    ariaLabel: 'Enter ingredients to exclude',
+    clearable: true,
+    isExclude: true,
+    order: 2,
+  },
+
+  {
+    key: 'cookTime',
+    label: 'Cook Time',
+    type: 'single',
+    ariaLabel: 'Select cook time',
+    items: cookTimes,
+    order: 3,
+  },
+  {
+    key: 'dietaryPreferences',
+    label: 'Dietary Preference',
+    type: 'multiple',
+    ariaLabel: 'Select dietary preference',
+    items: dietaryPreferences,
+    clearable: true,
+    order: 4,
+  },
+  {
+    key: 'maxCalories',
+    label: 'Max Calories',
+    type: 'single',
+    ariaLabel: 'Select max calories',
+    items: maxCalories,
+    order: 5,
+  },
+  {
+    key: 'difficultyLevel',
+    label: 'Difficulty',
+    type: 'single',
+    ariaLabel: 'Select difficulty level',
+    items: difficultyLevels,
+    order: 6,
+  },
+  {
+    key: 'mealType',
+    label: 'Meal Type',
+    type: 'single',
+    ariaLabel: 'Select meal type',
+    items: mealType,
+
+    order: 7,
+  },
+
+  {
+    key: 'specialTags',
+    label: 'Special Tags',
+    type: 'multiple',
+    ariaLabel: 'Select special tags',
+    items: specialTags,
+    clearable: true,
+    order: 8,
+  },
+  {
+    key: 'occasionTags',
+    label: 'Occasion',
+    type: 'multiple',
+    ariaLabel: 'Select occasion',
+    items: occasionTags,
+    clearable: true,
+    order: 9,
+  },
+  {
+    key: 'healthTags',
+    label: 'Health & Nutrition',
+    type: 'multiple',
+    ariaLabel: 'Select health tags',
+    items: healthTags,
+    clearable: true,
+    order: 10,
+  },
+];

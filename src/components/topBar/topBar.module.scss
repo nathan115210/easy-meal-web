@@ -3,15 +3,23 @@
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/z-index' as *;
 
+:root {
+  --topbar-height: #{pxToRem(113)};
+  @include desktop {
+    --topbar-height: #{pxToRem(75)};
+  }
+}
+
 .topBar {
   display: flex;
   padding: pxToRem(16);
   position: sticky;
-  background-color: $color-background;
+  background-color: $color-background-secondary;
   top: 0;
   border-bottom: 2px solid $color-border;
   z-index: zIndex('max');
   max-height: 20rem;
+  height: var(--topbar-height);
 
   /* mobile-first: allow wrapping so we can create two rows */
   flex-wrap: wrap;

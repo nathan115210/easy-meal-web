@@ -1,0 +1,228 @@
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.chip {
+  /* Layout tokens */
+  --chip-padding-y: #{pxToRem(6)};
+  --chip-padding-x: #{pxToRem(16)};
+  --chip-font-size: #{pxToRem(14)};
+  --chip-radius: #{$radius-xl};
+  --chip-gap: #{pxToRem(8)};
+  --chip-border-width: 1px;
+
+  /* Base (muted) colors */
+  --chip-bg: #{$color-muted};
+  --chip-fg: #{$color-muted-foreground};
+  --chip-border-color: #{$color-muted};
+
+  /* Hover colors (fallbacks for muted) */
+  --chip-bg-hover: #{$color-background-secondary};
+  --chip-fg-hover: #{$color-foreground};
+  --chip-border-hover: #{$color-border};
+
+  /* Selected colors (fallbacks for muted) */
+  --chip-bg-selected: #{$color-primary};
+  --chip-fg-selected: #{$color-primary-foreground};
+  --chip-border-selected: #{$color-primary};
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--chip-gap);
+  padding: var(--chip-padding-y) var(--chip-padding-x);
+  font-size: var(--chip-font-size);
+  font-weight: 600;
+  line-height: 1.2;
+  border-radius: var(--chip-radius);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  border: var(--chip-border-width) solid var(--chip-border-color);
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+
+  /* Hover = use hover variables; variants override them if needed */
+  &:hover:not(.disabled):not(.labelType) {
+    background: var(--chip-bg-hover);
+    color: var(--chip-fg-hover);
+    border-color: var(--chip-border-hover);
+    cursor: pointer;
+  }
+}
+
+/* ───────────────────── Variants ───────────────────── */
+
+/* Muted (default / “neutral”) */
+.variantMuted {
+  --chip-bg: #{$color-muted};
+  --chip-fg: #{$color-muted-foreground};
+  --chip-border-color: #{$color-muted};
+
+  --chip-bg-hover: #{$color-background-secondary};
+  --chip-fg-hover: #{$color-foreground};
+  --chip-border-hover: #{$color-border};
+
+  --chip-bg-selected: #{$color-primary};
+  --chip-fg-selected: #{$color-primary-foreground};
+  --chip-border-selected: #{$color-primary};
+}
+
+/* Primary – strong emphasis */
+.variantPrimary {
+  /* base: light tint of primary */
+  --chip-bg: color-mix(in srgb, #{$color-primary} 8%, #{$color-background} 92%);
+  --chip-fg: #{$color-primary};
+  --chip-border-color: color-mix(in srgb, #{$color-primary} 35%, #{$color-border} 65%);
+
+  /* hover: stronger tint */
+  --chip-bg-hover: color-mix(in srgb, #{$color-primary} 16%, #{$color-background} 84%);
+  --chip-fg-hover: #{$color-primary};
+  --chip-border-hover: #{$color-primary};
+
+  /* selected: solid primary pill */
+  --chip-bg-selected: #{$color-primary};
+  --chip-fg-selected: #{$color-primary-foreground};
+  --chip-border-selected: #{$color-primary};
+}
+
+/* Secondary – soft neutral pill */
+.variantSecondary {
+  --chip-bg: #{$color-secondary};
+  --chip-fg: #{$color-secondary-foreground};
+  --chip-border-color: #{$color-secondary};
+
+  --chip-bg-hover: color-mix(in srgb, #{$color-secondary} 80%, #{$color-background} 20%);
+  --chip-fg-hover: #{$color-secondary-foreground};
+  --chip-border-hover: #{$color-secondary};
+
+  --chip-bg-selected: color-mix(in srgb, #{$color-secondary} 60%, #{$color-primary} 40%);
+  --chip-fg-selected: #{$color-primary-foreground};
+  --chip-border-selected: #{$color-primary};
+}
+
+/* Success – green contextual */
+.variantSuccess {
+  --chip-bg: color-mix(in srgb, #{$color-success} 10%, #{$color-background} 90%);
+  --chip-fg: #{$color-success};
+  --chip-border-color: color-mix(in srgb, #{$color-success} 40%, #{$color-border} 60%);
+
+  --chip-bg-hover: color-mix(in srgb, #{$color-success} 18%, #{$color-background} 82%);
+  --chip-fg-hover: #{$color-success};
+  --chip-border-hover: #{$color-success};
+
+  --chip-bg-selected: #{$color-success};
+  --chip-fg-selected: #{$color-success-foreground};
+  --chip-border-selected: #{$color-success};
+}
+
+/* Warning – orange contextual */
+.variantWarning {
+  --chip-bg: color-mix(in srgb, #{$color-warning} 10%, #{$color-background} 90%);
+  --chip-fg: #{$color-warning};
+  --chip-border-color: color-mix(in srgb, #{$color-warning} 40%, #{$color-border} 60%);
+
+  --chip-bg-hover: color-mix(in srgb, #{$color-warning} 18%, #{$color-background} 82%);
+  --chip-fg-hover: #{$color-warning};
+  --chip-border-hover: #{$color-warning};
+
+  --chip-bg-selected: #{$color-warning};
+  --chip-fg-selected: #{$color-warning-foreground};
+  --chip-border-selected: #{$color-warning};
+}
+
+/* Destructive – error / danger */
+.variantDestructive {
+  --chip-bg: #{$color-destructive};
+  --chip-fg: #{$color-destructive-foreground};
+  --chip-border-color: color-mix(in srgb, #{$color-destructive} 40%, #{$color-border} 60%);
+
+  --chip-bg-hover: color-mix(in srgb, #{$color-destructive} 18%, #{$color-background} 82%);
+  --chip-fg-hover: #{$color-destructive};
+  --chip-border-hover: #{$color-destructive};
+
+  --chip-bg-selected: #{$color-destructive};
+  --chip-fg-selected: #{$color-destructive-foreground};
+  --chip-border-selected: #{$color-destructive};
+}
+
+/* Accent – visually similar to primary in your tokens */
+.variantAccent {
+  --chip-bg: color-mix(in srgb, #{$color-accent} 8%, #{$color-background} 92%);
+  --chip-fg: #{$color-accent};
+  --chip-border-color: color-mix(in srgb, #{$color-accent} 35%, #{$color-border} 65%);
+
+  --chip-bg-hover: color-mix(in srgb, #{$color-accent} 16%, #{$color-background} 84%);
+  --chip-fg-hover: #{$color-accent};
+  --chip-border-hover: #{$color-accent};
+
+  --chip-bg-selected: #{$color-accent};
+  --chip-fg-selected: #{$color-accent-foreground};
+  --chip-border-selected: #{$color-accent};
+}
+
+/* ───────────────────── States ───────────────────── */
+
+.selected {
+  background: var(--chip-bg-selected);
+  color: var(--chip-fg-selected);
+  border-color: var(--chip-border-selected);
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.labelType {
+  cursor: default;
+}
+
+.sm {
+  --chip-padding-y: #{pxToRem(2)};
+  --chip-padding-x: #{pxToRem(8)};
+  --chip-font-size: #{pxToRem(12)};
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Delete / clear button inside chip */
+.deleteBtn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: pxToRem(14);
+  line-height: 1;
+  padding: pxToRem(2);
+  border-radius: 50%;
+
+  &:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+/* Group container */
+.chipsGroup {
+  --chip-gap: #{pxToRem(6)};
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chip-gap);
+}

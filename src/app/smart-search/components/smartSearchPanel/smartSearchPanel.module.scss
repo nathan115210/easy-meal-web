@@ -1,0 +1,24 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/colors' as *;
+
+.smartSearchPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; /* allow children to shrink for proper scrolling */
+  gap: pxToRem(12);
+  background: $color-background-secondary;
+
+  padding: 0 pxToRem(8) 0 pxToRem(8);
+
+  .heading {
+    margin: 0;
+    font-size: pxToRem(18);
+  }
+
+  .desc {
+    margin-top: pxToRem(4);
+    color: $color-muted-foreground;
+    font-size: pxToRem(14);
+  }
+}
