@@ -4,6 +4,7 @@ const navigationData: { main: NavigationItemProps[]; shortcuts: NavigationItemPr
   main: [
     { label: 'Home', href: '/', icon: 'home' },
     { label: 'Browse Meals', href: '/meals', icon: 'utensils' },
+    { label: 'Smart Search', href: '/smart-search', icon: 'scan-search' },
     { label: 'Profile', href: '/profile', icon: 'user' },
     { label: 'Settings', href: '/settings', icon: 'settings' },
   ],

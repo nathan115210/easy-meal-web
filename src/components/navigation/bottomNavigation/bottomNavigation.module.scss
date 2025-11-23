@@ -6,6 +6,7 @@
 :root {
   --bottom-nav-item-gap: #{pxToRem(6)};
   --bottom-nav-list-padding: #{pxToRem(8)} #{pxToRem(16)};
+  --bottom-nav-height: #{pxToRem(64)};
 }
 
 .bottomNavigationWrapper {
@@ -19,6 +20,7 @@
   .bottomNavigation {
     height: 100%;
     width: 100%;
+    border-top: 2px solid $color-border;
 
     &-list {
       display: flex;

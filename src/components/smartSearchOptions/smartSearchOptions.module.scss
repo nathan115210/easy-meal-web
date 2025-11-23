@@ -1,0 +1,163 @@
+@use '@/styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+/* Root container */
+.smartSearchOptions {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100%;
+  gap: pxToRem(16);
+
+  /* ──────────────────────────────
+     Shared layout vars
+     ────────────────────────────── */
+  --input-height: #{pxToRem(44)};
+  --input-pad-y: #{pxToRem(10)};
+  --input-pad-x: #{pxToRem(12)};
+  --inline-gap: #{pxToRem(6)};
+  --transition-base: 0.15s ease;
+
+  /* ──────────────────────────────
+     Field container block
+     ────────────────────────────── */
+  .optionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(6);
+
+    .labelRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .fieldLabel {
+        font-size: pxToRem(12);
+        font-weight: 700;
+      }
+    }
+  }
+
+  /* ──────────────────────────────
+     Inline input + Add button row
+     ────────────────────────────── */
+  .inlineInputRow {
+    display: flex;
+    align-items: center;
+    min-height: var(--input-height);
+
+    /* Input */
+    .optionInput {
+      flex: 1 1 auto;
+      padding: var(--input-pad-y) var(--input-pad-x);
+      background: $color-input;
+      color: $color-foreground;
+      font: inherit;
+
+      border: 2px solid $color-border;
+      border-right: none;
+      border-radius: $radius-md;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      outline: none;
+      transition:
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+
+      &::placeholder {
+        color: rgba($color-muted-foreground, 0.6);
+      }
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+
+    /* Add / Exclude button */
+    .addInlineBtn {
+      all: unset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: pxToRem(26);
+      padding: var(--input-pad-y) var(--input-pad-x);
+
+      background: $color-primary;
+      color: $color-primary-foreground;
+
+      border: 2px solid $color-primary;
+      border-left: none;
+      border-radius: $radius-md;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      font-size: pxToRem(18);
+      line-height: 1;
+      cursor: pointer;
+
+      transition:
+        background var(--transition-base),
+        color var(--transition-base);
+
+      &:disabled {
+        background: $color-secondary;
+        border-color: $color-secondary;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background: $color-secondary;
+        color: $color-secondary-foreground;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $color-accent;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  /* ──────────────────────────────
+     Sticky footer actions
+     ────────────────────────────── */
+  .actions {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    gap: pxToRem(8);
+
+    margin-top: auto;
+    padding: pxToRem(12) 0;
+    background: $color-background-secondary;
+    border-top: 4px solid $color-warning;
+    z-index: zIndex('max');
+
+    .actionBtn {
+      @include desktop {
+        width: 100%;
+      }
+    }
+  }
+
+  /* Exclude label special layout */
+  .excludeLabelRow {
+    display: flex;
+    align-items: center;
+    gap: pxToRem(4);
+  }
+
+  /* Chip sizing override (global) */
+  :global(.chip) {
+    --chip-pad-y: #{pxToRem(2)};
+    --chip-pad-x: #{pxToRem(8)};
+    --chip-font-size: #{pxToRem(16)};
+  }
+}

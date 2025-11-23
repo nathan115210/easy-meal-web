@@ -4,26 +4,42 @@ import type { ButtonHTMLAttributes, MouseEvent } from 'react';
 import { forwardRef, memo } from 'react';
 import styles from './button.module.scss';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'primary-outline' | 'secondary-outline';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'primary-outline'
+  | 'secondary-outline'
+  | 'ghost'
+  | 'destructive';
+
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'compact';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
+  size?: ButtonSize;
   className?: string;
   loading?: boolean; // shows spinner, sets aria-busy
   loadingText?: string; // SR-only text while loading
   pressed?: boolean; // toggle state for aria-pressed
   iconOnly?: boolean; // requires aria-label when true
+  fullWidth?: boolean; // stretch to 100% width
 };
+
+function cx(...classes: (string | false | null | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
     variant = 'primary',
+    size = 'md',
     className,
     type = 'button',
     loading = false,
     loadingText = 'Loading…',
     pressed,
     iconOnly = false,
+    fullWidth = false,
     onClick,
     disabled = false,
     children,
@@ -43,15 +59,18 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   }
 
   const variantClass = styles[`button--${variant}`] ?? styles['button--primary'];
-  const cls = [
+  const sizeClass =
+    size === 'md' ? undefined : (styles[`button--${size}` as keyof typeof styles] ?? undefined);
+
+  const cls = cx(
     styles.button,
     variantClass,
-    iconOnly ? styles['button--icon-only'] : '',
-    isLoading ? styles['is-loading'] : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+    sizeClass,
+    iconOnly && styles['button--icon-only'],
+    isLoading && styles['is-loading'],
+    fullWidth && 'w-100', // optional: or create a .button--fullWidth in SCSS
+    className
+  );
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (isDisabled || isLoading) {
@@ -75,6 +94,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       {...rest}
     >
       {isLoading && <span className={styles.spinner} aria-hidden="true" />}
+
+      {/* If icon-only + loading, we can hide children visually */}
       {!(isLoading && iconOnly) && <span aria-hidden={isLoading || undefined}>{children}</span>}
 
       {isLoading && (

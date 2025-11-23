@@ -1,0 +1,41 @@
+/* scss */
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+
+.smartSearch {
+  --smart-search-container-height: calc(100vh - var(--topbar-height) - var(--bottom-nav-height, 0));
+
+  display: flex;
+  flex-direction: column;
+  height: var(--smart-search-container-height);
+  min-height: var(--smart-search-container-height);
+
+  .searchPanel {
+    --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+    border-right: 2px solid $color-border;
+    height: 100%;
+    overflow: auto;
+    flex-basis: 35%;
+    background-color: $color-background-secondary;
+    padding: var(--smart-search-panel-padding);
+  }
+
+  .searchResults {
+    height: 100%;
+    overflow: auto;
+    flex-basis: 65%;
+  }
+
+  /* responsive behavior (use project mixins) */
+  @include tablet {
+    flex-direction: row;
+  }
+
+  @include desktop {
+    flex-direction: row;
+    --smart-search-container-height: calc(100vh - var(--topbar-height));
+    --smart-search-panel-padding: pxToRem(32);
+  }
+}
