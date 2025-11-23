@@ -1,8 +1,5 @@
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/colors' as *;
-@use '@styles/tokens/border-radius' as *;
-@use '@styles/tokens/mixins' as *;
-@use '@styles/tokens/z-index' as *;
 
 .smartSearchPanel {
   display: flex;

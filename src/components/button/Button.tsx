@@ -22,7 +22,6 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loadingText?: string; // SR-only text while loading
   pressed?: boolean; // toggle state for aria-pressed
   iconOnly?: boolean; // requires aria-label when true
-  fullWidth?: boolean; // stretch to 100% width
 };
 
 function cx(...classes: (string | false | null | undefined)[]) {
@@ -39,7 +38,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     loadingText = 'Loading…',
     pressed,
     iconOnly = false,
-    fullWidth = false,
     onClick,
     disabled = false,
     children,
@@ -68,7 +66,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     sizeClass,
     iconOnly && styles['button--icon-only'],
     isLoading && styles['is-loading'],
-    fullWidth && 'w-100', // optional: or create a .button--fullWidth in SCSS
     className
   );
 
