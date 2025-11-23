@@ -20,6 +20,7 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     placeholder: 'Add from pantry (e.g. eggs, milk)...',
     ariaLabel: 'Enter ingredients you have',
     clearable: true,
+    order: 1,
   },
   {
     key: 'excludeIngredients',
@@ -29,13 +30,16 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     ariaLabel: 'Enter ingredients to exclude',
     clearable: true,
     isExclude: true,
+    order: 2,
   },
+
   {
     key: 'cookTime',
     label: 'Cook Time',
     type: 'single',
     ariaLabel: 'Select cook time',
     items: cookTimes,
+    order: 3,
   },
   {
     key: 'dietaryPreferences',
@@ -44,6 +48,7 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     ariaLabel: 'Select dietary preference',
     items: dietaryPreferences,
     clearable: true,
+    order: 4,
   },
   {
     key: 'maxCalories',
@@ -51,6 +56,7 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     type: 'single',
     ariaLabel: 'Select max calories',
     items: maxCalories,
+    order: 5,
   },
   {
     key: 'difficultyLevel',
@@ -58,33 +64,43 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     type: 'single',
     ariaLabel: 'Select difficulty level',
     items: difficultyLevels,
+    order: 6,
   },
   {
     key: 'mealType',
     label: 'Meal Type',
     type: 'single',
-    ariaLabel: 'Select Meal Type',
+    ariaLabel: 'Select meal type',
     items: mealType,
+
+    order: 7,
   },
+
   {
     key: 'specialTags',
     label: 'Special Tags',
     type: 'multiple',
-    ariaLabel: 'Select Special tags',
+    ariaLabel: 'Select special tags',
     items: specialTags,
+    clearable: true,
+    order: 8,
   },
   {
     key: 'occasionTags',
     label: 'Occasion',
     type: 'multiple',
-    ariaLabel: 'Select Occasion',
+    ariaLabel: 'Select occasion',
     items: occasionTags,
+    clearable: true,
+    order: 9,
   },
   {
     key: 'healthTags',
-    label: 'Special Tags',
+    label: 'Health & Nutrition',
     type: 'multiple',
-    ariaLabel: 'Select Special tags',
+    ariaLabel: 'Select health tags',
     items: healthTags,
+    clearable: true,
+    order: 10,
   },
 ];

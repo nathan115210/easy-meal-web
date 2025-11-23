@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './smartSearchOptions.module.scss';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
@@ -39,9 +39,18 @@ function SmartSearchOptions({
     onReset?.();
   };
 
+  const sortedConfig = useMemo(() => {
+    return [...filterConfig].sort((a, b) => {
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+
+      return orderA - orderB;
+    });
+  }, [filterConfig]);
+
   return (
     <div className={styles.smartSearchOptions}>
-      {filterConfig.map((config) => (
+      {sortedConfig.map((config) => (
         <SmartFilterSection
           key={config.key}
           config={config}

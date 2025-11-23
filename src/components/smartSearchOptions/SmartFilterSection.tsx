@@ -23,6 +23,11 @@ export type SmartSearchOptionItem = {
 type FilterBaseConfig = {
   key: SmartSearchFilterKey;
   label: string;
+  /**
+   * Controls vertical ordering in the Smart Search panel.
+   * Lower numbers appear first. Optional; defaults to 999 if omitted.
+   */
+  order?: number;
 };
 
 type InputFilterConfig = FilterBaseConfig & {
