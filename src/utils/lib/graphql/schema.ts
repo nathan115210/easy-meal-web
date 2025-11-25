@@ -1,11 +1,21 @@
+// src/utils/lib/graphql/schema.ts
 import { getMealBySlug, getMealsData } from '@/utils/data-server/getMealsData';
 import { createSchema } from 'graphql-yoga';
-import type { Meal } from '@/utils/types/meals';
+import type { Meal, MealType } from '@/utils/types/meals';
 
 const typeDefs = /* GraphQL */ `
+  enum MealType {
+    breakfast
+    lunch
+    dinner
+    snacks
+    dessert
+    drinks
+  }
+
   input MealsFilterInput {
     search: String
-    category: String
+    mealType: [MealType!]
   }
 
   input PaginationInput {
@@ -30,9 +40,7 @@ const typeDefs = /* GraphQL */ `
     description: String!
     ingredients: [MealIngredient!]!
     instructions: [MealInstruction!]!
-    creator: String!
-    creator_email: String!
-    category: [String!]
+    mealType: [MealType!]!
   }
 
   type MealsPage {
@@ -52,7 +60,7 @@ const typeDefs = /* GraphQL */ `
 
 type MealsFilterInput = {
   search?: string | null;
-  category?: string | null;
+  mealType?: MealType[] | null;
   tags?: string[] | null; //TODO: add tags filtering later, tags can be ['vegan', 'gluten-free', etc.]
 };
 
@@ -80,8 +88,13 @@ const resolvers = {
         filtered = filtered.filter((meal) => meal.title.toLowerCase().includes(q));
       }
 
-      if (filter?.category) {
-        filtered = filtered.filter((meal) => meal.category?.includes(filter.category!));
+      if (filter?.mealType && filter.mealType.length > 0) {
+        // keep meals that have at least one mealType in the filter list
+        filtered = filtered.filter(
+          (meal) =>
+            Array.isArray(meal.mealType) &&
+            meal.mealType.some((mt) => filter.mealType!.includes(mt as MealType))
+        );
       }
 
       // Pagination (always 8 per page by default)
@@ -107,6 +120,3 @@ export const schema = createSchema({
   typeDefs,
   resolvers,
 });
-
-// Optional: Types for strongly-typed resolvers later (we can expand if you want)
-//export type GraphQLContext = {};

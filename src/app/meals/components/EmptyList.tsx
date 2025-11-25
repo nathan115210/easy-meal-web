@@ -4,8 +4,8 @@ import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
 import BaseLink from '@/components/baseLink/BaseLink';
 import Button from '@/components/button/Button';
 
-export default function EmptyList({ search, category }: { search?: string; category?: string }) {
-  const hasFilter = !!search || !!category;
+export default function EmptyList({ search }: { search?: string }) {
+  const hasFilter = !!search;
 
   const img = !hasFilter ? '/broken-dish.svg' : '/empty-dish.svg';
   const heading = hasFilter ? 'No matching meals found' : 'Meals unavailable';

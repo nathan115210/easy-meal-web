@@ -13,11 +13,7 @@ import Spinner from '@/components/spinner/Spinner';
 import BottomLine from '@/components/bottomLine/BottomLine';
 import EmptyList from '@/app/meals/components/EmptyList';
 import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
-
-type MealsInfiniteListProps = {
-  search?: string;
-  category?: string;
-};
+import { MealType } from '@/utils/types/meals';
 
 type MealsPagePayload = {
   meals: {
@@ -36,19 +32,19 @@ const PAGE_SIZE = 8;
 async function fetchMealsData({
   pageParam,
   search,
-  category,
+  mealType,
   signal,
 }: {
   pageParam?: number;
   search?: string;
-  category?: string;
+  mealType?: MealType[];
   signal: AbortSignal;
 }): Promise<MealsPagePayload['meals']> {
   const data = await graphqlFetchClient<MealsPagePayload>(
     ALL_MEALS_QUERY,
     {
       search,
-      category,
+      mealType,
       limit: PAGE_SIZE,
       offset: pageParam ?? 0,
     },
@@ -58,27 +54,29 @@ async function fetchMealsData({
   return data.meals;
 }
 
-export default function MealsInfiniteList({ search, category }: MealsInfiniteListProps) {
+export default function MealsInfiniteList({
+  search,
+  mealType,
+}: {
+  search?: string;
+  mealType?: MealType[];
+}) {
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
-    queryKey: ['meals', search, category],
-
+    queryKey: ['meals', search, mealType],
     queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
         search,
-        category,
+        mealType,
         signal,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage.hasMore) return undefined;
-
-      // Next offset = number of items already loaded across all pages
       return allPages.reduce((sum, page) => sum + page.items.length, 0);
     },
-
     //control "stale-while-revalidate" behavior
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: false, // don't refetch when tab gains focus
@@ -105,7 +103,9 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
 
   // IntersectionObserver to trigger fetching the next page
   useEffect(() => {
-    if (!hasNextPage || !watcherRef.current) return;
+    if (!hasNextPage || !watcherRef.current) {
+      return;
+    }
 
     const node = watcherRef.current;
 
@@ -116,11 +116,7 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
           void fetchNextPage();
         }
       },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 1.0,
-      }
+      { root: null, rootMargin: '0px', threshold: 1.0 }
     );
 
     observer.observe(node);
@@ -146,10 +142,9 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
     );
   }
 
-  // No data at all
-  if (!items.length) return <EmptyList search={search} category={category} />;
+  if (!items.length) return <EmptyList search={search} />;
 
-  const bottomLineText = !!search || !!category ? '🔍 That’s all we found' : '🍽️  All meals loaded';
+  const bottomLineText = !!search ? '🔍 That’s all we found' : '🍽️  All meals loaded';
 
   return (
     <>
@@ -168,7 +163,6 @@ export default function MealsInfiniteList({ search, category }: MealsInfiniteLis
         </Col>
       ))}
 
-      {/* Sentinel for infinite scroll */}
       <div ref={watcherRef} className={styles.sentinel} />
 
       {isFetchingNextPage && <Spinner />}
