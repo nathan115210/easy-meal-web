@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { MealsListItem } from '@/app/meals/page';
 import { Col } from '@/components/grid/Grid';
-import styles from '../page.module.scss';
 import Card from '@/components/card/Card';
 import BaseLink from '@/components/baseLink/BaseLink';
 import { ALL_MEALS_QUERY } from '@/utils/lib/graphql/queries/meals-queries';
@@ -135,9 +134,9 @@ export default function MealsInfiniteList({
   // Error state
   if (status === 'error') {
     return (
-      <div className={styles.loader}>
+      <div>
         <span>Something went wrong.</span>
-        <pre className={styles.error}>{(error as Error).message}</pre>
+        <pre>{(error as Error).message}</pre>
       </div>
     );
   }
@@ -163,7 +162,7 @@ export default function MealsInfiniteList({
         </Col>
       ))}
 
-      <div ref={watcherRef} className={styles.sentinel} />
+      <div ref={watcherRef} />
 
       {isFetchingNextPage && <Spinner />}
 

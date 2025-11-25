@@ -1,7 +1,7 @@
 import { Meal, MealType } from '@/utils/types/meals';
-import MealsInfiniteList from '@/app/meals/components/MealsInfiniteList';
 import styles from '@/app/meals/page.module.scss';
 import { Grid, Row } from '@/components/grid/Grid';
+import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
 
 export type MealsListItem = Pick<Meal, 'title' | 'slug' | 'description' | 'image'>;
 
