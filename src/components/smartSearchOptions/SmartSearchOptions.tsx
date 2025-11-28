@@ -4,8 +4,15 @@ import React, { useMemo } from 'react';
 import styles from './smartSearchOptions.module.scss';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
-import SmartFilterSection, { SmartFilterConfigType, SmartSearchFilterKey, } from './SmartFilterSection';
-import { ClearOptionFn, DEFAULT_SMART_OPTIONS, UpdateOptionFn, } from '@/utils/hooks/useSmartSearchOptions';
+import SmartFilterSection, {
+  SmartFilterConfigType,
+  SmartSearchFilterKey,
+} from './SmartFilterSection';
+import {
+  ClearOptionFn,
+  DEFAULT_SMART_OPTIONS,
+  UpdateOptionFn,
+} from '@/utils/hooks/useSmartSearchOptions';
 import { SmartSearchOptionsState } from '@/utils/types/meals';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
