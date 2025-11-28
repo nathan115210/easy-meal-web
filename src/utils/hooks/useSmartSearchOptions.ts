@@ -9,7 +9,7 @@ export interface SmartSearchOptionsState {
   dietaryPreferences: string[];
   maxCalories: string;
   difficultyLevel: string;
-  mealType: string;
+  mealType: string[];
   specialTags: string[];
   occasionTags: string[];
   healthTags: string[];
@@ -22,7 +22,7 @@ export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   maxCalories: 'any',
   difficultyLevel: 'any',
   dietaryPreferences: [],
-  mealType: 'any',
+  mealType: [],
   specialTags: [],
   occasionTags: [],
   healthTags: [],
@@ -81,6 +81,7 @@ export function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
   // 3) Persist to localStorage when options change (client only)
   useEffect(() => {
     if (!storageKey) return;
+
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(options));
     } catch {

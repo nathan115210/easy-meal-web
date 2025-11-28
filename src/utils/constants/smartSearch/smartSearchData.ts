@@ -29,7 +29,6 @@ const smartSearchData = {
     { label: 'Hard', value: 'hard' },
   ],
   mealType: [
-    { label: 'Any', value: 'any' },
     { label: 'Breakfast', value: 'breakfast' },
     { label: 'Lunch', value: 'lunch' },
     { label: 'Dinner', value: 'dinner' },

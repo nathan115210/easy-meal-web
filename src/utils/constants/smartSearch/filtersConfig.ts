@@ -68,11 +68,10 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
   },
   {
     key: 'mealType',
-    label: 'Meal Type',
-    type: 'single',
-    ariaLabel: 'Select meal type',
+    label: 'Meal Types',
+    type: 'multiple',
+    ariaLabel: 'Select meal types',
     items: mealType,
-
     order: 7,
   },
 
