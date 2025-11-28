@@ -4,16 +4,10 @@ import React, { useMemo } from 'react';
 import styles from './smartSearchOptions.module.scss';
 import Button from '@/components/button/Button';
 import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
-import SmartFilterSection, {
-  SmartFilterConfigType,
-  SmartSearchFilterKey,
-} from './SmartFilterSection';
-import {
-  ClearOptionFn,
-  DEFAULT_SMART_OPTIONS,
-  UpdateOptionFn,
-} from '@/utils/hooks/useSmartSearchOptions';
+import SmartFilterSection, { SmartFilterConfigType, SmartSearchFilterKey, } from './SmartFilterSection';
+import { ClearOptionFn, DEFAULT_SMART_OPTIONS, UpdateOptionFn, } from '@/utils/hooks/useSmartSearchOptions';
 import { SmartSearchOptionsState } from '@/utils/types/meals';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type SmartSearchOptionsProps = {
   options: SmartSearchOptionsState;
@@ -21,7 +15,7 @@ export type SmartSearchOptionsProps = {
   clearOption: ClearOptionFn;
   filterConfig: SmartFilterConfigType[];
   onSearch?: (options: SmartSearchOptionsState) => void;
-  onReset?: () => void;
+  onResetSearchOptions?: () => void;
 };
 
 function SmartSearchOptions({
@@ -30,14 +24,30 @@ function SmartSearchOptions({
   clearOption,
   filterConfig,
   onSearch,
-  onReset,
+  onResetSearchOptions,
 }: SmartSearchOptionsProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const handleSearch = () => {
     onSearch?.(options);
   };
 
   const handleReset = () => {
-    onReset?.();
+    // reset all options to default
+    onResetSearchOptions?.();
+
+    // reset page url to initial state
+    //Compute current full URL and target URL
+    const currentQuery = searchParams?.toString() ?? '';
+    const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname;
+    if (currentUrl === pathname) {
+      // Already at the "reset" URL, no need to push/replace
+      //avoid a navigation if the URL wouldn’t change
+      return;
+    }
+    router.push(pathname, { scroll: false });
   };
 
   const sortedConfig = useMemo(() => {

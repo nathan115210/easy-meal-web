@@ -2,13 +2,16 @@ import styles from './page.module.scss';
 import SmartSearchPanel from '@/app/smart-search/components/smartSearchPanel/SmartSearchPanel';
 import { Grid, Row } from '@/components/grid/Grid';
 import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
-import { CookTimeValue } from '@/utils/types/meals';
+import { SmartSearchOptionsState } from '@/utils/types/meals';
 
-function SmartSearchPage() {
-  //1. initial recipes list should be the "most trending" recipes / popular recipes
-  // 2. if user enters a search term, filter the recipes list based on the search term
-  // 3. if user applies filters (e.g., dietary preferences, cooking time), update the recipes list
-  // 4. display the filtered recipes list to the user
+type SmartSearchPageProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function SmartSearchPage({ searchParams }: SmartSearchPageProps) {
+  const params = (await searchParams) ?? {};
+  const resolvedSearchParams = normalizeSearchParams(params ?? {});
+  const { cookTime, mealType } = resolvedSearchParams;
 
   return (
     <div className={styles.smartSearch}>
@@ -18,7 +21,11 @@ function SmartSearchPage() {
       <div className={styles.searchResults}>
         <Grid className={styles.mealsList}>
           <Row>
-            <MealsInfiniteList cookTime={CookTimeValue.Any} />
+            <MealsInfiniteList
+              gridLayout={{ sm: 12, md: 6, lg: 6, xl: 4 }}
+              cookTime={cookTime}
+              mealType={mealType}
+            />
           </Row>
         </Grid>
       </div>
@@ -26,4 +33,42 @@ function SmartSearchPage() {
   );
 }
 
-export default SmartSearchPage;
+// helpers
+
+function toArray(value?: string | string[]): string[] {
+  if (!value) return [];
+  if (Array.isArray(value))
+    return value.flatMap((v) =>
+      v
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+    );
+  return value
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function toString(value?: string | string[]): string {
+  if (!value) return '';
+  if (Array.isArray(value)) return value[0] ?? '';
+  return value;
+}
+
+function normalizeSearchParams(params: {
+  [key: string]: string | string[] | undefined;
+}): SmartSearchOptionsState {
+  return {
+    existIngredients: toArray(params.existIngredients),
+    excludeIngredients: toArray(params.excludeIngredients),
+    cookTime: toString(params.cookTime) as SmartSearchOptionsState['cookTime'],
+    dietaryPreferences: toArray(params.dietaryPreferences),
+    maxCalories: toString(params.maxCalories),
+    difficultyLevel: toString(params.difficultyLevel),
+    mealType: toArray(params.mealType) as SmartSearchOptionsState['mealType'],
+    specialTags: toArray(params.specialTags),
+    occasionTags: toArray(params.occasionTags),
+    healthTags: toArray(params.healthTags),
+  };
+}

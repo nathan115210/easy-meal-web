@@ -6,9 +6,7 @@ import { useSmartSearchNavigation } from '@/utils/hooks/useSmartSearchNavigation
 import useSmartSearchOptions from '@/utils/hooks/useSmartSearchOptions';
 
 export default function SmartSearchOptionsContainer() {
-  const { options, updateOption, clearOption, resetAll } = useSmartSearchOptions({
-    storageKey: 'easy-meal:smart-search',
-  });
+  const { options, updateOption, clearOption, resetAll } = useSmartSearchOptions();
 
   const { handleSearch } = useSmartSearchNavigation();
 
@@ -19,7 +17,7 @@ export default function SmartSearchOptionsContainer() {
       clearOption={clearOption}
       filterConfig={SMART_SEARCH_FILTER_CONFIG}
       onSearch={handleSearch}
-      onReset={resetAll}
+      onResetSearchOptions={resetAll}
     />
   );
 }

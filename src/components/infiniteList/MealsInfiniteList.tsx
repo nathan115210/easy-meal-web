@@ -11,21 +11,25 @@ import EmptyList from '@/app/meals/components/EmptyList';
 import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
 import { CookTimeValue, MealType } from '@/utils/types/meals';
 import fetchMealsData from '@/utils/data-server/fetchMealsData';
+import { usePathname } from 'next/navigation';
 
 export default function MealsInfiniteList({
   search,
   mealType,
   cookTime,
-  clearHref,
+
   gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
 }: {
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
-  clearHref?: string;
+
   gridLayout?: ColProps;
 }) {
+  const pagePath = usePathname();
+
   const watcherRef = useRef<HTMLDivElement | null>(null);
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
     queryKey: ['meals', search, mealType, cookTime],
     queryFn: ({ pageParam = 0, signal }) =>
@@ -106,7 +110,10 @@ export default function MealsInfiniteList({
     );
   }
 
-  if (!items.length) return <EmptyList search={search} mealType={mealType} cookTime={cookTime} />;
+  if (!items.length)
+    return (
+      <EmptyList search={search} mealType={mealType} cookTime={cookTime} clearHref={pagePath} />
+    );
 
   const bottomLineText = !!search ? '🔍 That’s all we found' : '🍽️  All meals loaded';
 
@@ -132,11 +139,7 @@ export default function MealsInfiniteList({
       {isFetchingNextPage && <Spinner />}
 
       {!hasNextPage && items.length > 0 && (
-        <BottomLine
-          label={bottomLineText}
-          clearHref={clearHref}
-          showClear={!!search || !!mealType || !!cookTime}
-        />
+        <BottomLine label={bottomLineText} showClear={!!search || !!mealType || !!cookTime} />
       )}
     </>
   );
