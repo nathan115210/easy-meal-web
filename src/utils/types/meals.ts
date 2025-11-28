@@ -1,4 +1,3 @@
-
 export interface Meal {
   title: string;
   slug: string;
@@ -6,7 +5,7 @@ export interface Meal {
   description: string;
   ingredients: MealIngredient[];
   instructions: MealInstruction[];
-  total_cook_time?: number; // in minutes
+  cookTime?: number; // in minutes
   difficulty?: DifficultyLevel;
   nutrition?: NutritionInfo; //TODO: figuring out how to calculate
   mealType?: MealType[];
@@ -40,3 +39,24 @@ export enum MealType {
   Drinks = 'drinks',
 }
 
+export enum CookTimeValue {
+  Any = 'any',
+  Under15 = 'under_15',
+  Under30 = 'under_30',
+  Under45 = 'under_45',
+  Under60 = 'under_60',
+  Over60 = 'over_60',
+}
+
+export interface SmartSearchOptionsState {
+  existIngredients: string[];
+  excludeIngredients: string[];
+  cookTime: string;
+  dietaryPreferences: string[];
+  maxCalories: string;
+  difficultyLevel: string;
+  mealType: string[];
+  specialTags: string[];
+  occasionTags: string[];
+  healthTags: string[];
+}

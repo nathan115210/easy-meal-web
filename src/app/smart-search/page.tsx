@@ -1,5 +1,8 @@
 import styles from './page.module.scss';
 import SmartSearchPanel from '@/app/smart-search/components/smartSearchPanel/SmartSearchPanel';
+import { Grid, Row } from '@/components/grid/Grid';
+import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
+import { CookTimeValue } from '@/utils/types/meals';
 
 function SmartSearchPage() {
   //1. initial recipes list should be the "most trending" recipes / popular recipes
@@ -12,7 +15,13 @@ function SmartSearchPage() {
       <div className={styles.searchPanel}>
         <SmartSearchPanel />
       </div>
-      <div className={styles.searchResults}>searchResults panel</div>
+      <div className={styles.searchResults}>
+        <Grid className={styles.mealsList}>
+          <Row>
+            <MealsInfiniteList cookTime={CookTimeValue.Any} />
+          </Row>
+        </Grid>
+      </div>
     </div>
   );
 }

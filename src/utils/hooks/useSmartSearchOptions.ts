@@ -1,19 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import type { SmartSearchOptionsState } from '@/utils/types/meals';
 
-export interface SmartSearchOptionsState {
-  existIngredients: string[];
-  excludeIngredients: string[];
-  cookTime: string;
-  dietaryPreferences: string[];
-  maxCalories: string;
-  difficultyLevel: string;
-  mealType: string[];
-  specialTags: string[];
-  occasionTags: string[];
-  healthTags: string[];
-}
 
 export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   existIngredients: [],

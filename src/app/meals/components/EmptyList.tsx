@@ -3,14 +3,25 @@ import styles from '../page.module.scss';
 import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
 import BaseLink from '@/components/baseLink/BaseLink';
 import Button from '@/components/button/Button';
+import { CookTimeValue, MealType } from '@/utils/types/meals';
 
-export default function EmptyList({ search }: { search?: string }) {
-  const hasFilter = !!search;
+export default function EmptyList({
+  search,
+  mealType,
+  cookTime,
+  clearHref = '/meals',
+}: {
+  search?: string;
+  mealType?: MealType[];
+  cookTime?: CookTimeValue;
+  clearHref?: string;
+}) {
+  const hasFilter = !!search || !!mealType || !!cookTime;
 
   const img = !hasFilter ? '/broken-dish.svg' : '/empty-dish.svg';
   const heading = hasFilter ? 'No matching meals found' : 'Meals unavailable';
   const content = hasFilter
-    ? 'We couldn’t find any meals that match your search. Try adjusting your keywords or exploring another category.'
+    ? 'We couldn’t find any meals that match your search. Try adjusting your searching options.'
     : 'Unable to load meals at the moment.';
 
   return (
@@ -21,7 +32,7 @@ export default function EmptyList({ search }: { search?: string }) {
 
       <ButtonGroup>
         {hasFilter ? (
-          <BaseLink href={'/meals'} variant={'primary'}>
+          <BaseLink href={clearHref} variant={'primary'}>
             Clear search
           </BaseLink>
         ) : (

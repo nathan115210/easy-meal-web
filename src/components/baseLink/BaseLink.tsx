@@ -31,7 +31,6 @@ const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function LinkComponent
     variant = 'link',
     underline = 'hover',
     className,
-
     pressed,
     iconOnly = false,
     disabled = false,

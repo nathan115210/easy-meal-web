@@ -37,7 +37,7 @@ Row.displayName = 'Row';
 //
 // Col
 //
-interface ColProps extends HTMLAttributes<HTMLDivElement> {
+export interface ColProps extends HTMLAttributes<HTMLDivElement> {
   sm: number;
   md?: number;
   lg?: number;

@@ -1,3 +1,5 @@
+import { CookTimeValue } from '@/utils/types/meals';
+
 /**
  * Convert a string to Title Case.
  * - Trims extra whitespace
@@ -18,3 +20,69 @@ export function titleCase(str: string): string {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }
+
+export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined) {
+  switch (cookTime) {
+    case 'under_15':
+      return { cookTimeMin: null, cookTimeMax: 15 };
+    case 'under_30':
+      return { cookTimeMin: null, cookTimeMax: 30 };
+    case 'under_45':
+      return { cookTimeMin: null, cookTimeMax: 45 };
+    case 'under_60':
+      return { cookTimeMin: null, cookTimeMax: 60 };
+    case 'over_60':
+      return { cookTimeMin: 61, cookTimeMax: null }; // or 60 depending on how you define it
+    case 'any':
+    default:
+      return { cookTimeMin: null, cookTimeMax: null };
+  }
+}
+
+/**
+ * Set a query param when the provided value is present and not the literal "any".
+ * Otherwise delete the param from the URLSearchParams.
+ *
+ * Notes:
+ * - The check for `"any"` is exact (case-sensitive) to match existing code behavior.
+ * - Empty strings and `null`/`undefined` remove the param.
+ *
+ * Example:
+ *  setOrDelete(params, 'cookTime', 'under_30') // sets cookTime=under_30
+ *  setOrDelete(params, 'cookTime', 'any')     // deletes cookTime
+ */
+export const setOrDelete = (
+  params: URLSearchParams,
+  key: string,
+  value: string | null | undefined
+) => {
+  if (value && value !== 'any' && value !== '') {
+    params.set(key, value);
+  } else {
+    params.delete(key);
+  }
+};
+
+/**
+ * Sync an array field into URLSearchParams as repeated params.
+ * - Removes any existing occurrences of `key` first.
+ * - Appends each non-empty, non-`"any"` item.
+ *
+ * Notes:
+ * - The `"any"` check is exact (case-sensitive) to preserve current logic.
+ * - Items are appended as separate params: `?mealType=dinner&mealType=snacks`.
+ *
+ * Example:
+ *  syncArray(params, 'mealType', ['dinner', 'snacks'])
+ *  // results in mealType=dinner & mealType=snacks
+ */
+export const syncArray = (params: URLSearchParams, key: string, values: string[]) => {
+  params.delete(key);
+  if (values.length > 0) {
+    values.forEach((v) => {
+      if (v && v !== 'any') {
+        params.append(key, v);
+      }
+    });
+  }
+};

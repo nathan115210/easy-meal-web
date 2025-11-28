@@ -18,7 +18,7 @@ export default async function AllMealsPage({ searchParams }: AllMealsPageProps) 
   return (
     <Grid className={styles.mealsList}>
       <Row>
-        <MealsInfiniteList search={search} mealType={mealType} />
+        <MealsInfiniteList search={search} clearHref={'/meals'} />
       </Row>
     </Grid>
   );

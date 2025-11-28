@@ -16,6 +16,8 @@ const typeDefs = /* GraphQL */ `
   input MealsFilterInput {
     search: String
     mealType: [MealType!]
+    cookTimeMin: Int
+    cookTimeMax: Int
   }
 
   input PaginationInput {
@@ -41,6 +43,7 @@ const typeDefs = /* GraphQL */ `
     ingredients: [MealIngredient!]!
     instructions: [MealInstruction!]!
     mealType: [MealType!]!
+    cookTime: Int
   }
 
   type MealsPage {
@@ -61,7 +64,9 @@ const typeDefs = /* GraphQL */ `
 type MealsFilterInput = {
   search?: string | null;
   mealType?: MealType[] | null;
-  tags?: string[] | null; //TODO: add tags filtering later, tags can be ['vegan', 'gluten-free', etc.]
+  cookTimeMin?: number | null;
+  cookTimeMax?: number | null;
+  //tags?: string[] | null; //TODO: add tags filtering later, tags can be ['vegan', 'gluten-free', etc.]
 };
 
 type PaginationInput = {
@@ -79,22 +84,37 @@ const resolvers = {
       const allMeals = await getMealsData();
 
       const { filter, pagination } = args;
+      const { search, mealType, cookTimeMin, cookTimeMax } = filter || {};
 
       // Filtering
       let filtered: Meal[] = allMeals;
 
-      if (filter?.search) {
-        const q = filter.search.toLowerCase();
+      // With search keywords
+      if (search) {
+        const q = search.toLowerCase();
         filtered = filtered.filter((meal) => meal.title.toLowerCase().includes(q));
       }
 
-      if (filter?.mealType && filter.mealType.length > 0) {
+      // With mealTypes
+      if (mealType && mealType.length > 0) {
         // keep meals that have at least one mealType in the filter list
         filtered = filtered.filter(
           (meal) =>
             Array.isArray(meal.mealType) &&
-            meal.mealType.some((mt) => filter.mealType!.includes(mt as MealType))
+            meal.mealType.some((mt) => mealType!.includes(mt as MealType))
         );
+      }
+
+      // With cookTime
+
+      if (!!cookTimeMin || !!cookTimeMax) {
+        filtered = filtered.filter((meal) => {
+          if (meal.cookTime === undefined) return false;
+          if (!!cookTimeMin && meal.cookTime < cookTimeMin) return false;
+          if (!!cookTimeMax && meal.cookTime > cookTimeMax) return false;
+
+          return true;
+        });
       }
 
       // Pagination (always 8 per page by default)
@@ -116,7 +136,7 @@ const resolvers = {
     },
   },
 };
-export const schema = createSchema({
+export const mealsSchema = createSchema({
   typeDefs,
   resolvers,
 });
