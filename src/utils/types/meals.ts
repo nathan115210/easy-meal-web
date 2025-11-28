@@ -51,11 +51,11 @@ export enum CookTimeValue {
 export interface SmartSearchOptionsState {
   existIngredients: string[];
   excludeIngredients: string[];
-  cookTime: string;
+  cookTime: CookTimeValue;
   dietaryPreferences: string[];
   maxCalories: string;
   difficultyLevel: string;
-  mealType: string[];
+  mealType: MealType[];
   specialTags: string[];
   occasionTags: string[];
   healthTags: string[];

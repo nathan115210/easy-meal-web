@@ -13,12 +13,12 @@ export type AllMealsPageProps = {
 };
 
 export default async function AllMealsPage({ searchParams }: AllMealsPageProps) {
-  const { search = '', mealType = undefined } = (await searchParams) ?? {};
+  const { search = '' } = (await searchParams) ?? {};
 
   return (
     <Grid className={styles.mealsList}>
       <Row>
-        <MealsInfiniteList search={search} clearHref={'/meals'} />
+        <MealsInfiniteList search={search} resetAction={'link'} />
       </Row>
     </Grid>
   );

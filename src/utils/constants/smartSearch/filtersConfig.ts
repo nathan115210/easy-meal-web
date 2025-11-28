@@ -72,6 +72,7 @@ export const SMART_SEARCH_FILTER_CONFIG: SmartFilterConfigType[] = [
     type: 'multiple',
     ariaLabel: 'Select meal types',
     items: mealType,
+    clearable: true,
     order: 7,
   },
 

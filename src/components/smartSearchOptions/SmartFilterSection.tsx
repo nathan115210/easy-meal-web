@@ -4,14 +4,10 @@ import React, { memo } from 'react';
 import styles from './smartSearchOptions.module.scss';
 import ChipsGroup from '@/components/chip/ChipsGroup';
 import Chip from '@/components/chip/Chip';
-
-import type {
-  ClearOptionFn,
-  SmartSearchOptionsState,
-  UpdateOptionFn,
-} from '@/utils/hooks/useSmartSearchOptions';
+import type { ClearOptionFn, UpdateOptionFn } from '@/utils/hooks/useSmartSearchOptions';
 import OptionInput from '@/components/smartSearchOptions/OptionInput';
 import FieldLabelRow from '@/components/smartSearchOptions/FieldLabelRow';
+import { SmartSearchOptionsState } from '@/utils/types/meals';
 
 export type SmartSearchFilterKey = keyof SmartSearchOptionsState;
 

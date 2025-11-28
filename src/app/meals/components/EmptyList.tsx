@@ -9,12 +9,14 @@ export default function EmptyList({
   search,
   mealType,
   cookTime,
-  clearHref = '/meals',
+  clearHref,
+  clearAction,
 }: {
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
   clearHref?: string;
+  clearAction?: () => void;
 }) {
   const hasFilter = !!search || !!mealType || !!cookTime;
 
@@ -24,22 +26,38 @@ export default function EmptyList({
     ? 'We couldn’t find any meals that match your search. Try adjusting your searching options.'
     : 'Unable to load meals at the moment.';
 
+  const renderClearActionEle = () => {
+    if (hasFilter) {
+      if (!!clearHref) {
+        return (
+          <BaseLink href={clearHref} variant={'primary'}>
+            Clear search
+          </BaseLink>
+        );
+      }
+      if (!!clearAction) {
+        return (
+          <Button variant={'primary'} onClick={clearAction}>
+            Clear search
+          </Button>
+        );
+      }
+    } else {
+      return (
+        <Button variant={'primary'} onClick={() => window.location.reload()}>
+          Refresh
+        </Button>
+      );
+    }
+  };
+
   return (
     <div className={styles.emptyList}>
       <h1>{heading}</h1>
       <p>{content}</p>
       <Image src={img} alt={'No more results for'} width={'300'} height={'300'}></Image>
-
       <ButtonGroup>
-        {hasFilter ? (
-          <BaseLink href={clearHref} variant={'primary'}>
-            Clear search
-          </BaseLink>
-        ) : (
-          <Button variant={'primary'} onClick={() => window.location.reload()}>
-            Refresh
-          </Button>
-        )}
+        {renderClearActionEle()}
 
         <BaseLink href={'/'} variant={'secondary'}>
           Back to home

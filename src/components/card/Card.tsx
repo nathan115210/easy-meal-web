@@ -10,7 +10,7 @@ export interface CardProps {
   children?: ReactNode;
 }
 
-//TODO: render the cookTime 
+//TODO: render the cookTime
 function Card({ imageSet, description, heading, imageAlt, children }: CardProps) {
   return (
     <div className={styles.card}>

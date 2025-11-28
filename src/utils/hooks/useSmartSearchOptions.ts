@@ -1,13 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import type { SmartSearchOptionsState } from '@/utils/types/meals';
-
+import { CookTimeValue, SmartSearchOptionsState } from '@/utils/types/meals';
 
 export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   existIngredients: [],
   excludeIngredients: [],
-  cookTime: 'any',
+  cookTime: CookTimeValue.Any,
   maxCalories: 'any',
   difficultyLevel: 'any',
   dietaryPreferences: [],
@@ -36,7 +35,7 @@ export type UpdateOptionFn = <K extends keyof SmartSearchOptionsState>(
 
 export type ClearOptionFn = (key: keyof SmartSearchOptionsState) => void;
 
-export function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
+export default function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
   const { storageKey, initial } = args;
 
   // 1) Always start from the same deterministic default
