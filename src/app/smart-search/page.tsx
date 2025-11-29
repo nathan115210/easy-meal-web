@@ -71,7 +71,7 @@ function normalizeSearchParams(params: {
   [key: string]: string | string[] | undefined;
 }): SmartSearchOptionsState {
   const cookTimeRaw = toString(params.cookTime);
-  const cookTime: CookTimeValue = isCookTimeValue(cookTimeRaw) ? cookTimeRaw : CookTimeValue.Any; // or your DEFAULT_SMART_OPTIONS.cookTime
+  const cookTime: CookTimeValue = isCookTimeValue(cookTimeRaw) ? cookTimeRaw : CookTimeValue.Any;
 
   const mealTypeRaw = toArray(params.mealType);
   const mealType: MealType[] = mealTypeRaw.filter(isMealType);
