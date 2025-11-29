@@ -21,19 +21,22 @@ export function titleCase(str: string): string {
     .join(' ');
 }
 
-export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined) {
+export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined): {
+  cookTimeMin: number | null;
+  cookTimeMax: number | null;
+} {
   switch (cookTime) {
-    case 'under_15':
+    case CookTimeValue.Under15:
       return { cookTimeMin: null, cookTimeMax: 15 };
-    case 'under_30':
+    case CookTimeValue.Under30:
       return { cookTimeMin: null, cookTimeMax: 30 };
-    case 'under_45':
+    case CookTimeValue.Under45:
       return { cookTimeMin: null, cookTimeMax: 45 };
-    case 'under_60':
+    case CookTimeValue.Under60:
       return { cookTimeMin: null, cookTimeMax: 60 };
-    case 'over_60':
+    case CookTimeValue.Over60:
       return { cookTimeMin: 61, cookTimeMax: null }; // or 60 depending on how you define it
-    case 'any':
+    case CookTimeValue.Any:
     default:
       return { cookTimeMin: null, cookTimeMax: null };
   }

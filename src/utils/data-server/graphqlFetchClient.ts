@@ -24,7 +24,7 @@ export async function graphqlFetchClient<T>(
   }
 
   if (!json.data) {
-    throw new Error(`${apiEndPoint} -  GraphQL client: data is null`);
+    throw new Error(`${apiEndPoint} - GraphQL client: data is null`);
   }
 
   return json.data;

@@ -42,16 +42,16 @@ function SmartSearchOptions({
   };
 
   const handleReset = () => {
-    // reset all options to default
+    // Reset all options to default
     onResetSearchOptions?.();
 
-    // reset page url to initial state
-    //Compute current full URL and target URL
+    // Reset page url to initial state
+    // Compute current full URL and target URL
     const currentQuery = searchParams?.toString() ?? '';
     const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname;
     if (currentUrl === pathname) {
       // Already at the "reset" URL, no need to push/replace
-      //avoid a navigation if the URL wouldn’t change
+      // Avoid a navigation if the URL wouldn’t change
       return;
     }
     router.push(pathname, { scroll: false });

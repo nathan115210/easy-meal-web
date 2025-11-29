@@ -2,7 +2,7 @@ import styles from './page.module.scss';
 import SmartSearchPanel from '@/app/smart-search/components/smartSearchPanel/SmartSearchPanel';
 import { Grid, Row } from '@/components/grid/Grid';
 import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
-import { SmartSearchOptionsState } from '@/utils/types/meals';
+import { CookTimeValue, MealType, SmartSearchOptionsState } from '@/utils/types/meals';
 
 type SmartSearchPageProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -10,7 +10,7 @@ type SmartSearchPageProps = {
 
 export default async function SmartSearchPage({ searchParams }: SmartSearchPageProps) {
   const params = (await searchParams) ?? {};
-  const resolvedSearchParams = normalizeSearchParams(params ?? {});
+  const resolvedSearchParams = normalizeSearchParams(params);
   const { cookTime, mealType } = resolvedSearchParams;
 
   return (
@@ -33,7 +33,7 @@ export default async function SmartSearchPage({ searchParams }: SmartSearchPageP
   );
 }
 
-// helpers
+// Helpers
 
 function toArray(value?: string | string[]): string[] {
   if (!value) return [];
@@ -56,17 +56,34 @@ function toString(value?: string | string[]): string {
   return value;
 }
 
+const COOK_TIME_VALUES = new Set<string>(Object.values(CookTimeValue));
+const MEAL_TYPE_VALUES = new Set<string>(Object.values(MealType));
+
+function isCookTimeValue(value: string): value is CookTimeValue {
+  return COOK_TIME_VALUES.has(value);
+}
+
+function isMealType(value: string): value is MealType {
+  return MEAL_TYPE_VALUES.has(value);
+}
+
 function normalizeSearchParams(params: {
   [key: string]: string | string[] | undefined;
 }): SmartSearchOptionsState {
+  const cookTimeRaw = toString(params.cookTime);
+  const cookTime: CookTimeValue = isCookTimeValue(cookTimeRaw) ? cookTimeRaw : CookTimeValue.Any; // or your DEFAULT_SMART_OPTIONS.cookTime
+
+  const mealTypeRaw = toArray(params.mealType);
+  const mealType: MealType[] = mealTypeRaw.filter(isMealType);
+
   return {
     existIngredients: toArray(params.existIngredients),
     excludeIngredients: toArray(params.excludeIngredients),
-    cookTime: toString(params.cookTime) as SmartSearchOptionsState['cookTime'],
+    cookTime,
     dietaryPreferences: toArray(params.dietaryPreferences),
     maxCalories: toString(params.maxCalories),
     difficultyLevel: toString(params.difficultyLevel),
-    mealType: toArray(params.mealType) as SmartSearchOptionsState['mealType'],
+    mealType,
     specialTags: toArray(params.specialTags),
     occasionTags: toArray(params.occasionTags),
     healthTags: toArray(params.healthTags),

@@ -58,8 +58,6 @@ export default function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = 
 
   // Persist to localStorage when options change (client only)
   useEffect(() => {
-    if (!storageKey) return;
-
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(options));
     } catch {
