@@ -8,6 +8,7 @@ export type GraphQLResponse<T> = {
 };
 
 async function fetchGraphQL<T>(
+  apiEndPoint: string,
   query: string,
   options: {
     tags?: string[];
@@ -20,7 +21,7 @@ async function fetchGraphQL<T>(
     ...(options.variables ? { variables: options.variables } : {}),
   };
 
-  const res = await apiFetchServer<GraphQLResponse<T>>('/api/graphql', {
+  const res = await apiFetchServer<GraphQLResponse<T>>(apiEndPoint, {
     method: 'POST',
     body: payload,
     tags: options.tags,

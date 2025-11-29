@@ -132,6 +132,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
             <X size={16} />
           </button>
         )}
+        {type === 'multi-select' && selected && <X size={16} />}
       </div>
     );
   }

@@ -33,6 +33,7 @@ export const mealsData: Meal[] = [
       },
       { image: '/placeholder.png', text: 'Serve: Add top bun and serve hot.' },
     ],
+    cookTime: 25,
   },
   {
     title: 'Spicy Curry',
@@ -55,6 +56,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Serve with rice.' },
     ],
     mealType: [MealType.Dinner],
+    cookTime: 35,
   },
   {
     title: 'Homemade Dumplings',
@@ -74,6 +76,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Serve hot.' },
     ],
     mealType: [MealType.Snacks],
+    cookTime: 32,
   },
   {
     title: 'Classic Mac n Cheese',
@@ -95,6 +98,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Melt in cheese, combine pasta.' },
       { image: '/placeholder.png', text: 'Top with breadcrumbs, bake briefly.' },
     ],
+    cookTime: 30,
   },
   {
     title: 'Authentic Pizza',
@@ -114,6 +118,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Bake at high heat.' },
       { image: '/placeholder.png', text: 'Garnish with basil.' },
     ],
+    cookTime: 40,
   },
   {
     title: 'Wiener Schnitzel',
@@ -134,6 +139,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Fry until golden.' },
       { image: '/placeholder.png', text: 'Serve with lemon.' },
     ],
+    cookTime: 25,
   },
   {
     title: 'Fresh Tomato Salad',
@@ -154,8 +160,8 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Dress with oil & vinegar.' },
       { image: '/placeholder.png', text: 'Toss and serve.' },
     ],
+    cookTime: 10,
   },
-  // Additional meal objects
   {
     title: 'Creamy Mushroom Risotto',
     slug: 'creamy-mushroom-risotto',
@@ -180,6 +186,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Add broth gradually, stirring until absorbed.' },
       { image: '/placeholder.png', text: 'Finish with butter & parmesan; season.' },
     ],
+    cookTime: 35,
   },
   {
     title: 'Lemon Herb Grilled Chicken',
@@ -202,6 +209,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Grill each side until cooked.' },
       { image: '/placeholder.png', text: 'Rest briefly; slice & serve.' },
     ],
+    cookTime: 30,
   },
   {
     title: 'Vegan Quinoa Bowl',
@@ -225,6 +233,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Whisk tahini, lemon, salt, pepper.' },
       { image: '/placeholder.png', text: 'Assemble bowl; drizzle sauce.' },
     ],
+    cookTime: 35,
   },
   {
     title: 'Garlic Butter Shrimp Pasta',
@@ -248,6 +257,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Add shrimp; cook until pink.' },
       { image: '/placeholder.png', text: 'Toss with pasta, parsley, lemon.' },
     ],
+    cookTime: 25,
   },
   {
     title: 'Tofu Stir Fry',
@@ -271,6 +281,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Stir fry veggies with aromatics.' },
       { image: '/placeholder.png', text: 'Add tofu & sauce; toss to coat.' },
     ],
+    cookTime: 20,
   },
   {
     title: 'Greek Salad Bowl',
@@ -295,6 +306,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Whisk dressing ingredients.' },
       { image: '/placeholder.png', text: 'Toss salad; top with feta.' },
     ],
+    cookTime: 15,
   },
   {
     title: 'Beef Chili',
@@ -319,6 +331,7 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Add beans & tomato; simmer.' },
       { image: '/placeholder.png', text: 'Adjust seasoning; serve warm.' },
     ],
+    cookTime: 62,
   },
   {
     title: 'Overnight Oats',
@@ -339,5 +352,6 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Stir; refrigerate overnight.' },
       { image: '/placeholder.png', text: 'Top with fruit & serve.' },
     ],
+    cookTime: 5, // active time; overnight is passive
   },
 ];

@@ -8,11 +8,13 @@ import SmartFilterSection, {
   SmartFilterConfigType,
   SmartSearchFilterKey,
 } from './SmartFilterSection';
-import type {
+import {
   ClearOptionFn,
-  SmartSearchOptionsState,
+  DEFAULT_SMART_OPTIONS,
   UpdateOptionFn,
 } from '@/utils/hooks/useSmartSearchOptions';
+import { SmartSearchOptionsState } from '@/utils/types/meals';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type SmartSearchOptionsProps = {
   options: SmartSearchOptionsState;
@@ -20,7 +22,7 @@ export type SmartSearchOptionsProps = {
   clearOption: ClearOptionFn;
   filterConfig: SmartFilterConfigType[];
   onSearch?: (options: SmartSearchOptionsState) => void;
-  onReset?: () => void;
+  onResetSearchOptions?: () => void;
 };
 
 function SmartSearchOptions({
@@ -29,14 +31,30 @@ function SmartSearchOptions({
   clearOption,
   filterConfig,
   onSearch,
-  onReset,
+  onResetSearchOptions,
 }: SmartSearchOptionsProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const handleSearch = () => {
     onSearch?.(options);
   };
 
   const handleReset = () => {
-    onReset?.();
+    // Reset all options to default
+    onResetSearchOptions?.();
+
+    // Reset page url to initial state
+    // Compute current full URL and target URL
+    const currentQuery = searchParams?.toString() ?? '';
+    const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname;
+    if (currentUrl === pathname) {
+      // Already at the "reset" URL, no need to push/replace
+      // Avoid a navigation if the URL wouldn’t change
+      return;
+    }
+    router.push(pathname, { scroll: false });
   };
 
   const sortedConfig = useMemo(() => {
@@ -48,11 +66,19 @@ function SmartSearchOptions({
     });
   }, [filterConfig]);
 
+  const isDefaultOptions = useMemo(() => {
+    try {
+      return JSON.stringify(options) === JSON.stringify(DEFAULT_SMART_OPTIONS);
+    } catch {
+      return false;
+    }
+  }, [options]);
+
   return (
     <div className={styles.smartSearchOptions}>
-      {sortedConfig.map((config) => (
+      {sortedConfig.map((config, index) => (
         <SmartFilterSection
-          key={config.key}
+          key={`smart-filter-section-${index}`}
           config={config}
           value={options[config.key as SmartSearchFilterKey]}
           updateOption={updateOption}
@@ -61,10 +87,20 @@ function SmartSearchOptions({
       ))}
 
       <ButtonGroup className={styles.actions} align="between">
-        <Button className={styles.actionBtn} variant="primary" onClick={handleSearch}>
+        <Button
+          className={styles.actionBtn}
+          variant="primary"
+          onClick={handleSearch}
+          disabled={isDefaultOptions}
+        >
           Search
         </Button>
-        <Button className={styles.actionBtn} variant="secondary-outline" onClick={handleReset}>
+        <Button
+          className={styles.actionBtn}
+          variant="secondary-outline"
+          onClick={handleReset}
+          disabled={isDefaultOptions}
+        >
           Reset
         </Button>
       </ButtonGroup>

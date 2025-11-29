@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './searchBar.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type SearchBarProps = {
@@ -16,7 +16,7 @@ export type SearchBarProps = {
 function SearchBar({
   inputId,
   inputName = 'search',
-  defaultValue = '',
+  defaultValue = '', //TODO: considering to add the ability to set default value from props, and let default value has light grey color. just like BiliBili
   ariaLabel,
   classname = '',
   placeholder = 'Search...',
@@ -24,15 +24,25 @@ function SearchBar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [value, setValue] = useState<string>(
     defaultValue !== '' ? defaultValue : (searchParams?.get(inputName) ?? '')
   );
+
+  useEffect(() => {
+    const param = searchParams?.get(inputName) ?? defaultValue;
+
+    // Only update if it actually changed
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setValue((prev) => (prev === param ? prev : param));
+  }, [searchParams, inputName, defaultValue]);
 
   const action = getComputedSearchAction(pathname);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setValue(inputValue);
+
     if (inputValue === '') {
       router.push(action);
     }
@@ -78,7 +88,7 @@ function getComputedSearchAction(pagePath: string): string {
 
   const routes: Array<[RegExp, string]> = [
     [/^\/meals(?:\/|$)/, '/meals'],
-    /*//TODO: define the page path for search bar here when the actual page created*/
+    // TODO: add more mappings as you add pages
     [/^\/restaurants(?:\/|$)/, '/restaurants'],
     [/^\/products?(?:\/|$)/, '/products'],
     [/^\/search(?:\/|$)/, '/search'],
@@ -96,7 +106,7 @@ function getComputedSearchAction(pagePath: string): string {
     if (re.test(p)) return action;
   }
 
-  const m = p.match(/^\/([^\/]+)/);
+  const m = p.match(/^\/([^/]+)/);
   if (m) return `/${m[1]}`;
 
   return defaultAction;

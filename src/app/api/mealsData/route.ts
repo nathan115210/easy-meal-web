@@ -1,9 +1,9 @@
 import { createYoga } from 'graphql-yoga';
-import { schema } from '@/utils/lib/graphql/schema';
+import { mealsSchema } from '@/utils/lib/graphql/schemas/meals-schema';
 
 const yogaApp = createYoga({
-  schema,
-  graphqlEndpoint: '/api/graphql',
+  schema: mealsSchema,
+  graphqlEndpoint: '/api/mealsData',
   graphiql: process.env.NODE_ENV !== 'production',
 });
 

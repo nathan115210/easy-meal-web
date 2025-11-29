@@ -15,6 +15,11 @@
   // horizontal gutters, aligned with grid items, col and row padding of 16px on each side
   margin-inline: math.div(32px, 2);
 
+  .bottomLineContent {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem(4);
+  }
   &::before,
   &::after {
     content: '';

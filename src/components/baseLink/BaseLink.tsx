@@ -1,6 +1,6 @@
 'use client';
 
-import { AnchorHTMLAttributes, forwardRef, MouseEvent, useState } from 'react';
+import { ComponentPropsWithoutRef, forwardRef, MouseEvent, useState } from 'react';
 import buttonStyles from '../button/button.module.scss';
 import linkStyles from './baseLink.module.scss';
 import type { ButtonVariant } from '../button/Button';
@@ -9,8 +9,10 @@ import Link from 'next/link';
 type LinkVariant = 'link' | 'link-muted';
 type Underline = 'always' | 'hover' | 'none';
 
-export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href: string;
+// All props that Next.js <Link> accepts, including href, prefetch, etc.
+type InternalLinkProps = ComponentPropsWithoutRef<typeof Link>;
+
+export type LinkProps = Omit<InternalLinkProps, 'className'> & {
   variant?: ButtonVariant | LinkVariant; // 'link*' -> text link, others -> button look
   underline?: Underline; // only affects text-link appearance
   className?: string;
@@ -31,7 +33,6 @@ const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function LinkComponent
     variant = 'link',
     underline = 'hover',
     className,
-
     pressed,
     iconOnly = false,
     disabled = false,

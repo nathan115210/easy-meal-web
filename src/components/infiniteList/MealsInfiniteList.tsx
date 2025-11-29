@@ -2,73 +2,42 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import type { MealsListItem } from '@/app/meals/page';
-import { Col } from '@/components/grid/Grid';
+import { Col, ColProps } from '@/components/grid/Grid';
 import Card from '@/components/card/Card';
 import BaseLink from '@/components/baseLink/BaseLink';
-import { ALL_MEALS_QUERY } from '@/utils/lib/graphql/queries/meals-queries';
-import { graphqlFetchClient } from '@/utils/data-server/graphqlFetchClient';
 import Spinner from '@/components/spinner/Spinner';
 import BottomLine from '@/components/bottomLine/BottomLine';
 import EmptyList from '@/app/meals/components/EmptyList';
 import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
-import { MealType } from '@/utils/types/meals';
-
-type MealsPagePayload = {
-  meals: {
-    items: MealsListItem[];
-    total: number;
-    hasMore: boolean;
-  };
-};
-
-const PAGE_SIZE = 8;
-
-/**
- * Fetch a page of meals using the GraphQL client.
- * - Uses TanStack Query's AbortSignal to support cancellation.
- */
-async function fetchMealsData({
-  pageParam,
-  search,
-  mealType,
-  signal,
-}: {
-  pageParam?: number;
-  search?: string;
-  mealType?: MealType[];
-  signal: AbortSignal;
-}): Promise<MealsPagePayload['meals']> {
-  const data = await graphqlFetchClient<MealsPagePayload>(
-    ALL_MEALS_QUERY,
-    {
-      search,
-      mealType,
-      limit: PAGE_SIZE,
-      offset: pageParam ?? 0,
-    },
-    signal
-  );
-
-  return data.meals;
-}
+import { CookTimeValue, MealType } from '@/utils/types/meals';
+import fetchMealsData from '@/utils/data-server/fetchMealsData';
+import { usePathname } from 'next/navigation';
 
 export default function MealsInfiniteList({
   search,
   mealType,
+  cookTime,
+
+  gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
 }: {
   search?: string;
   mealType?: MealType[];
+  cookTime?: CookTimeValue;
+
+  gridLayout?: ColProps;
 }) {
+  const pagePath = usePathname();
+
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
-    queryKey: ['meals', search, mealType],
+    queryKey: ['meals', search, mealType, cookTime],
     queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
         search,
         mealType,
+        cookTime,
         signal,
       }),
     initialPageParam: 0,
@@ -141,14 +110,17 @@ export default function MealsInfiniteList({
     );
   }
 
-  if (!items.length) return <EmptyList search={search} />;
+  if (!items.length)
+    return (
+      <EmptyList search={search} mealType={mealType} cookTime={cookTime} clearHref={pagePath} />
+    );
 
   const bottomLineText = !!search ? '🔍 That’s all we found' : '🍽️  All meals loaded';
 
   return (
     <>
       {items.map((meal, index) => (
-        <Col key={`${meal.slug}-${index}`} sm={12} md={6} lg={4} xl={3}>
+        <Col key={`${meal.slug}-${index}`} {...gridLayout}>
           <Card
             heading={meal.title}
             imageSet={{ mobileSrc: meal.image }}
@@ -166,7 +138,9 @@ export default function MealsInfiniteList({
 
       {isFetchingNextPage && <Spinner />}
 
-      {!hasNextPage && items.length > 0 && <BottomLine label={bottomLineText} />}
+      {!hasNextPage && items.length > 0 && (
+        <BottomLine label={bottomLineText} showClear={!!search || !!mealType || !!cookTime} />
+      )}
     </>
   );
 }

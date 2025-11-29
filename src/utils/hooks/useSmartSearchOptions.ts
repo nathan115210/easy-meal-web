@@ -1,24 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-
-export interface SmartSearchOptionsState {
-  existIngredients: string[];
-  excludeIngredients: string[];
-  cookTime: string;
-  dietaryPreferences: string[];
-  maxCalories: string;
-  difficultyLevel: string;
-  mealType: string[];
-  specialTags: string[];
-  occasionTags: string[];
-  healthTags: string[];
-}
+import { CookTimeValue, SmartSearchOptionsState } from '@/utils/types/meals';
 
 export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   existIngredients: [],
   excludeIngredients: [],
-  cookTime: 'any',
+  cookTime: CookTimeValue.Any,
   maxCalories: 'any',
   difficultyLevel: 'any',
   dietaryPreferences: [],
@@ -29,14 +17,6 @@ export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
 };
 
 type UseSmartSearchOptionsArgs = {
-  /**
-   * If provided, state will persist to localStorage under this key.
-   * If omitted, state is in-memory only.
-   */
-  storageKey?: string;
-  /**
-   * Optional initial value (merged with defaults).
-   */
   initial?: Partial<SmartSearchOptionsState>;
 };
 
@@ -47,19 +27,17 @@ export type UpdateOptionFn = <K extends keyof SmartSearchOptionsState>(
 
 export type ClearOptionFn = (key: keyof SmartSearchOptionsState) => void;
 
-export function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
-  const { storageKey, initial } = args;
+const storageKey = 'easy-meal:smart-search';
 
-  // 1) Always start from the same deterministic default
+export default function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
+  const { initial } = args;
+
   const [options, setOptions] = useState<SmartSearchOptionsState>({
     ...DEFAULT_SMART_OPTIONS,
     ...initial,
   });
 
-  // 2) After mount (client only), hydrate from localStorage if enabled
   useEffect(() => {
-    if (!storageKey) return;
-
     try {
       const raw = window.localStorage.getItem(storageKey);
       if (!raw) return;
@@ -76,18 +54,16 @@ export function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
     } catch {
       // ignore
     }
-  }, [storageKey]);
+  }, []);
 
-  // 3) Persist to localStorage when options change (client only)
+  // Persist to localStorage when options change (client only)
   useEffect(() => {
-    if (!storageKey) return;
-
     try {
       window.localStorage.setItem(storageKey, JSON.stringify(options));
     } catch {
       // ignore
     }
-  }, [options, storageKey]);
+  }, [options]);
 
   const updateOption = useCallback<UpdateOptionFn>((key, value) => {
     setOptions((prev) => ({

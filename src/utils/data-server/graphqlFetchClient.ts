@@ -1,11 +1,12 @@
 import { GraphQLResponse } from '@/utils/data-server/fetchGraphQL';
 
 export async function graphqlFetchClient<T>(
+  apiEndPoint: string,
   query: string,
   variables?: Record<string, unknown>,
   signal?: AbortSignal
 ): Promise<T> {
-  const res = await fetch('/api/graphql', {
+  const res = await fetch(apiEndPoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, variables }),
@@ -13,7 +14,7 @@ export async function graphqlFetchClient<T>(
   });
 
   if (!res.ok) {
-    throw new Error(`GraphQL network error ${res.status}`);
+    throw new Error(`${apiEndPoint} - GraphQL network error ${res.status}`);
   }
 
   const json = (await res.json()) as GraphQLResponse<T>;
@@ -23,7 +24,7 @@ export async function graphqlFetchClient<T>(
   }
 
   if (!json.data) {
-    throw new Error('GraphQL client: data is null');
+    throw new Error(`${apiEndPoint} - GraphQL client: data is null`);
   }
 
   return json.data;
