@@ -12,18 +12,21 @@ import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsList
 import { CookTimeValue, MealType } from '@/utils/types/meals';
 import fetchMealsData from '@/utils/data-server/fetchMealsData';
 import { usePathname } from 'next/navigation';
+import ChipsGroup from '@/components/chip/ChipsGroup';
+import Chip from '@/components/chip/Chip';
+import { underscoreToTitle } from '@/utils/lib/helpers';
+import styles from './mealsInfiniteList.module.scss';
+import { ChefHat, Flame } from 'lucide-react';
 
 export default function MealsInfiniteList({
   search,
   mealType,
   cookTime,
-
   gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
 }: {
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
-
   gridLayout?: ColProps;
 }) {
   const pagePath = usePathname();
@@ -119,20 +122,59 @@ export default function MealsInfiniteList({
 
   return (
     <>
-      {items.map((meal, index) => (
-        <Col key={`${meal.slug}-${index}`} {...gridLayout}>
-          <Card
-            heading={meal.title}
-            imageSet={{ mobileSrc: meal.image }}
-            imageAlt={meal.title}
-            description={meal.description}
-          >
-            <BaseLink href={`/${meal.slug}`} variant="primary" underline="hover">
-              Learn More
-            </BaseLink>
-          </Card>
-        </Col>
-      ))}
+      {items.map((meal, index) => {
+        const { difficulty, nutritionInfo: { calories } = {} } = meal;
+        const quickInfo = [parseCalories(calories), parseDifficulty(difficulty)].filter(Boolean);
+
+        return (
+          <Col className={styles.listContainer} key={`${meal.slug}-${index}`} {...gridLayout}>
+            <Card
+              heading={meal.title}
+              imageSet={{ mobileSrc: meal.image }}
+              imageAlt={meal.title}
+              cookTime={meal.cookTime}
+            >
+              {/*Quick Info*/}
+              <div className={styles.quickInfo}>
+                {quickInfo.map(
+                  (item, index) =>
+                    item && (
+                      <span key={`${-item}-${index}`} className={styles['quickInfo-item']}>
+                        {isDifficulty(item) && <ChefHat size={12} />}
+                        {isCalories(item) && <Flame size={12} />}
+
+                        {item}
+                      </span>
+                    )
+                )}
+              </div>
+              {/*//TODO - Start: Add new feature for displaying dynamic tags
+                1. if there is no tags from search params, show topTags from meal
+                2. if there are tags from search params, show those tags and highlight them. if the tag is not in meal.topTags, add meal.topTags at the end
+              */}
+              {/*Top tags*/}
+              {meal.topTags && meal.topTags.length > 0 && (
+                <ChipsGroup ariaLabel={`${meal.title} - top tags`}>
+                  {meal.topTags.map((tag, index) => (
+                    <Chip
+                      key={`${meal.title}-${tag}-${index}`}
+                      label={underscoreToTitle(tag)}
+                      size={'sm'}
+                      variant="secondary"
+                      type={'label'}
+                    />
+                  ))}
+                </ChipsGroup>
+              )}
+              {/* //TODO - END */}
+
+              <BaseLink href={`/${meal.slug}`} variant="primary" underline="hover">
+                Learn More
+              </BaseLink>
+            </Card>
+          </Col>
+        );
+      })}
 
       <div ref={watcherRef} />
 
@@ -143,4 +185,41 @@ export default function MealsInfiniteList({
       )}
     </>
   );
+}
+
+type ExtractDifficultyLevelType = 'Easy' | 'Med' | 'Hard';
+
+const DIFFICULTY_VALUES = new Set<ExtractDifficultyLevelType>(['Easy', 'Med', 'Hard']);
+
+/**
+ * Type guard: checks whether a value is one of the allowed difficulty strings.
+ */
+function isDifficulty(value: unknown): value is ExtractDifficultyLevelType {
+  return typeof value === 'string' && DIFFICULTY_VALUES.has(value as ExtractDifficultyLevelType);
+}
+
+/**
+ * Parse a string into ExtractDifficultyLevelType if it matches (case-insensitive).
+ * Recognizes common synonym "Medium" -> "Med".
+ * Returns `undefined` when no match is found.
+ */
+function parseDifficulty(value?: string | null): ExtractDifficultyLevelType {
+  if (!value) return 'Med';
+  const trimmed = value?.trim() || 'Med';
+  if (isDifficulty(trimmed)) return trimmed;
+
+  const lower = trimmed.toLowerCase();
+
+  if (lower === 'easy') return 'Easy';
+  if (lower === 'hard') return 'Hard';
+  return 'Med';
+}
+
+function parseCalories(value?: number): string | undefined {
+  if (value) return `${value} Kcal`;
+  return undefined;
+}
+
+function isCalories(value: unknown): boolean {
+  return typeof value === 'string' && value.includes('Kcal');
 }

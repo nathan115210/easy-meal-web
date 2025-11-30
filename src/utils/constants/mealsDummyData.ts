@@ -1,4 +1,4 @@
-import { Meal, MealType } from '@/utils/types/meals';
+import { DifficultyLevel, Meal, MealType } from '@/utils/types/meals';
 
 export const mealsData: Meal[] = [
   {
@@ -18,6 +18,16 @@ export const mealsData: Meal[] = [
       { text: 'Oil', amount: '1 tbsp' },
     ],
     mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Easy,
+    tags: [
+      'crowd_pleaser',
+      'kid_friendly',
+      'lazy_night',
+      'budget',
+      'weeknight',
+      'comfort_food',
+      'party',
+    ],
     instructions: [
       {
         image: '/placeholder.png',
@@ -34,6 +44,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Serve: Add top bun and serve hot.' },
     ],
     cookTime: 25,
+    nutritionInfo: {
+      calories: 650,
+      protein: 32,
+      carbs: 45,
+      fat: 32,
+    },
   },
   {
     title: 'Spicy Curry',
@@ -48,6 +64,21 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Medium,
+    tags: [
+      'one_pot',
+      'minimal_cleanup',
+      'meal_prep',
+      'freezer_friendly',
+      'spicy',
+      'budget',
+      'weeknight',
+      'comfort_food',
+      'party',
+      'high_fiber',
+      'iron_rich',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Chop vegetables.' },
       { image: '/placeholder.png', text: 'Sauté vegetables in oil.' },
@@ -55,8 +86,13 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Simmer with coconut milk ~15 min.' },
       { image: '/placeholder.png', text: 'Serve with rice.' },
     ],
-    mealType: [MealType.Dinner],
     cookTime: 35,
+    nutritionInfo: {
+      calories: 550,
+      protein: 18,
+      carbs: 50,
+      fat: 28,
+    },
   },
   {
     title: 'Homemade Dumplings',
@@ -69,14 +105,22 @@ export const mealsData: Meal[] = [
       { text: 'Spices', amount: '1 tsp' },
       { text: 'Dumpling wrappers', amount: '12' },
     ],
+    mealType: [MealType.Snacks],
+    difficulty: DifficultyLevel.Medium,
+    tags: ['crowd_pleaser', 'freezer_friendly', 'budget', 'party', 'weeknight', 'comfort_food'],
     instructions: [
       { image: '/placeholder.png', text: 'Mix filling.' },
       { image: '/placeholder.png', text: 'Fill and seal wrappers.' },
       { image: '/placeholder.png', text: 'Steam ~10 min.' },
       { image: '/placeholder.png', text: 'Serve hot.' },
     ],
-    mealType: [MealType.Snacks],
     cookTime: 32,
+    nutritionInfo: {
+      calories: 480,
+      protein: 20,
+      carbs: 50,
+      fat: 15,
+    },
   },
   {
     title: 'Classic Mac n Cheese',
@@ -92,6 +136,9 @@ export const mealsData: Meal[] = [
       { text: 'Breadcrumbs', amount: '30g' },
       { text: 'Parsley', amount: '1 tbsp (optional)' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Easy,
+    tags: ['one_pot', 'crowd_pleaser', 'kid_friendly', 'lazy_night', 'comfort_food', 'weeknight'],
     instructions: [
       { image: '/placeholder.png', text: 'Cook pasta.' },
       { image: '/placeholder.png', text: 'Make roux with butter+flour, add milk.' },
@@ -99,6 +146,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Top with breadcrumbs, bake briefly.' },
     ],
     cookTime: 30,
+    nutritionInfo: {
+      calories: 700,
+      protein: 25,
+      carbs: 65,
+      fat: 32,
+    },
   },
   {
     title: 'Authentic Pizza',
@@ -112,6 +165,18 @@ export const mealsData: Meal[] = [
       { text: 'Favorite toppings', amount: 'as desired' },
       { text: 'Basil leaves', amount: 'a few' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Medium,
+    tags: [
+      'crowd_pleaser',
+      'kid_friendly',
+      'party',
+      'lazy_night',
+      'budget',
+      'party',
+      'weeknight',
+      'comfort_food',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Stretch dough.' },
       { image: '/placeholder.png', text: 'Add sauce and toppings.' },
@@ -119,6 +184,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Garnish with basil.' },
     ],
     cookTime: 40,
+    nutritionInfo: {
+      calories: 720,
+      protein: 28,
+      carbs: 70,
+      fat: 30,
+    },
   },
   {
     title: 'Wiener Schnitzel',
@@ -133,6 +204,9 @@ export const mealsData: Meal[] = [
       { text: 'Oil', amount: 'for frying' },
       { text: 'Lemon', amount: '1 slice' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Medium,
+    tags: ['crowd_pleaser', 'comfort_food', 'weeknight', 'date_night', 'iron_rich'],
     instructions: [
       { image: '/placeholder.png', text: 'Prepare breading stations.' },
       { image: '/placeholder.png', text: 'Coat cutlets flour, egg, crumbs.' },
@@ -140,6 +214,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Serve with lemon.' },
     ],
     cookTime: 25,
+    nutritionInfo: {
+      calories: 680,
+      protein: 34,
+      carbs: 40,
+      fat: 35,
+    },
   },
   {
     title: 'Fresh Tomato Salad',
@@ -154,6 +234,17 @@ export const mealsData: Meal[] = [
       { text: 'Olive oil', amount: '2 tbsp' },
       { text: 'Balsamic vinegar', amount: '1 tbsp' },
     ],
+    mealType: [MealType.Lunch],
+    difficulty: DifficultyLevel.Easy,
+    tags: [
+      'simple_5_ingredients',
+      'minimal_cleanup',
+      'budget',
+      'light_meal',
+      'lunchbox',
+      'low_sodium',
+      'high_fiber',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Slice tomatoes.' },
       { image: '/placeholder.png', text: 'Add basil and season.' },
@@ -161,6 +252,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Toss and serve.' },
     ],
     cookTime: 10,
+    nutritionInfo: {
+      calories: 180,
+      protein: 4,
+      carbs: 12,
+      fat: 12,
+    },
   },
   {
     title: 'Creamy Mushroom Risotto',
@@ -179,6 +276,16 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Hard,
+    tags: [
+      'one_pot',
+      'minimal_cleanup',
+      'crowd_pleaser',
+      'comfort_food',
+      'weeknight',
+      'date_night',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Sauté chopped onion & garlic in oil.' },
       { image: '/placeholder.png', text: 'Add sliced mushrooms; cook until soft.' },
@@ -187,6 +294,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Finish with butter & parmesan; season.' },
     ],
     cookTime: 35,
+    nutritionInfo: {
+      calories: 600,
+      protein: 16,
+      carbs: 70,
+      fat: 24,
+    },
   },
   {
     title: 'Lemon Herb Grilled Chicken',
@@ -203,6 +316,9 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Easy,
+    tags: ['meal_prep', 'lunch_friendly', 'weeknight', 'light_meal', 'post_workout'],
     instructions: [
       { image: '/placeholder.png', text: 'Mix marinade ingredients.' },
       { image: '/placeholder.png', text: 'Coat chicken; rest 20 min.' },
@@ -210,6 +326,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Rest briefly; slice & serve.' },
     ],
     cookTime: 30,
+    nutritionInfo: {
+      calories: 450,
+      protein: 38,
+      carbs: 8,
+      fat: 24,
+    },
   },
   {
     title: 'Vegan Quinoa Bowl',
@@ -227,6 +349,20 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Lunch],
+    difficulty: DifficultyLevel.Medium,
+    tags: [
+      'meal_prep',
+      'lunch_friendly',
+      'one_pot',
+      'minimal_cleanup',
+      'light_meal',
+      'lunchbox',
+      'weeknight',
+      'high_fiber',
+      'iron_rich',
+      'post_workout',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Roast chopped veggies & chickpeas.' },
       { image: '/placeholder.png', text: 'Cook quinoa until fluffy.' },
@@ -234,6 +370,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Assemble bowl; drizzle sauce.' },
     ],
     cookTime: 35,
+    nutritionInfo: {
+      calories: 520,
+      protein: 20,
+      carbs: 60,
+      fat: 18,
+    },
   },
   {
     title: 'Garlic Butter Shrimp Pasta',
@@ -251,6 +393,9 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Medium,
+    tags: ['one_pot', 'crowd_pleaser', 'date_night', 'weeknight', 'comfort_food'],
     instructions: [
       { image: '/placeholder.png', text: 'Cook pasta al dente.' },
       { image: '/placeholder.png', text: 'Sauté garlic in butter & oil.' },
@@ -258,6 +403,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Toss with pasta, parsley, lemon.' },
     ],
     cookTime: 25,
+    nutritionInfo: {
+      calories: 560,
+      protein: 30,
+      carbs: 55,
+      fat: 22,
+    },
   },
   {
     title: 'Tofu Stir Fry',
@@ -275,6 +426,18 @@ export const mealsData: Meal[] = [
       { text: 'Cornstarch', amount: '1 tsp' },
       { text: 'Oil', amount: '1 tbsp' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Easy,
+    tags: [
+      'one_pot',
+      'minimal_cleanup',
+      'meal_prep',
+      'lunch_friendly',
+      'weeknight',
+      'light_meal',
+      'high_fiber',
+      'post_workout',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Press & cube tofu; toss in cornstarch.' },
       { image: '/placeholder.png', text: 'Pan-fry tofu until golden.' },
@@ -282,6 +445,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Add tofu & sauce; toss to coat.' },
     ],
     cookTime: 20,
+    nutritionInfo: {
+      calories: 420,
+      protein: 22,
+      carbs: 30,
+      fat: 20,
+    },
   },
   {
     title: 'Greek Salad Bowl',
@@ -300,6 +469,19 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Lunch],
+    difficulty: DifficultyLevel.Easy,
+    tags: [
+      'simple_5_ingredients',
+      'minimal_cleanup',
+      'lunch_friendly',
+      'budget',
+      'light_meal',
+      'lunchbox',
+      'weeknight',
+      'low_sodium',
+      'high_fiber',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Chop vegetables evenly.' },
       { image: '/placeholder.png', text: 'Combine in a large bowl.' },
@@ -307,6 +489,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Toss salad; top with feta.' },
     ],
     cookTime: 15,
+    nutritionInfo: {
+      calories: 350,
+      protein: 10,
+      carbs: 18,
+      fat: 26,
+    },
   },
   {
     title: 'Beef Chili',
@@ -325,6 +513,19 @@ export const mealsData: Meal[] = [
       { text: 'Salt', amount: 'to taste' },
       { text: 'Pepper', amount: 'to taste' },
     ],
+    mealType: [MealType.Dinner],
+    difficulty: DifficultyLevel.Medium,
+    tags: [
+      'one_pot',
+      'meal_prep',
+      'freezer_friendly',
+      'crowd_pleaser',
+      'budget',
+      'weeknight',
+      'comfort_food',
+      'party',
+      'iron_rich',
+    ],
     instructions: [
       { image: '/placeholder.png', text: 'Brown beef with onion & garlic.' },
       { image: '/placeholder.png', text: 'Stir in spices; cook briefly.' },
@@ -332,6 +533,12 @@ export const mealsData: Meal[] = [
       { image: '/placeholder.png', text: 'Adjust seasoning; serve warm.' },
     ],
     cookTime: 62,
+    nutritionInfo: {
+      calories: 640,
+      protein: 35,
+      carbs: 45,
+      fat: 30,
+    },
   },
   {
     title: 'Overnight Oats',
@@ -347,11 +554,20 @@ export const mealsData: Meal[] = [
       { text: 'Vanilla extract', amount: '1/4 tsp' },
       { text: 'Salt', amount: 'pinch' },
     ],
+    mealType: [MealType.Breakfast],
+    difficulty: DifficultyLevel.Easy,
+    tags: ['meal_prep', 'simple_5_ingredients', 'budget', 'light_meal', 'high_fiber'],
     instructions: [
       { image: '/placeholder.png', text: 'Combine oats, chia, milk, sweetener.' },
       { image: '/placeholder.png', text: 'Stir; refrigerate overnight.' },
       { image: '/placeholder.png', text: 'Top with fruit & serve.' },
     ],
     cookTime: 5, // active time; overnight is passive
+    nutritionInfo: {
+      calories: 320,
+      protein: 10,
+      carbs: 45,
+      fat: 9,
+    },
   },
 ];

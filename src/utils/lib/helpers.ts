@@ -21,6 +21,11 @@ export function titleCase(str: string): string {
     .join(' ');
 }
 
+export function underscoreToTitle(str: string): string {
+  if (!str) return '';
+  const withSpaces = str.replace(/_+/g, ' ').replace(/\s+/g, ' ').trim();
+  return titleCase(withSpaces);
+}
 export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined): {
   cookTimeMin: number | null;
   cookTimeMax: number | null;

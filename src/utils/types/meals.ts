@@ -7,8 +7,10 @@ export interface Meal {
   instructions: MealInstruction[];
   cookTime?: number; // in minutes
   difficulty?: DifficultyLevel;
-  nutrition?: NutritionInfo; //TODO: figuring out how to calculate
+  nutritionInfo?: NutritionInfo; //TODO: figuring out how to calculate
   mealType?: MealType[];
+  tags?: string[];
+  topTags?: string[]; // first 3 items from tags, handled by GraphQL server
 }
 
 export interface MealIngredient {
@@ -21,7 +23,11 @@ export interface MealInstruction {
   text: string;
 }
 
-export type DifficultyLevel = 'easy' | 'medium' | 'hard';
+export enum DifficultyLevel {
+  Easy = 'easy',
+  Medium = 'medium',
+  Hard = 'hard',
+}
 
 export interface NutritionInfo {
   calories: number; // per serving

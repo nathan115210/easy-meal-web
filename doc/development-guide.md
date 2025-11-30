@@ -196,7 +196,7 @@ import { schema } from '@/lib/graphql/schema';
 
 const yogaApp = createYoga({
   schema,
-  graphqlEndpoint: '/api/graphql',
+  graphqlEndpoint: '/api/mealsData',
   graphiql: process.env.NODE_ENV !== 'production',
 });
 
@@ -216,7 +216,7 @@ pnpm dev
 Then visit:
 
 ```
-http://localhost:3000/api/graphql
+http://localhost:3000/api/mealsData
 ```
 
 ---

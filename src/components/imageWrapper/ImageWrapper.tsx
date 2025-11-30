@@ -17,7 +17,6 @@ type ImageWrapperProps = {
   priority?: boolean;
   className?: string;
   ariaHidden?: boolean;
-
   sizes?: string;
   objectFit?: CSSProperties['objectFit'];
   objectPosition?: CSSProperties['objectPosition'];

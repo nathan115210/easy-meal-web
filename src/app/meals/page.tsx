@@ -3,7 +3,18 @@ import styles from '@/app/meals/page.module.scss';
 import { Grid, Row } from '@/components/grid/Grid';
 import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
 
-export type MealsListItem = Pick<Meal, 'title' | 'slug' | 'description' | 'image'>;
+export type MealsListItem = Pick<
+  Meal,
+  | 'title'
+  | 'slug'
+  | 'description'
+  | 'image'
+  | 'cookTime'
+  | 'mealType'
+  | 'topTags'
+  | 'difficulty'
+  | 'nutritionInfo'
+>;
 
 export type AllMealsPageProps = {
   searchParams?: {
@@ -18,7 +29,7 @@ export default async function AllMealsPage({ searchParams }: AllMealsPageProps) 
   return (
     <Grid className={styles.mealsList}>
       <Row>
-        <MealsInfiniteList search={search} resetAction={'link'} />
+        <MealsInfiniteList search={search} />
       </Row>
     </Grid>
   );

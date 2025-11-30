@@ -107,7 +107,6 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
       role = 'checkbox';
       ariaChecked = selected;
     }
-
     return (
       <div
         ref={ref as React.Ref<HTMLDivElement>}
@@ -121,6 +120,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
         onKeyDown={handleKeyDown}
       >
         <span className={styles.label}>{label}</span>
+
         {deletable && onDelete && (
           <button
             type="button"
