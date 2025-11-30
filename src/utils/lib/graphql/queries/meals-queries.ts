@@ -20,8 +20,15 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
         title
         slug
         image
-        description
         cookTime
+        topTags
+        difficulty
+        nutritionInfo {
+          calories
+          protein
+          fat
+          carbs
+        }
       }
       total
       hasMore

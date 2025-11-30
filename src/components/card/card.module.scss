@@ -2,18 +2,40 @@
 @use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/border-radius' as *;
+@use '@styles/tokens/z-index' as *;
 
 .card {
   --card-padding: #{pxToRem(14)};
+  --card-border-radius: #{$radius-lg};
 
   display: flex;
   flex-direction: column;
   padding: var(--card-padding);
   gap: pxToRem(10);
   background-color: $color-card;
-  border-radius: $radius-lg;
+  border-radius: var(--card-border-radius);
   border: 1px solid $color-muted;
+  box-shadow:
+    0 6px 14px rgba(15, 23, 42, 0.12),
+    0 1px 3px rgba(15, 23, 42, 0.06);
 
+  // start at rest
+  transform: translateY(0);
+  // smooth animation
+  transition:
+    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  // hint for the browser
+  will-change: transform, box-shadow;
+
+  &:hover {
+    //outline: 1px solid $color-accent;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+      0 14px 30px rgba(15, 23, 42, 0.18),
+      0 4px 10px rgba(15, 23, 42, 0.12);
+  }
   // Fill the column width instead of capping it
   width: 100%;
   min-width: calc(100vw - $grid-gutter * 4);
@@ -23,10 +45,19 @@
 
   // If images can overflow, this helps contain them
   overflow: hidden;
-  .cardImg {
-    width: 100%;
-    border-radius: calc(#{$radius-lg} - 2px);
+
+  .cardTag {
+    max-width: 5rem;
+    position: absolute;
+    top: calc(var(--card-padding) * 2);
+    right: calc(var(--card-padding) * 2);
+    z-index: zIndex('content');
   }
+
+  .cardImg {
+    border-radius: var(--card-border-radius);
+  }
+
   .content {
     display: flex;
     flex-direction: column;
@@ -41,5 +72,9 @@
   @include desktop {
     --card-padding: #{pxToRem(20)};
     min-width: unset;
+  }
+
+  &-withOverlay {
+    position: relative;
   }
 }

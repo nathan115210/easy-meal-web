@@ -35,6 +35,19 @@ const typeDefs = /* GraphQL */ `
     text: String!
   }
 
+  enum DifficultyLevel {
+    easy
+    medium
+    hard
+  }
+
+  type NutritionInfo {
+    calories: Int # per serving
+    protein: Int # grams
+    carbs: Int # grams
+    fat: Int # grams
+  }
+
   type Meal {
     title: String!
     slug: String!
@@ -44,6 +57,10 @@ const typeDefs = /* GraphQL */ `
     instructions: [MealInstruction!]!
     mealType: [MealType!]!
     cookTime: Int
+    tags: [String!]
+    topTags(limit: Int = 3): [String!]!
+    difficulty: DifficultyLevel
+    nutritionInfo: NutritionInfo
   }
 
   type MealsPage {
@@ -74,7 +91,7 @@ type PaginationInput = {
   offset?: number | null;
 };
 
-// Basic resolvers using your dummy data
+// Basic resolvers using dummy data for now
 const resolvers = {
   Query: {
     meals: async (
@@ -97,27 +114,23 @@ const resolvers = {
 
       // With mealTypes
       if (mealType && mealType.length > 0) {
-        // keep meals that have at least one mealType in the filter list
         filtered = filtered.filter(
           (meal) =>
             Array.isArray(meal.mealType) &&
-            meal.mealType.some((mt) => mealType!.includes(mt as MealType))
+            meal.mealType.some((mt) => mealType.includes(mt as MealType))
         );
       }
 
       // With cookTime
-
       if (!!cookTimeMin || !!cookTimeMax) {
         filtered = filtered.filter((meal) => {
-          if (meal.cookTime === undefined) return false;
+          if (meal.cookTime == null) return false;
           if (!!cookTimeMin && meal.cookTime < cookTimeMin) return false;
           if (!!cookTimeMax && meal.cookTime > cookTimeMax) return false;
-
           return true;
         });
       }
 
-      // Pagination (always 8 per page by default)
       const total = filtered.length;
       const limit = pagination?.limit ?? 8;
       const offset = pagination?.offset ?? 0;
@@ -135,7 +148,15 @@ const resolvers = {
       return getMealBySlug(args.slug);
     },
   },
+
+  Meal: {
+    topTags: (meal: Meal) => {
+      // always return at most 3 tags; default to [] if undefined
+      return (meal.tags ?? []).slice(0, 3);
+    },
+  },
 };
+
 export const mealsSchema = createSchema({
   typeDefs,
   resolvers,
