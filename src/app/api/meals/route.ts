@@ -3,7 +3,6 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { getMealsData } from '@/utils/data-server/getMealsData';
 
 export async function GET() {
-  console.log('🔁 API HIT: /api/meals ', new Date().toLocaleTimeString());
 
   try {
     const data = await getMealsData();

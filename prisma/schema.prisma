@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Meal {
+  id           Int               @id @default(autoincrement())
+  title        String
+  image        String
+  ingredients  Ingredient[]
+  instructions InstructionItem[]
+  mealType     String
+  cookTime     Int
+  tags         String[]
+  difficulty   String
+  calories     Int
+  protein      Int
+  carbs        Int
+  fat          Int
+}
+
+model Ingredient {
+  id     Int    @id @default(autoincrement())
+  text   String
+  amount String
+  // 1:1 relation to Meal (one nutrition row per meal)
+  meal   Meal   @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  mealId Int //1:many (one meal -> many ingredients)
+}
+
+model InstructionItem {
+  id     Int     @id @default(autoincrement())
+  image  String?
+  text   String
+  step   Int
+  meal   Meal    @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  mealId Int
+  @@unique([mealId, step]) // ✅ each step number is unique per meal
+}

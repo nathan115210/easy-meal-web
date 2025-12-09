@@ -30,7 +30,8 @@ const typeDefs = /* GraphQL */ `
     amount: String!
   }
 
-  type MealInstruction {
+  type MealInstructionItem {
+    step: Int!
     image: String
     text: String!
   }
@@ -54,7 +55,7 @@ const typeDefs = /* GraphQL */ `
     image: String!
     description: String!
     ingredients: [MealIngredient!]!
-    instructions: [MealInstruction!]!
+    instructions: [MealInstructionItem!]!
     mealType: [MealType!]!
     cookTime: Int
     tags: [String!]
