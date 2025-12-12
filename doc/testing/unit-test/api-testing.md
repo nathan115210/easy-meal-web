@@ -47,16 +47,14 @@ This gives us:
 
 ## 2. File & folder structure
 
-The MSW setup for **unit tests** lives under `test/unit/msw` in this repo:
+The MSW setup for **unit tests** in this repo is located under `src/utils/test/unit-test/msw`:
 
 ```txt
-test/
-  unit/
-    msw/
-      server.ts           # MSW server instance (Node)
-      mocks/
-        allMealsHandlers.ts  # GraphQL handlers for /api/all-meals
-        handlers.ts          # Aggregates all handler sets
+src/utils/test/unit-test/msw/
+  mswServer.ts           # MSW server instance (Node)
+  mocks/
+    mockHandlers.ts      # Aggregates mock handler sets
+    allMealsHandlers.ts  # GraphQL handlers for /api/all-meals (example)
 ```
 
 Related test infra (examples of where tests and helpers live in this repo):
@@ -68,9 +66,8 @@ Related test infra (examples of where tests and helpers live in this repo):
 - `src/utils/types/meals.ts` – domain types (`Meal`, `MealsListItem`, `MealType`, etc.)
 - `src/utils/lib/graphql/queries/meals-queries.ts` – GraphQL queries (`ALL_MEALS_QUERY`)
 
-> Note: paths above are intentionally conservative and should match the repository layout. If your project places test
-> helpers in a different folder (for example `src/utils/test/unit-test/msw`), update the paths accordingly. The canonical
-> MSW server file in this repo is `test/unit/msw/server.ts`.
+> Note: the paths above reflect the current repository layout. If your project changes folder layout, update these
+> references accordingly.
 
 ---
 
@@ -93,53 +90,53 @@ import '@testing-library/jest-dom/vitest';
 import 'whatwg-fetch';
 import { beforeAll, afterEach, afterAll } from 'vitest';
 import { cleanup } from '@testing-library/react';
-import { server } from '../../test/unit/msw/server'; // adjust relative path as needed
+import { mswServer } from '@/utils/test/unit-test/msw/mswServer';
 
 // --- MSW server lifecycle ---
-beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }));
+beforeAll(() => mswServer.listen({ onUnhandledRequest: 'warn' }));
 
 afterEach(() => {
-  server.resetHandlers();
+  mswServer.resetHandlers();
   cleanup();
 });
 
-afterAll(() => server.close());
+afterAll(() => mswServer.close());
 ```
 
 Key points:
 
-- `server.listen()` starts the MSW server before tests.
-- `server.resetHandlers()` ensures each test starts with a clean handler state.
+- `mswServer.listen()` starts the MSW server before tests.
+- `mswServer.resetHandlers()` ensures each test starts with a clean handler state.
 - `onUnhandledRequest: 'warn'` will warn if a test hits an unmocked endpoint.
 
 ---
 
-## 4. MSW server (`test/unit/msw/server.ts`)
+## 4. MSW server (`src/utils/test/unit-test/msw/mswServer.ts`)
 
 The MSW server is responsible for holding all HTTP/GraphQL handlers:
 
 ```ts
 import { setupServer } from 'msw/node';
-import { handlers } from './mocks/handlers';
+import { mockHandlers } from './mocks/mockHandlers';
 
-export const server = setupServer(...handlers);
+export const mswServer = setupServer(...mockHandlers);
 ```
 
 This file:
 
-- Imports an aggregated `handlers` array.
+- Imports an aggregated `mockHandlers` array.
 - Sets up a Node-based MSW server (`setupServer`) for Vitest.
 
 ---
 
-## 5. Handlers aggregator (`test/unit/msw/mocks/handlers.ts`)
+## 5. Handlers aggregator (`src/utils/test/unit-test/msw/mocks/mockHandlers.ts`)
 
-Instead of importing each handler set one by one in `server.ts`, we centralize them:
+We aggregate handler sets in one place:
 
 ```ts
 import { allMealsHandlers } from './allMealsHandlers';
 
-export const handlers = [
+export const mockHandlers = [
   ...allMealsHandlers,
   // future: ...authHandlers, ...plannerHandlers, ...
 ];
@@ -170,7 +167,7 @@ This makes it easy to add new domains:
 We use full `Meal`-shaped objects in the mock dataset:
 
 ```ts
-// test/unit/msw/mocks/allMealsHandlers.ts (partial)
+// src/utils/test/unit-test/msw/mocks/allMealsHandlers.ts (partial)
 import { graphql, HttpResponse } from 'msw';
 import { DifficultyLevel, MealType } from '@/utils/types/meals';
 import type { MealsListItem } from '@/app/meals/page';
@@ -493,12 +490,12 @@ When adding a new GraphQL query/mutation:
    - Do not mock `graphqlFetchClient`.
    - Let MSW respond and assert on the typed result.
 
-4. If needed, add your handler set into `handlers.ts`:
+4. If needed, add your handler set into `mockHandlers.ts`:
 
    ```ts
    import { someFeatureHandlers } from './someFeatureHandlers';
 
-   export const handlers = [...allMealsHandlers, ...someFeatureHandlers];
+   export const mockHandlers = [...allMealsHandlers, ...someFeatureHandlers];
    ```
 
 ---
@@ -522,5 +519,3 @@ This pattern gives a strong balance of:
 - Maintainability (mocks colocated with domain types and queries).
 
 ---
-
-_End of document_
