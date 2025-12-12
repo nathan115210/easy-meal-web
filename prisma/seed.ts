@@ -2,14 +2,14 @@ import 'dotenv/config';
 import { prisma } from '@/utils/lib/prisma';
 
 export async function main() {
-
-
   // 1) Simple Tomato Pasta
   await prisma.meal.create({
     data: {
       title: 'Simple Tomato Pasta',
+      description:
+        'Simple Tomato Pasta is a classic Italian dish featuring pasta tossed in a light, vibrant sauce made primarily from tomatoes, garlic, and olive oil.',
       image: '/images/meals/simple-tomato-pasta.jpg',
-      mealType: 'dinner',
+      mealType: ['dinner'],
       cookTime: 20,
       tags: ['quick', 'vegetarian', '30-minutes-or-less'],
       difficulty: 'easy',
@@ -53,8 +53,10 @@ export async function main() {
   await prisma.meal.create({
     data: {
       title: 'Protein Scrambled Eggs on Toast',
+      description:
+        'A nutritious and satisfying breakfast that combines creamy, high-protein scrambled eggs served atop crisp, wholesome toast',
       image: '/images/meals/scrambled-eggs-toast.jpg',
-      mealType: 'breakfast',
+      mealType: ['breakfast'],
       cookTime: 10,
       tags: ['high-protein', 'quick', 'breakfast'],
       difficulty: 'easy',

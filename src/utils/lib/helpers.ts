@@ -93,4 +93,27 @@ export const syncArray = (params: URLSearchParams, key: string, values: string[]
       }
     });
   }
-};
+}
+
+/**
+ * Convert a title string into a URL-friendly slug.
+ *
+ * Rules:
+ * - Lowercases the entire string
+ * - Trims leading/trailing whitespace
+ * - Replaces any sequence of non-alphanumeric characters with a single dash (-)
+ * - Removes leading/trailing dashes
+ *
+ * Examples:
+ *  slugify('Juicy Cheese Burger')       => 'juicy-cheese-burger'
+ *  slugify('  Ma Po Dou Fu  ')          => 'ma-po-dou-fu'
+ *  slugify('Fish & Chips!!')            => 'fish-chips'
+ *  slugify('Taco\tTuesday\nSpecials')  => 'taco-tuesday-specials'
+ */
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-') // replace spaces & special chars
+    .replace(/(^-|-$)+/g, '');   // trim leading/trailing -
+}

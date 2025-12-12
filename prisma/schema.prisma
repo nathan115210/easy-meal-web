@@ -13,13 +13,23 @@ datasource db {
   provider = "postgresql"
 }
 
+enum MealType {
+  breakfast
+  lunch
+  dinner
+  snacks
+  dessert
+  drinks
+}
+
 model Meal {
   id           Int               @id @default(autoincrement())
   title        String
+  description  String
   image        String
   ingredients  Ingredient[]
   instructions InstructionItem[]
-  mealType     String
+  mealType     MealType[]
   cookTime     Int
   tags         String[]
   difficulty   String
@@ -45,5 +55,6 @@ model InstructionItem {
   step   Int
   meal   Meal    @relation(fields: [mealId], references: [id], onDelete: Cascade)
   mealId Int
+
   @@unique([mealId, step]) // ✅ each step number is unique per meal
 }

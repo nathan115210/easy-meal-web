@@ -11,7 +11,7 @@
     "db:studio": "prisma studio",
     "db:format": "prisma format",
     "db:seed": "npx prisma db seed",
-    "db:reset": "prisma migrate reset --force --skip-generate",
+    "db:reset": "prisma migrate reset",
     "build": "pnpm run test && prettier --check . && next build",
     "start": "next start",
     "lint": "eslint",

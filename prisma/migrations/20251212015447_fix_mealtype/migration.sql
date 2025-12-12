@@ -1,16 +1,20 @@
+-- CreateEnum
+CREATE TYPE "MealType" AS ENUM ('breakfast', 'lunch', 'dinner', 'snacks', 'dessert', 'drinks');
+
 -- CreateTable
 CREATE TABLE "Meal" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
     "image" TEXT NOT NULL,
-    "mealType" TEXT NOT NULL,
+    "mealType" "MealType"[],
     "cookTime" INTEGER NOT NULL,
     "tags" TEXT[],
     "difficulty" TEXT NOT NULL,
-    "calories" TEXT NOT NULL,
-    "protein" TEXT NOT NULL,
-    "carbds" TEXT NOT NULL,
-    "fat" TEXT NOT NULL,
+    "calories" INTEGER NOT NULL,
+    "protein" INTEGER NOT NULL,
+    "carbs" INTEGER NOT NULL,
+    "fat" INTEGER NOT NULL,
 
     CONSTRAINT "Meal_pkey" PRIMARY KEY ("id")
 );
@@ -37,10 +41,10 @@ CREATE TABLE "InstructionItem" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ingredient_mealId_key" ON "Ingredient"("mealId");
+CREATE UNIQUE INDEX "InstructionItem_mealId_step_key" ON "InstructionItem"("mealId", "step");
 
 -- AddForeignKey
-ALTER TABLE "Ingredient" ADD CONSTRAINT "Ingredient_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Ingredient" ADD CONSTRAINT "Ingredient_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "InstructionItem" ADD CONSTRAINT "InstructionItem_mealId_fkey" FOREIGN KEY ("mealId") REFERENCES "Meal"("id") ON DELETE CASCADE ON UPDATE CASCADE;
