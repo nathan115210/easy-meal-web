@@ -38,3 +38,4 @@ next-env.d.ts
 # IDE and editors
 .vscode
 /.idea
+/prisma/generated/prisma

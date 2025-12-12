@@ -16,10 +16,6 @@ export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   healthTags: [],
 };
 
-type UseSmartSearchOptionsArgs = {
-  initial?: Partial<SmartSearchOptionsState>;
-};
-
 export type UpdateOptionFn = <K extends keyof SmartSearchOptionsState>(
   key: K,
   value: SmartSearchOptionsState[K]
@@ -29,9 +25,7 @@ export type ClearOptionFn = (key: keyof SmartSearchOptionsState) => void;
 
 const storageKey = 'easy-meal:smart-search';
 
-export default function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = {}) {
-  const { initial } = args;
-
+const useSmartSearchOptions = (initial?: Partial<SmartSearchOptionsState>) => {
   const [options, setOptions] = useState<SmartSearchOptionsState>({
     ...DEFAULT_SMART_OPTIONS,
     ...initial,
@@ -94,4 +88,6 @@ export default function useSmartSearchOptions(args: UseSmartSearchOptionsArgs = 
     resetAll,
     setOptions,
   };
-}
+};
+
+export default useSmartSearchOptions;
