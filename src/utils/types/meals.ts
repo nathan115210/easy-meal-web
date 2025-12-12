@@ -20,6 +20,7 @@ export interface MealIngredient {
 
 export interface MealInstruction {
   image?: string;
+  step: number;
   text: string;
 }
 

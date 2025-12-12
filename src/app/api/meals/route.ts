@@ -3,7 +3,6 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { getMealsData } from '@/utils/data-server/getMealsData';
 
 export async function GET() {
-
   try {
     const data = await getMealsData();
     return NextResponse.json(data, { status: 200 });

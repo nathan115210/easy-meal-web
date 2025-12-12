@@ -9,8 +9,8 @@ provided npm scripts in day-to-day development.
 - ORM: Prisma 7
 - App framework: Next.js 16 (App Router)
 - Usage pattern:
-    - Schema defined in `prisma/schema.prisma`
-    - Migrations stored in `prisma/migrations`
+  - Schema defined in `prisma/schema.prisma`
+  - Migrations stored in `prisma/migrations`
   - Prisma Client generated into `prisma/generated/prisma`
     - Shared Prisma client singleton in `src/utils/lib/prisma.ts`
     - Seed data in `prisma/seed.ts`
@@ -30,13 +30,13 @@ DATABASE_URL="postgresql://postgres:postgres@localhost:5432/easy_meal"
 - Models: `Meal`, `Ingredient`, `InstructionItem`
 - Enum: `MealType` (values: `breakfast`, `lunch`, `dinner`, `snacks`, `dessert`, `drinks`)
 - Relations:
-    - One `Meal` → many `Ingredient`
-    - One `Meal` → many `InstructionItem`
+  - One `Meal` → many `Ingredient`
+  - One `Meal` → many `InstructionItem`
 - Array fields:
-    - `Meal.mealType: MealType[]` (e.g. `["breakfast"]`, `["dinner","snacks"]`)
-    - `Meal.tags: String[]` (e.g. `["quick","high-protein"]`)
+  - `Meal.mealType: MealType[]` (e.g. `["breakfast"]`, `["dinner","snacks"]`)
+  - `Meal.tags: String[]` (e.g. `["quick","high-protein"]`)
 - Nutrition fields on `Meal`:
-    - `calories`, `protein`, `carbs`, `fat` as `Int`
+  - `calories`, `protein`, `carbs`, `fat` as `Int`
 
 Client generation & output:
 
@@ -58,9 +58,9 @@ Client usage pattern:
 - Import the generated client in `src/utils/lib/prisma.ts`
 - Expose a singleton (reuse in dev to avoid multiple connections)
 - Use `prisma` only in server-side code:
-    - Route handlers (`app/api/**/route.ts`)
-    - Server components / server helpers (e.g. `getMealsData`)
-    - Seed script (`prisma/seed.ts`)
+  - Route handlers (`app/api/**/route.ts`)
+  - Server components / server helpers (e.g. `getMealsData`)
+  - Seed script (`prisma/seed.ts`)
 
 ---
 
@@ -206,23 +206,24 @@ pnpm run db:seed
 ### `prisma/schema.prisma` (models & enums present)
 
 - Models defined include (based on repository context):
-    - `Meal` — core entity with fields like `id`, `title`, `image`, `description`, and `instructions`.
-        - `Ingredient` — normalized entity related to `Meal` via a foreign key, representing each ingredient as a
-          separate row.
-        - `InstructionItem` — (if present) represents individual steps or instructions, related to `Meal`.
+  - `Meal` — core entity with fields like `id`, `title`, `image`, `description`, and `instructions`.
+    - `Ingredient` — normalized entity related to `Meal` via a foreign key, representing each ingredient as a
+      separate row.
+    - `InstructionItem` — (if present) represents individual steps or instructions, related to `Meal`.
 - Enums:
-    - `MealType` — when used, supports filtering via GraphQL and smart search (values commonly: `breakfast`, `lunch`,
-      `dinner`, `snacks`, `dessert`, `drinks`).
+  - `MealType` — when used, supports filtering via GraphQL and smart search (values commonly: `breakfast`, `lunch`,
+    `dinner`, `snacks`, `dessert`, `drinks`).
 - Migrations:
-    - See `prisma/migrations/*/migration.sql` for the exact evolution (e.g., adding nutrition fields, adjusting
-      related tables). Use these files to understand current column shapes.
+  - See `prisma/migrations/*/migration.sql` for the exact evolution (e.g., adding nutrition fields, adjusting
+    related tables). Use these files to understand current column shapes.
 
 > Note: Ingredients are now normalized into a separate `Ingredient` table and related to `Meal` via a foreign key. Each
 > ingredient is stored as a separate row, not as a JSON array on the `Meal` model.
+
 ### `prisma.config.ts` (adapter & generation specifics)
 
 - The project uses a Prisma config file to centralize settings. Typical patterns include:
-    - Adapter: `@prisma/adapter-pg` for PostgreSQL, constructed from `process.env.DATABASE_URL`.
+  - Adapter: `@prisma/adapter-pg` for PostgreSQL, constructed from `process.env.DATABASE_URL`.
   - Client output: generated into `prisma/generated/prisma` (as configured in the generator block).
     - Logging: enable `['query','error','warn']` in development for better visibility.
 
@@ -237,16 +238,16 @@ Example aspects (not full code):
 ## Troubleshooting
 
 - `P1001: Can't reach database server`
-    - Verify the DB is running and `DATABASE_URL` is correct.
-    - For Docker: run `pnpm run db:start` and check `docker ps`.
+  - Verify the DB is running and `DATABASE_URL` is correct.
+  - For Docker: run `pnpm run db:start` and check `docker ps`.
 
 - `@prisma/client did not initialize yet`
-    - Run `pnpm run db:generate`.
-    - Ensure the import path is correct and generation completed successfully.
+  - Run `pnpm run db:generate`.
+  - Ensure the import path is correct and generation completed successfully.
 
 - Migration errors
-    - Inspect migration SQL under `prisma/migrations/*/migration.sql`.
-    - Check for incompatible changes (e.g., required fields without defaults).
+  - Inspect migration SQL under `prisma/migrations/*/migration.sql`.
+  - Check for incompatible changes (e.g., required fields without defaults).
 
 ---
 

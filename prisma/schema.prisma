@@ -56,5 +56,5 @@ model InstructionItem {
   meal   Meal    @relation(fields: [mealId], references: [id], onDelete: Cascade)
   mealId Int
 
-  @@unique([mealId, step]) // ✅ each step number is unique per meal
+  @@unique([mealId, step]) // each step number is unique per meal
 }

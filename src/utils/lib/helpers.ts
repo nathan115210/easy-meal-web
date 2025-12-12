@@ -93,7 +93,7 @@ export const syncArray = (params: URLSearchParams, key: string, values: string[]
       }
     });
   }
-}
+};
 
 /**
  * Convert a title string into a URL-friendly slug.
@@ -115,5 +115,5 @@ export function slugify(title: string): string {
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-') // replace spaces & special chars
-    .replace(/(^-|-$)+/g, '');   // trim leading/trailing -
+    .replace(/(^-|-$)+/g, ''); // trim leading/trailing -
 }
