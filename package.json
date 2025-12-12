@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "pnpm db:start && next dev",
     "db:start": "docker start easy-meal-postgres || docker ps",
     "db:stop": "docker stop easy-meal-postgres || docker ps",
     "db:generate": "prisma generate",
@@ -15,9 +15,10 @@
     "build": "pnpm run test && prettier --check . && next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:unit:ui": "vitest --ui",
+    "test:e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -35,8 +36,10 @@
     "react-dom": "19.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
     "@types/pg": "^8.15.6",
@@ -48,6 +51,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
     "jsdom": "^27.1.0",
+    "msw": "^2.12.4",
     "prettier": "3.6.2",
     "prisma": "^7.1.0",
     "sass": "^1.93.2",

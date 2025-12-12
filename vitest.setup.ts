@@ -1,10 +1,21 @@
 import '@testing-library/jest-dom/vitest';
 import 'whatwg-fetch'; // fetch() in jsdom
 import React from 'react';
-import { vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, vi } from 'vitest';
+import { mswServer } from '@/utils/test/unit-test/msw/mswServer';
+import { cleanup } from '@testing-library/react';
 
 type NextImageProps = import('next/image').ImageProps;
 type StaticImageData = import('next/image').StaticImageData;
+
+beforeAll(() => mswServer.listen({ onUnhandledRequest: 'warn' }));
+afterEach(() => {
+  mswServer.resetHandlers();
+  cleanup();
+});
+afterAll(() => {
+  mswServer.close();
+});
 
 // next/image → plain <img> so RTL can find it
 vi.mock('next/image', () => {
@@ -20,7 +31,6 @@ vi.mock('next/image', () => {
 
 // App Router hooks used in unit tests
 vi.mock('next/navigation', async () => {
-  // Provide only what you use; extend as needed
   return {
     usePathname: () => '/',
     useSearchParams: () => new URLSearchParams(),

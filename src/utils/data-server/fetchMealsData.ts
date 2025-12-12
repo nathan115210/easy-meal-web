@@ -36,10 +36,10 @@ async function fetchMealsData({
 }): Promise<MealsPagePayload['meals']> {
   const { cookTimeMin, cookTimeMax } = mapCookTimeToBounds(cookTime);
   const data = await graphqlFetchClient<MealsPagePayload>(
-    '/api/mealsData',
+    '/api/all-meals',
     ALL_MEALS_QUERY,
     {
-      search: search,
+      search,
       mealType,
       cookTimeMin,
       cookTimeMax,

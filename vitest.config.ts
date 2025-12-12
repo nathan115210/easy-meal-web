@@ -13,6 +13,7 @@ export default defineConfig({
       modules: { classNameStrategy: 'non-scoped' },
     },
     coverage: {
+      provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
       include: ['src/**/*.{ts,tsx}'],
     },
