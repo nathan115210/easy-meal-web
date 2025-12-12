@@ -11,7 +11,7 @@ provided npm scripts in day-to-day development.
 - Usage pattern:
     - Schema defined in `prisma/schema.prisma`
     - Migrations stored in `prisma/migrations`
-    - Prisma Client generated into `prisma/generated/client`
+  - Prisma Client generated into `prisma/generated/prisma`
     - Shared Prisma client singleton in `src/utils/lib/prisma.ts`
     - Seed data in `prisma/seed.ts`
 
@@ -43,14 +43,14 @@ Client generation & output:
 ```prisma
 generator client {
   provider = "prisma-client"
-  output   = "./generated/client"
+  output = "./generated/prisma"
 }
 ```
 
 This emits the Prisma Client into:
 
 ```
-prisma/generated/client
+prisma/generated/prisma
 ```
 
 Client usage pattern:
@@ -180,7 +180,7 @@ First time / fresh environment:
 pnpm run db:start      # start Postgres in Docker
 pnpm run db:migrate    # apply schema to DB
 pnpm run db:seed       # insert initial meals
-dpnm run dev           # start Next.js dev server
+pnm run dev           # start Next.js dev server
 ```
 
 After changing `schema.prisma`:
@@ -206,25 +206,24 @@ pnpm run db:seed
 ### `prisma/schema.prisma` (models & enums present)
 
 - Models defined include (based on repository context):
-    - `Meal` — core entity with fields like `id`, `slug`, `title`, `image`, `description`, `ingredients` (TEXT/JSON
-      depending on migration), `instructions`, `creator`, `creator_email`.
-    - (If normalized) `Ingredient` and `InstructionItem` may be separate models; otherwise they are stored as
-      arrays/JSON on `Meal`.
+    - `Meal` — core entity with fields like `id`, `title`, `image`, `description`, and `instructions`.
+        - `Ingredient` — normalized entity related to `Meal` via a foreign key, representing each ingredient as a
+          separate row.
+        - `InstructionItem` — (if present) represents individual steps or instructions, related to `Meal`.
 - Enums:
     - `MealType` — when used, supports filtering via GraphQL and smart search (values commonly: `breakfast`, `lunch`,
       `dinner`, `snacks`, `dessert`, `drinks`).
 - Migrations:
     - See `prisma/migrations/*/migration.sql` for the exact evolution (e.g., adding nutrition fields, adjusting
-      `ingredients` type). Use these files to understand current column shapes.
+      related tables). Use these files to understand current column shapes.
 
-> Tip: If `ingredients` are stored as JSON strings (e.g., `[{"text":"Salt","amount":"1 tsp"}, ...]`), ensure helpers
-> validate/parse into `Array<{ text: string; amount: string }>` when reading.
-
+> Note: Ingredients are now normalized into a separate `Ingredient` table and related to `Meal` via a foreign key. Each
+> ingredient is stored as a separate row, not as a JSON array on the `Meal` model.
 ### `prisma.config.ts` (adapter & generation specifics)
 
 - The project uses a Prisma config file to centralize settings. Typical patterns include:
     - Adapter: `@prisma/adapter-pg` for PostgreSQL, constructed from `process.env.DATABASE_URL`.
-    - Client output: generated into `prisma/generated/client` (as configured in the generator block).
+  - Client output: generated into `prisma/generated/prisma` (as configured in the generator block).
     - Logging: enable `['query','error','warn']` in development for better visibility.
 
 Example aspects (not full code):

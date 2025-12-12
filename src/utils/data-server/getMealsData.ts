@@ -16,8 +16,27 @@ export async function getMealsData(): Promise<Meal[]> {
 }
 
 export async function getMealBySlug(slug: string): Promise<Meal | undefined> {
-  const meals = await getMealsData();
-  return meals.find((meal) => meal.slug === slug);
+  // Fetch all meal titles and IDs
+  const mealsMeta = await prisma.meal.findMany({
+    select: { id: true, title: true },
+  });
+  const matchedMealMeta = mealsMeta.find((meal) => slugify(meal.title) === slug);
+  if (!matchedMealMeta) {
+    return undefined;
+  }
+
+  // Fetch the full meal with relations by ID
+  const mealDb = await prisma.meal.findUnique({
+    where: { id: matchedMealMeta.id },
+    include: {
+      ingredients: true,
+      instructions: true,
+    },
+  });
+
+  if (!mealDb) return undefined;
+
+  return extractDbToMeal(mealDb);
 }
 
 type DbMealWithRelations = Prisma.MealGetPayload<{
@@ -36,7 +55,7 @@ const extractDbToMeal = (dbMeal: DbMealWithRelations): Meal => {
     title: dbMeal.title,
     slug: slugify(dbMeal.title),
     image: dbMeal.image,
-    description: 'TODFO: add description',
+    description: dbMeal.description,
     ingredients: dbMeal.ingredients.map((ing) => ({
       id: ing.id,
       text: ing.text,

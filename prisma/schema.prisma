@@ -43,7 +43,7 @@ model Ingredient {
   id     Int    @id @default(autoincrement())
   text   String
   amount String
-  // 1:1 relation to Meal (one nutrition row per meal)
+  //  Many ingredients belong to one meal
   meal   Meal   @relation(fields: [mealId], references: [id], onDelete: Cascade)
   mealId Int //1:many (one meal -> many ingredients)
 }
