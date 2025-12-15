@@ -1,18 +1,26 @@
 import '@testing-library/jest-dom/vitest';
 import 'whatwg-fetch'; // fetch() in jsdom
 import React from 'react';
-import { vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, vi } from 'vitest';
+import { mswServer } from '@/utils/test/unit-test/msw/mswServer';
+import { cleanup } from '@testing-library/react';
 
 type NextImageProps = import('next/image').ImageProps;
-type StaticImageData = import('next/image').StaticImageData;
+
+beforeAll(() => mswServer.listen({ onUnhandledRequest: 'warn' }));
+afterEach(() => {
+  mswServer.resetHandlers();
+  cleanup();
+});
+afterAll(() => {
+  mswServer.close();
+});
 
 // next/image → plain <img> so RTL can find it
 vi.mock('next/image', () => {
-  const MockNextImage: React.FC<NextImageProps> = ({ src, alt, ...rest }) => {
-    // Accept string or imported static image
-    const resolved = typeof src === 'string' ? src : (src as StaticImageData).src;
-
-    return React.createElement('img', { src: resolved, alt, ...rest });
+  const MockNextImage = (props: NextImageProps) => {
+    const { priority, placeholder, loader, unoptimized, ...imgProps } = props;
+    return React.createElement('img', imgProps as React.ImgHTMLAttributes<HTMLImageElement>);
   };
 
   return { __esModule: true, default: MockNextImage };
@@ -20,7 +28,6 @@ vi.mock('next/image', () => {
 
 // App Router hooks used in unit tests
 vi.mock('next/navigation', async () => {
-  // Provide only what you use; extend as needed
   return {
     usePathname: () => '/',
     useSearchParams: () => new URLSearchParams(),

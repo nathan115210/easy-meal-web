@@ -3,7 +3,7 @@ import { mealsSchema } from '@/utils/lib/graphql/schemas/meals-schema';
 
 const yogaApp = createYoga({
   schema: mealsSchema,
-  graphqlEndpoint: '/api/mealsData',
+  graphqlEndpoint: '/api/all-meals',
   graphiql: process.env.NODE_ENV !== 'production',
 });
 

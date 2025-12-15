@@ -79,7 +79,7 @@ const typeDefs = /* GraphQL */ `
   }
 `;
 
-type MealsFilterInput = {
+export type MealsFilterInput = {
   search?: string | null;
   mealType?: MealType[] | null;
   cookTimeMin?: number | null;
@@ -87,7 +87,7 @@ type MealsFilterInput = {
   //tags?: string[] | null; //TODO: add tags filtering later, tags can be ['vegan', 'gluten-free', etc.]
 };
 
-type PaginationInput = {
+export type PaginationInput = {
   limit?: number | null;
   offset?: number | null;
 };

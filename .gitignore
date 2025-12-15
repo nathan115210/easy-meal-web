@@ -39,3 +39,6 @@ next-env.d.ts
 .vscode
 /.idea
 /prisma/generated/prisma
+
+# Testing
+/test-results

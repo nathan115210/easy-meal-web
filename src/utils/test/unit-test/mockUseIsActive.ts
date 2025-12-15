@@ -1,6 +1,5 @@
-// src/test/mocks/useIsActive.ts
 import { type MockedFunction, vi } from 'vitest';
-/** Now import the mocked hook */
+/** import the mocked hook */
 import useIsActive from '@/utils/hooks/useIsActive';
 
 /** Hoist the module mock first */

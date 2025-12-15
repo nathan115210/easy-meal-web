@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { mockActive, resetActiveMock } from '@/utils/unit-test/mockUseIsActive';
+import { mockActive, resetActiveMock } from '@/utils/test/unit-test/mockUseIsActive';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import BottomNavigation from './BottomNavigation';
 import { NavigationItemProps } from '@/components/navigation/navigationTypes';
