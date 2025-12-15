@@ -6,7 +6,6 @@ import { mswServer } from '@/utils/test/unit-test/msw/mswServer';
 import { cleanup } from '@testing-library/react';
 
 type NextImageProps = import('next/image').ImageProps;
-type StaticImageData = import('next/image').StaticImageData;
 
 beforeAll(() => mswServer.listen({ onUnhandledRequest: 'warn' }));
 afterEach(() => {
@@ -19,11 +18,9 @@ afterAll(() => {
 
 // next/image → plain <img> so RTL can find it
 vi.mock('next/image', () => {
-  const MockNextImage: React.FC<NextImageProps> = ({ src, alt, ...rest }) => {
-    // Accept string or imported static image
-    const resolved = typeof src === 'string' ? src : (src as StaticImageData).src;
-
-    return React.createElement('img', { src: resolved, alt, ...rest });
+  const MockNextImage = (props: NextImageProps) => {
+    const { priority, placeholder, loader, unoptimized, ...imgProps } = props;
+    return React.createElement('img', imgProps as React.ImgHTMLAttributes<HTMLImageElement>);
   };
 
   return { __esModule: true, default: MockNextImage };

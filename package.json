@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm db:start && next dev",
+    "dev": "next dev",
     "db:start": "docker start easy-meal-postgres || docker ps",
     "db:stop": "docker stop easy-meal-postgres || docker ps",
     "db:generate": "prisma generate",
@@ -12,7 +12,7 @@
     "db:format": "prisma format",
     "db:seed": "npx prisma db seed",
     "db:reset": "prisma migrate reset",
-    "build": "pnpm run test && prettier --check . && next build",
+    "build": "pnpm run test:unit && prettier --check . && next build",
     "start": "next start",
     "lint": "eslint",
     "test:unit": "vitest run",

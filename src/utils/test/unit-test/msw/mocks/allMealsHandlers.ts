@@ -70,7 +70,7 @@ const mockAllMeals: Meal[] = [
     cookTime: 10,
     tags: ['quick', 'breakfast'],
     topTags: ['quick', 'breakfast'],
-    difficulty: DifficultyLevel.Hard,
+    difficulty: DifficultyLevel.Easy,
     nutritionInfo: {
       calories: 350,
       protein: 12,

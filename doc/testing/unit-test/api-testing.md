@@ -134,7 +134,7 @@ This file:
 We aggregate handler sets in one place:
 
 ```ts
-import { allMealsHandlers } from './allMealsHandlers';
+import { allMealsHandlers } from '@/utils/test/unit-test/msw/mocks/allMealsHandlers';
 
 export const mockHandlers = [
   ...allMealsHandlers,
