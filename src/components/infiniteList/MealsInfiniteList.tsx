@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Col, ColProps } from '@/components/grid/Grid';
+import { Col, ColProps, Row } from '@/components/grid/Grid';
 import Card from '@/components/card/Card';
 import BaseLink from '@/components/baseLink/BaseLink';
 import Spinner from '@/components/spinner/Spinner';
@@ -100,13 +100,17 @@ export default function MealsInfiniteList({
 
   // Initial load state
   if (status === 'pending') {
-    return <CardsListSkeleton />;
+    return (
+      <Row>
+        <CardsListSkeleton />
+      </Row>
+    );
   }
 
   // Error state
   if (status === 'error') {
     return (
-      <div>
+      <div data-testid="meals-list-error">
         <span>Something went wrong.</span>
         <pre>{(error as Error).message}</pre>
       </div>
@@ -115,13 +119,19 @@ export default function MealsInfiniteList({
 
   if (!items.length)
     return (
-      <EmptyList search={search} mealType={mealType} cookTime={cookTime} clearHref={pagePath} />
+      <EmptyList
+        search={search}
+        mealType={mealType}
+        cookTime={cookTime}
+        clearHref={pagePath}
+        data-testid="meals-empty-list"
+      />
     );
 
   const bottomLineText = !!search ? '🔍 That’s all we found' : '🍽️  All meals loaded';
 
   return (
-    <>
+    <Row data-testid="meals-infinite-list">
       {items.map((meal, index) => {
         const { difficulty, nutritionInfo: { calories } = {} } = meal;
         const quickInfo = [parseCalories(calories), parseDifficulty(difficulty)].filter(Boolean);
@@ -129,6 +139,7 @@ export default function MealsInfiniteList({
         return (
           <Col className={styles.listContainer} key={`${meal.slug}-${index}`} {...gridLayout}>
             <Card
+              data-testid="meal-card"
               heading={meal.title}
               imageSet={{ mobileSrc: meal.image }}
               imageAlt={meal.title}
@@ -176,14 +187,14 @@ export default function MealsInfiniteList({
         );
       })}
 
-      <div ref={watcherRef} />
+      <div ref={watcherRef} data-testid="infinite-scroll-watcher" />
 
       {isFetchingNextPage && <Spinner />}
 
       {!hasNextPage && items.length > 0 && (
         <BottomLine label={bottomLineText} showClear={!!search || !!mealType || !!cookTime} />
       )}
-    </>
+    </Row>
   );
 }
 

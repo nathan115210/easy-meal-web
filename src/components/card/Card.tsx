@@ -11,12 +11,11 @@ export interface CardProps {
   children?: ReactNode;
 }
 
-//TODO: render the cookTime
-function Card({ imageSet, heading, imageAlt, children, cookTime }: CardProps) {
+function Card({ imageSet, heading, imageAlt, children, cookTime, ...rest }: CardProps) {
   const cookTimeLabel = cookTime ? `${cookTime} min` : undefined;
 
   return (
-    <div className={`${styles.card} ${cookTimeLabel ? styles['card-withOverlay'] : ''}`}>
+    <div className={`${styles.card} ${cookTimeLabel ? styles['card-withOverlay'] : ''}`} {...rest}>
       {cookTimeLabel && (
         <Chip
           className={styles.cardTag}
