@@ -9,6 +9,7 @@ export default function EmptyList({
   mealType,
   cookTime,
   clearHref,
+  ...rest
 }: {
   search?: string;
   mealType?: MealType[];
@@ -25,18 +26,23 @@ export default function EmptyList({
     : 'Unable to load meals at the moment.';
 
   return (
-    <div className={styles.emptyList}>
+    <div className={styles.emptyList} {...rest}>
       <h1>{heading}</h1>
       <p>{content}</p>
       <Image src={img} alt={'No more results for'} width={'300'} height={'300'}></Image>
       <ButtonGroup>
         {clearHref && (
-          <BaseLink href={clearHref} variant={'primary'} replace>
+          <BaseLink
+            href={clearHref}
+            variant={'primary'}
+            replace
+            data-testid={'emptyList-reviewAllMeals-cta'}
+          >
             Review All Meals
           </BaseLink>
         )}
 
-        <BaseLink href={'/'} variant={'secondary'}>
+        <BaseLink href={'/'} variant={'secondary'} data-testid="emptyList-backToHome-cta">
           Back to home
         </BaseLink>
       </ButtonGroup>

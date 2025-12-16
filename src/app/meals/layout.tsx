@@ -40,9 +40,9 @@ export default function MealsLayout({
   children: ReactNode;
 }>) {
   return (
-    <div>
+    <section>
       <TopBar />
       {children}
-    </div>
+    </section>
   );
 }

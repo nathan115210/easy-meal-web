@@ -15,7 +15,7 @@ function TopBar({
   showSearch?: boolean;
 }) {
   return (
-    <div className={styles.topBar}>
+    <div className={styles.topBar} data-testid="topbar">
       <Link href={'/'} className={styles.logo}>
         <Image src="/logo.svg" alt="Your brand" width={120} height={27} priority />
       </Link>

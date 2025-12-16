@@ -60,6 +60,7 @@ function SearchBar({
         {ariaLabel}
       </label>
       <input
+        data-testid="search-bar-input"
         className={styles.searchInput}
         id={inputId}
         type="search"
