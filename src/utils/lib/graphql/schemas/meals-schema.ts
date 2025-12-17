@@ -2,6 +2,7 @@
 import { getMealBySlug, getMealsData } from '@/utils/data-server/getMealsData';
 import { createSchema } from 'graphql-yoga';
 import type { Meal, MealType } from '@/utils/types/meals';
+import { hasAnyOverlap, stringToArray } from '@/utils/lib/helpers';
 
 const typeDefs = /* GraphQL */ `
   enum MealType {
@@ -18,6 +19,7 @@ const typeDefs = /* GraphQL */ `
     mealType: [MealType!]
     cookTimeMin: Int
     cookTimeMax: Int
+    searchTags: [String!]
   }
 
   input PaginationInput {
@@ -84,7 +86,7 @@ export type MealsFilterInput = {
   mealType?: MealType[] | null;
   cookTimeMin?: number | null;
   cookTimeMax?: number | null;
-  //tags?: string[] | null; //TODO: add tags filtering later, tags can be ['vegan', 'gluten-free', etc.]
+  searchTags?: string[] | null;
 };
 
 export type PaginationInput = {
@@ -102,7 +104,7 @@ const resolvers = {
       const allMeals = await getMealsData();
 
       const { filter, pagination } = args;
-      const { search, mealType, cookTimeMin, cookTimeMax } = filter || {};
+      const { search, mealType, cookTimeMin, cookTimeMax, searchTags } = filter || {};
 
       // Filtering
       let filtered: Meal[] = allMeals;
@@ -110,7 +112,19 @@ const resolvers = {
       // With search keywords
       if (search) {
         const q = search.toLowerCase();
-        filtered = filtered.filter((meal) => meal.title.toLowerCase().includes(q));
+        const searchKeys = stringToArray(q);
+
+        filtered = filtered.reduce<Meal[]>((res, item) => {
+          const title = item.title.toLowerCase();
+          const titleArr = stringToArray(title);
+          console.log(titleArr);
+          if (hasAnyOverlap(searchKeys, titleArr)) {
+            res.push(item);
+          }
+          return res;
+        }, []);
+
+        //filtered = filtered.filter((meal) => meal.title.toLowerCase().includes(q));
       }
 
       // With mealTypes
@@ -129,6 +143,14 @@ const resolvers = {
           if (!!cookTimeMin && meal.cookTime < cookTimeMin) return false;
           if (!!cookTimeMax && meal.cookTime > cookTimeMax) return false;
           return true;
+        });
+      }
+
+      // With searchTags
+      if (!!searchTags && searchTags.length > 0) {
+        filtered = filtered.filter((meal) => {
+          if (!meal.tags || meal.tags.length === 0) return false;
+          return hasAnyOverlap(searchTags, meal.tags);
         });
       }
 

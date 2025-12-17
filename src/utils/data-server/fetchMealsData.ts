@@ -25,12 +25,13 @@ async function fetchMealsData({
   cookTime,
   signal,
   limit = PAGE_SIZE,
+  searchTags,
 }: {
   pageParam?: number;
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
-
+  searchTags?: string[];
   signal: AbortSignal;
   limit?: number;
 }): Promise<MealsPagePayload['meals']> {
@@ -43,6 +44,7 @@ async function fetchMealsData({
       mealType,
       cookTimeMin,
       cookTimeMax,
+      searchTags,
       limit,
       offset: pageParam,
     },

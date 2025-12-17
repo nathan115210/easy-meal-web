@@ -38,9 +38,9 @@ const smartSearchData = {
   ],
   specialTags: [
     { label: '5 Ingredients or Less', value: 'simple_5_ingredients' },
-    { label: 'One-Pot / One-Pan', value: 'one_pot' },
+    { label: 'One-Pot / One-Pan', value: 'one-pot' },
     { label: 'Minimal Cleanup', value: 'minimal_cleanup' },
-    { label: 'Quick Lunch Friendly', value: 'lunch_friendly' },
+    { label: 'Quick', value: 'quick' },
     { label: 'Crowd Pleaser', value: 'crowd_pleaser' },
     { label: 'Meal Prep Friendly', value: 'meal_prep' },
     { label: 'Freezer-Friendly', value: 'freezer_friendly' },

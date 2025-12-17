@@ -1,6 +1,6 @@
 import styles from './page.module.scss';
 import SmartSearchPanel from '@/app/smart-search/components/smartSearchPanel/SmartSearchPanel';
-import { Grid, Row } from '@/components/grid/Grid';
+import { Grid } from '@/components/grid/Grid';
 import MealsInfiniteList from '@/components/infiniteList/MealsInfiniteList';
 import { CookTimeValue, MealType, SmartSearchOptionsState } from '@/utils/types/meals';
 
@@ -9,10 +9,10 @@ type SmartSearchPageProps = {
 };
 
 export default async function SmartSearchPage({ searchParams }: SmartSearchPageProps) {
-  const params = (await searchParams) ?? {};
-  const resolvedSearchParams = normalizeSearchParams(params);
-  const { cookTime, mealType } = resolvedSearchParams;
-
+  const resolvedSearchParams = normalizeSearchParams((await searchParams) ?? {});
+  const { cookTime, mealType, search, dietaryPreferences, healthTags, specialTags, occasionTags } =
+    resolvedSearchParams;
+  const extractedTags = [...dietaryPreferences, ...healthTags, ...specialTags, ...occasionTags];
   return (
     <div className={styles.smartSearch}>
       <div className={styles.searchPanel}>
@@ -20,13 +20,13 @@ export default async function SmartSearchPage({ searchParams }: SmartSearchPageP
       </div>
       <div className={styles.searchResults}>
         <Grid>
-          <Row>
-            <MealsInfiniteList
-              gridLayout={{ sm: 12, md: 6, lg: 6, xl: 4 }}
-              cookTime={cookTime}
-              mealType={mealType}
-            />
-          </Row>
+          <MealsInfiniteList
+            gridLayout={{ sm: 12, md: 6, lg: 6, xl: 4 }}
+            cookTime={cookTime}
+            mealType={mealType}
+            search={search}
+            searchTags={extractedTags}
+          />
         </Grid>
       </div>
     </div>
@@ -87,5 +87,6 @@ function normalizeSearchParams(params: {
     specialTags: toArray(params.specialTags),
     occasionTags: toArray(params.occasionTags),
     healthTags: toArray(params.healthTags),
+    search: toString(params.search),
   };
 }

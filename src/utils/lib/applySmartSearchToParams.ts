@@ -42,5 +42,23 @@ export function applySmartSearchToParams(
     }
   });
 
+  // Keep `search` consistent: in some places it's treated as a scalar; in others
+  // it might arrive as an array. Ensure it is represented as a single param.
+  if ('search' in options) {
+    setOrDelete(params, 'search', (options.search ?? '') as string);
+  }
+
+  // IMPORTANT: MealsInfiniteList is filtered using `searchTags` (derived from
+  // dietaryPreferences/healthTags/specialTags/occasionTags in the page). The list won't
+  // update unless the URL changes in a way that changes the query key.
+  // So we also sync those tags explicitly under a dedicated param.
+  const searchTags = [
+    ...options.dietaryPreferences,
+    ...options.healthTags,
+    ...options.specialTags,
+    ...options.occasionTags,
+  ];
+  syncArray(params, 'searchTags', searchTags);
+
   return params;
 }

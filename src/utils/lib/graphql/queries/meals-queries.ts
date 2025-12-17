@@ -4,6 +4,7 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
     $mealType: [MealType!]
     $cookTimeMin: Int
     $cookTimeMax: Int
+    $searchTags: [String!]
     $limit: Int
     $offset: Int
   ) {
@@ -13,6 +14,7 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
         mealType: $mealType
         cookTimeMin: $cookTimeMin
         cookTimeMax: $cookTimeMax
+        searchTags: $searchTags
       }
       pagination: { limit: $limit, offset: $offset }
     ) {
@@ -21,6 +23,7 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
         slug
         image
         cookTime
+        tags
         topTags
         difficulty
         nutritionInfo {

@@ -66,4 +66,5 @@ export interface SmartSearchOptionsState {
   specialTags: string[];
   occasionTags: string[];
   healthTags: string[];
+  search?: string;
 }

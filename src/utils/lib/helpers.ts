@@ -48,7 +48,7 @@ export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined): {
 }
 
 /**
- * Set a query param when the provided value is present and not the literal "any".
+ * Set a query param when the provided value is§ present and not the literal "any".
  * Otherwise delete the param from the URLSearchParams.
  *
  * Notes:
@@ -111,9 +111,36 @@ export const syncArray = (params: URLSearchParams, key: string, values: string[]
  *  slugify('Taco\tTuesday\nSpecials')  => 'taco-tuesday-specials'
  */
 export function slugify(title: string): string {
-  return title
-    .toLowerCase()
-    .trim()
+  return normalizeString(title)
     .replace(/[^a-z0-9]+/g, '-') // replace spaces & special chars
     .replace(/(^-|-$)+/g, ''); // trim leading/trailing -
+}
+
+export const normalizeString = (s: string): string => s.trim().toLowerCase();
+
+export function stringToArray(str: string): string[] {
+  return normalizeString(str)
+    .split(' ')
+    .filter((item) => item.length > 0);
+}
+
+export function arrayToString(arr?: string | string[]): string {
+  if (arr === undefined) {
+    return '';
+  }
+  if (!Array.isArray(arr)) return arr;
+  return arr.map((item: string) => normalizeString(item)).join(' ');
+}
+
+export function hasAnyOverlap(arr1: readonly string[], arr2: readonly string[]): boolean {
+  if (arr1.length === 0 || arr2.length === 0) return false;
+
+  const [small, big] = arr1.length < arr2.length ? [arr1, arr2] : [arr2, arr1];
+  const set = new Set(small);
+
+  for (const item of big) {
+    if (set.has(normalizeString(item))) return true;
+  }
+
+  return false;
 }
