@@ -1,11 +1,13 @@
+import { CaloriesValue, CookTimeValue } from '@/utils/types/meals';
+
 const smartSearchData = {
   cookTimes: [
-    { label: 'Any', value: 'any' },
-    { label: '< 15m', value: 'under_15' },
-    { label: '< 30m', value: 'under_30' },
-    { label: '< 45m', value: 'under_45' },
-    { label: '< 60m', value: 'under_60' },
-    { label: '> 60m', value: 'over_60' },
+    { label: 'Any', value: CookTimeValue.Any },
+    { label: '< 15m', value: CookTimeValue.Under15 },
+    { label: '< 30m', value: CookTimeValue.Under30 },
+    { label: '< 45m', value: CookTimeValue.Under45 },
+    { label: '< 60m', value: CookTimeValue.Under60 },
+    { label: '> 60m', value: CookTimeValue.Over60 },
   ],
   dietaryPreferences: [
     { label: 'Balanced', value: 'balanced' },
@@ -17,10 +19,10 @@ const smartSearchData = {
     { label: 'Paleo', value: 'paleo' },
   ],
   maxCalories: [
-    { label: 'Any', value: 'any' },
-    { label: '< 400', value: 'under_400' },
-    { label: '< 600', value: 'under_600' },
-    { label: '< 800', value: 'under_800' },
+    { label: 'Any', value: CaloriesValue.Any },
+    { label: '< 400', value: CaloriesValue.Under400 },
+    { label: '< 600', value: CaloriesValue.Under600 },
+    { label: '< 800', value: CaloriesValue.Under800 },
   ],
   difficultyLevels: [
     { label: 'Any', value: 'any' },

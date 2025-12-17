@@ -1,7 +1,7 @@
 // src/utils/lib/graphql/schema.ts
 import { getMealBySlug, getMealsData } from '@/utils/data-server/getMealsData';
 import { createSchema } from 'graphql-yoga';
-import type { Meal, MealType } from '@/utils/types/meals';
+import { DifficultyLevel, Meal, MealType } from '@/utils/types/meals';
 import { hasAnyOverlap, stringToArray } from '@/utils/lib/helpers';
 
 const typeDefs = /* GraphQL */ `
@@ -20,6 +20,8 @@ const typeDefs = /* GraphQL */ `
     cookTimeMin: Int
     cookTimeMax: Int
     searchTags: [String!]
+    maxCalories: Int
+    difficulty: DifficultyLevel
   }
 
   input PaginationInput {
@@ -87,6 +89,8 @@ export type MealsFilterInput = {
   cookTimeMin?: number | null;
   cookTimeMax?: number | null;
   searchTags?: string[] | null;
+  maxCalories?: number | null;
+  difficulty?: DifficultyLevel | null;
 };
 
 export type PaginationInput = {
@@ -104,7 +108,7 @@ const resolvers = {
       const allMeals = await getMealsData();
 
       const { filter, pagination } = args;
-      const { search, mealType, cookTimeMin, cookTimeMax, searchTags } = filter || {};
+      const { search, mealType, cookTimeMin, cookTimeMax, searchTags, maxCalories } = filter || {};
 
       // Filtering
       let filtered: Meal[] = allMeals;
@@ -151,6 +155,23 @@ const resolvers = {
         filtered = filtered.filter((meal) => {
           if (!meal.tags || meal.tags.length === 0) return false;
           return hasAnyOverlap(searchTags, meal.tags);
+        });
+      }
+
+      // With maxCalories
+      if (!!maxCalories) {
+        filtered = filtered.filter((meal) => {
+          if (meal.nutritionInfo?.calories == null) return false;
+          if (maxCalories <= meal.nutritionInfo.calories) return false;
+          return true;
+        });
+      }
+
+      // Width difficulty
+      if (filter?.difficulty) {
+        filtered = filtered.filter((meal) => {
+          if (meal.difficulty == null) return false;
+          return meal.difficulty === filter.difficulty;
         });
       }
 

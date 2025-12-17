@@ -9,7 +9,7 @@ import Spinner from '@/components/spinner/Spinner';
 import BottomLine from '@/components/bottomLine/BottomLine';
 import EmptyList from '@/app/meals/components/EmptyList';
 import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
-import { CookTimeValue, MealType } from '@/utils/types/meals';
+import { CaloriesValue, CookTimeValue, DifficultyLevel, MealType } from '@/utils/types/meals';
 import fetchMealsData from '@/utils/data-server/fetchMealsData';
 import { usePathname } from 'next/navigation';
 import ChipsGroup from '@/components/chip/ChipsGroup';
@@ -24,19 +24,23 @@ export default function MealsInfiniteList({
   cookTime,
   gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
   searchTags,
+  maxCalories,
+  difficultyLevel,
 }: {
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
+  maxCalories?: CaloriesValue;
   gridLayout?: ColProps;
   searchTags?: string[];
+  difficultyLevel?: DifficultyLevel;
 }) {
   const pagePath = usePathname();
 
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
-    queryKey: ['meals', search, mealType, cookTime, searchTags],
+    queryKey: ['meals', search, mealType, cookTime, searchTags, maxCalories, difficultyLevel],
     queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
@@ -45,6 +49,8 @@ export default function MealsInfiniteList({
         cookTime,
         signal,
         searchTags,
+        difficulty: difficultyLevel,
+        calories: maxCalories,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {

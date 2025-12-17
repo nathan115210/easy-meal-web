@@ -1,8 +1,8 @@
-import { CookTimeValue, MealType } from '@/utils/types/meals';
+import { CaloriesValue, CookTimeValue, DifficultyLevel, MealType } from '@/utils/types/meals';
 import type { MealsListItem } from '@/app/meals/page';
 import { graphqlFetchClient } from '@/utils/data-server/graphqlFetchClient';
 import { ALL_MEALS_QUERY } from '@/utils/lib/graphql/queries/meals-queries';
-import { mapCookTimeToBounds } from '@/utils/lib/helpers';
+import { mapCalorieStringToNumber, mapCookTimeToBounds } from '@/utils/lib/helpers';
 
 type MealsPagePayload = {
   meals: {
@@ -26,6 +26,8 @@ async function fetchMealsData({
   signal,
   limit = PAGE_SIZE,
   searchTags,
+  calories,
+  difficulty,
 }: {
   pageParam?: number;
   search?: string;
@@ -34,8 +36,11 @@ async function fetchMealsData({
   searchTags?: string[];
   signal: AbortSignal;
   limit?: number;
+  calories?: CaloriesValue;
+  difficulty?: DifficultyLevel;
 }): Promise<MealsPagePayload['meals']> {
   const { cookTimeMin, cookTimeMax } = mapCookTimeToBounds(cookTime);
+  const maxCalories = mapCalorieStringToNumber(calories);
   const data = await graphqlFetchClient<MealsPagePayload>(
     '/api/all-meals',
     ALL_MEALS_QUERY,
@@ -45,7 +50,9 @@ async function fetchMealsData({
       cookTimeMin,
       cookTimeMax,
       searchTags,
+      maxCalories,
       limit,
+      difficulty,
       offset: pageParam,
     },
     signal

@@ -1,4 +1,4 @@
-import { CookTimeValue } from '@/utils/types/meals';
+import { CaloriesValue, CookTimeValue } from '@/utils/types/meals';
 
 /**
  * Convert a string to Title Case.
@@ -44,6 +44,20 @@ export function mapCookTimeToBounds(cookTime: CookTimeValue | undefined): {
     case CookTimeValue.Any:
     default:
       return { cookTimeMin: null, cookTimeMax: null };
+  }
+}
+
+export function mapCalorieStringToNumber(calories: CaloriesValue | undefined): number | null {
+  switch (calories) {
+    case CaloriesValue.Under400:
+      return 400;
+    case CaloriesValue.Under600:
+      return 600;
+    case CaloriesValue.Under800:
+      return 800;
+    case CaloriesValue.Any:
+    default:
+      return null;
   }
 }
 

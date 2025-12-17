@@ -1,14 +1,19 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { CookTimeValue, SmartSearchOptionsState } from '@/utils/types/meals';
+import {
+  CaloriesValue,
+  CookTimeValue,
+  DifficultyLevel,
+  SmartSearchOptionsState,
+} from '@/utils/types/meals';
 
 export const DEFAULT_SMART_OPTIONS: SmartSearchOptionsState = {
   existIngredients: [],
   excludeIngredients: [],
   cookTime: CookTimeValue.Any,
-  maxCalories: 'any',
-  difficultyLevel: 'any',
+  maxCalories: CaloriesValue.Any,
+  difficultyLevel: DifficultyLevel.Any,
   dietaryPreferences: [],
   mealType: [],
   specialTags: [],
