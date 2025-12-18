@@ -17,14 +17,14 @@ In this project we **do not** unit-test the Next.js route file (`/api/all-meals`
 Instead, we test:
 
 1. **API client helpers** (e.g. `fetchMealsData`):
-    - They call the GraphQL endpoint (e.g. `/api/all-meals`) using `graphqlFetchClient`.
-    - They attach the correct GraphQL query and variables.
-    - They parse the response into correct TypeScript types.
+   - They call the GraphQL endpoint (e.g. `/api/all-meals`) using `graphqlFetchClient`.
+   - They attach the correct GraphQL query and variables.
+   - They parse the response into correct TypeScript types.
 
 2. **GraphQL API behavior** via **MSW mock handlers**:
-    - MSW intercepts HTTP calls to the GraphQL endpoint used in tests.
-    - We use `graphql.link('/api/all-meals')` to simulate a GraphQL server for that endpoint.
-    - Handlers return **mocked data** in the same shape as the real API.
+   - MSW intercepts HTTP calls to the GraphQL endpoint used in tests.
+   - We use `graphql.link('/api/all-meals')` to simulate a GraphQL server for that endpoint.
+   - Handlers return **mocked data** in the same shape as the real API.
 
 Graphically:
 
@@ -157,8 +157,8 @@ This makes it easy to add new domains:
 
 - Defines a small set of **mock `Meal` data**.
 - Exposes GraphQL handlers for:
-    - `query AllMeals(...)` – fetch paginated meals list.
-    - `query Meal($slug)` – fetch a single meal by slug.
+  - `query AllMeals(...)` – fetch paginated meals list.
+  - `query Meal($slug)` – fetch a single meal by slug.
 
 - Mirrors **real schema behavior**: search, meal type filter, cook time range, pagination.
 
@@ -370,13 +370,13 @@ import { mapCookTimeToBounds } from '@/utils/lib/helpers';
 const PAGE_SIZE = 8;
 
 async function fetchMealsData({
-                                pageParam = 0,
-                                search,
-                                mealType,
-                                cookTime,
-                                signal,
-                                limit = PAGE_SIZE,
-                              } = {}) {
+  pageParam = 0,
+  search,
+  mealType,
+  cookTime,
+  signal,
+  limit = PAGE_SIZE,
+} = {}) {
   const { cookTimeMin, cookTimeMax } = mapCookTimeToBounds(cookTime);
 
   const data = await graphqlFetchClient(
@@ -477,18 +477,18 @@ When adding a new GraphQL query/mutation:
 1. **Define your real query** in `queries/*.ts`, including operation name and variables.
 
 2. In **MSW**:
-    - Add new mock data as needed.
-    - Add a new handler using `api.query` or `api.mutation`:
+   - Add new mock data as needed.
+   - Add a new handler using `api.query` or `api.mutation`:
 
-      ```ts
-      api.query('OperationName', ({ variables }) => {
-        // read variables, filter fake data, return HttpResponse.json({ data: { ... } })
-      });
-      ```
+     ```ts
+     api.query('OperationName', ({ variables }) => {
+       // read variables, filter fake data, return HttpResponse.json({ data: { ... } })
+     });
+     ```
 
 3. **Add tests** for the helper or hook that uses this query:
-    - Do not mock `graphqlFetchClient`.
-    - Let MSW respond and assert on the typed result.
+   - Do not mock `graphqlFetchClient`.
+   - Let MSW respond and assert on the typed result.
 
 4. If needed, add your handler set into `mockHandlers.ts`:
 
@@ -504,13 +504,13 @@ When adding a new GraphQL query/mutation:
 
 - **Vitest** runs tests in a Node + JSDOM environment, with global `fetch` and RTL.
 - **MSW** acts as a **fake GraphQL server**:
-    - All `fetch('/api/all-meals', { method: 'POST', body: { query, variables } })` calls are intercepted.
-    - Handlers are defined via `graphql.link('/api/all-meals')`.
-    - Handlers read `variables`, filter in-memory `mockAllMeals`, and return GraphQL-shaped JSON.
+  - All `fetch('/api/all-meals', { method: 'POST', body: { query, variables } })` calls are intercepted.
+  - Handlers are defined via `graphql.link('/api/all-meals')`.
+  - Handlers read `variables`, filter in-memory `mockAllMeals`, and return GraphQL-shaped JSON.
 
 - **We test the real data helpers** (`fetchMealsData`, etc.), not synthetic ones:
-    - If query/variable wiring changes, tests will fail.
-    - If schema shape changes (fields, operation names), we update handlers + tests together.
+  - If query/variable wiring changes, tests will fail.
+  - If schema shape changes (fields, operation names), we update handlers + tests together.
 
 This pattern gives a strong balance of:
 

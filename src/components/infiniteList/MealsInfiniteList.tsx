@@ -9,32 +9,52 @@ import Spinner from '@/components/spinner/Spinner';
 import BottomLine from '@/components/bottomLine/BottomLine';
 import EmptyList from '@/app/meals/components/EmptyList';
 import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsListSkeleton';
-import { CookTimeValue, MealType } from '@/utils/types/meals';
+import { CaloriesValue, CookTimeValue, DifficultyLevel, MealType } from '@/utils/types/meals';
 import fetchMealsData from '@/utils/data-server/fetchMealsData';
 import { usePathname } from 'next/navigation';
 import ChipsGroup from '@/components/chip/ChipsGroup';
-import Chip from '@/components/chip/Chip';
+import Chip, { ChipVariant } from '@/components/chip/Chip';
 import { underscoreToTitle } from '@/utils/lib/helpers';
 import styles from './mealsInfiniteList.module.scss';
-import { ChefHat, Flame } from 'lucide-react';
+import { Check, ChefHat, Flame } from 'lucide-react';
 
 export default function MealsInfiniteList({
   search,
   mealType,
   cookTime,
   gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
+  searchTags,
+  maxCalories,
+  difficultyLevel,
+  excludeIngredients,
+  includeIngredients,
 }: {
   search?: string;
   mealType?: MealType[];
   cookTime?: CookTimeValue;
+  maxCalories?: CaloriesValue;
   gridLayout?: ColProps;
+  searchTags?: string[];
+  difficultyLevel?: DifficultyLevel;
+  excludeIngredients?: string[];
+  includeIngredients?: string[];
 }) {
   const pagePath = usePathname();
 
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
-    queryKey: ['meals', search, mealType, cookTime],
+    queryKey: [
+      'meals',
+      search,
+      mealType,
+      cookTime,
+      searchTags,
+      maxCalories,
+      difficultyLevel,
+      excludeIngredients,
+      includeIngredients,
+    ],
     queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
@@ -42,6 +62,11 @@ export default function MealsInfiniteList({
         mealType,
         cookTime,
         signal,
+        searchTags,
+        difficulty: difficultyLevel,
+        calories: maxCalories,
+        excludeIngredients,
+        includeIngredients,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
@@ -71,7 +96,6 @@ export default function MealsInfiniteList({
   });
 
   const items = data?.pages.flatMap((page) => page.items) ?? [];
-
   // IntersectionObserver to trigger fetching the next page
   useEffect(() => {
     if (!hasNextPage || !watcherRef.current) {
@@ -135,6 +159,9 @@ export default function MealsInfiniteList({
       {items.map((meal, index) => {
         const { difficulty, nutritionInfo: { calories } = {} } = meal;
         const quickInfo = [parseCalories(calories), parseDifficulty(difficulty)].filter(Boolean);
+        const tags = new Set([...(meal.topTags ?? []), ...(searchTags ?? [])]);
+
+        const cardTags = extractTagsFromMealsSearchParams(meal.topTags, searchTags);
 
         return (
           <Col className={styles.listContainer} key={`${meal.slug}-${index}`} {...gridLayout}>
@@ -143,7 +170,7 @@ export default function MealsInfiniteList({
               heading={meal.title}
               imageSet={{ mobileSrc: meal.image }}
               imageAlt={meal.title}
-              cookTime={meal.cookTime}
+              label={`${meal.cookTime} mins`}
             >
               {/*Quick Info*/}
               <div className={styles.quickInfo}>
@@ -164,17 +191,22 @@ export default function MealsInfiniteList({
                 2. if there are tags from search params, show those tags and highlight them. if the tag is not in meal.topTags, add meal.topTags at the end
               */}
               {/*Top tags*/}
-              {meal.topTags && meal.topTags.length > 0 && (
+              {tags.size > 0 && (
                 <ChipsGroup ariaLabel={`${meal.title} - top tags`}>
-                  {meal.topTags.map((tag, index) => (
-                    <Chip
-                      key={`${meal.title}-${tag}-${index}`}
-                      label={underscoreToTitle(tag)}
-                      size={'sm'}
-                      variant="secondary"
-                      type={'label'}
-                    />
-                  ))}
+                  {[...cardTags].map((tag, index) => {
+                    const isHighlighted = searchTags?.includes(tag);
+                    const variant: ChipVariant = isHighlighted ? 'success' : 'secondary';
+                    return (
+                      <Chip
+                        key={`${meal.title}-${tag}-${index}`}
+                        label={underscoreToTitle(tag)}
+                        size={'sm'}
+                        variant={variant}
+                        type={'label'}
+                        labelIcon={isHighlighted ? <Check size={14} /> : undefined}
+                      />
+                    );
+                  })}
                 </ChipsGroup>
               )}
               {/* //TODO - END */}
@@ -198,6 +230,7 @@ export default function MealsInfiniteList({
   );
 }
 
+// Helpers
 type ExtractDifficultyLevelType = 'Easy' | 'Med' | 'Hard';
 
 const DIFFICULTY_VALUES = new Set<ExtractDifficultyLevelType>(['Easy', 'Med', 'Hard']);
@@ -233,4 +266,20 @@ function parseCalories(value?: number): string | undefined {
 
 function isCalories(value: unknown): boolean {
   return typeof value === 'string' && value.includes('Kcal');
+}
+
+// Reordering each meal's topTags and searchTags. Put searchTags first in the list.
+function extractTagsFromMealsSearchParams(topTags?: string[], searchTags?: string[]): string[] {
+  if (!topTags || topTags.length === 0) return [];
+  if (!searchTags || searchTags.length === 0) return [...topTags];
+
+  const priority = new Set(searchTags);
+  const inPriority: string[] = [];
+  const rest: string[] = [];
+
+  for (const item of topTags) {
+    (priority.has(item) ? inPriority : rest).push(item);
+  }
+
+  return [...inPriority, ...rest];
 }

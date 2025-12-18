@@ -25,6 +25,7 @@ export interface MealInstruction {
 }
 
 export enum DifficultyLevel {
+  Any = 'any',
   Easy = 'easy',
   Medium = 'medium',
   Hard = 'hard',
@@ -54,16 +55,23 @@ export enum CookTimeValue {
   Under60 = 'under_60',
   Over60 = 'over_60',
 }
+export enum CaloriesValue {
+  Any = 'any',
+  Under400 = 'under_400',
+  Under600 = 'under_600',
+  Under800 = 'under_800',
+}
 
 export interface SmartSearchOptionsState {
   existIngredients: string[];
   excludeIngredients: string[];
   cookTime: CookTimeValue;
   dietaryPreferences: string[];
-  maxCalories: string;
-  difficultyLevel: string;
+  maxCalories: CaloriesValue;
+  difficultyLevel: DifficultyLevel;
   mealType: MealType[];
   specialTags: string[];
   occasionTags: string[];
   healthTags: string[];
+  search?: string;
 }

@@ -20,10 +20,11 @@ export interface ChipProps {
   selected?: boolean;
   disabled?: boolean;
   deletable?: boolean;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
   onSelect?: (selected: boolean, event: React.MouseEvent | React.KeyboardEvent) => void;
   onDelete?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  labelIcon?: React.JSX.Element;
 }
 
 function cx(...classes: (string | false | undefined)[]) {
@@ -47,6 +48,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
       className,
       onSelect,
       onDelete,
+      labelIcon,
     },
     ref
   ) => {
@@ -59,6 +61,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
       variantClass,
       selected && styles.selected,
       size === 'sm' && styles.sm,
+      size === 'lg' && styles.lg,
       disabled && styles.disabled,
       isLabelType && styles.labelType,
       type === 'single-select' && styles.singleSelect,
@@ -73,6 +76,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
           className={commonClass}
           aria-disabled={disabled || undefined}
         >
+          {labelIcon}
           <span className={styles.label}>{label}</span>
         </span>
       );

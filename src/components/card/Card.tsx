@@ -7,23 +7,15 @@ export interface CardProps {
   imageSet?: ImageSetType;
   imageAlt?: string;
   heading?: string;
-  cookTime?: number;
+  label?: string;
   children?: ReactNode;
 }
 
-function Card({ imageSet, heading, imageAlt, children, cookTime, ...rest }: CardProps) {
-  const cookTimeLabel = cookTime ? `${cookTime} min` : undefined;
-
+function Card({ imageSet, heading, imageAlt, children, label, ...rest }: CardProps) {
   return (
-    <div className={`${styles.card} ${cookTimeLabel ? styles['card-withOverlay'] : ''}`} {...rest}>
-      {cookTimeLabel && (
-        <Chip
-          className={styles.cardTag}
-          label={cookTimeLabel}
-          type="label"
-          size={'md'}
-          variant={'muted'}
-        />
+    <div className={`${styles.card} ${label ? styles['card-withOverlay'] : ''}`} {...rest}>
+      {label && (
+        <Chip className={styles.cardTag} label={label} type="label" size={'md'} variant={'muted'} />
       )}
       {/*Image*/}
       {imageSet && imageAlt && (

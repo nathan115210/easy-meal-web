@@ -189,6 +189,12 @@
   --chip-padding-y: #{pxToRem(2)};
   --chip-padding-x: #{pxToRem(8)};
   --chip-font-size: #{pxToRem(12)};
+  --chip-gap: #{pxToRem(2)};
+}
+.lg {
+  --chip-padding-y: #{pxToRem(4)};
+  --chip-padding-x: #{pxToRem(10)};
+  --chip-font-size: #{pxToRem(16)};
 }
 
 .label {

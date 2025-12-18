@@ -7,7 +7,6 @@ import useSmartSearchOptions from '@/utils/hooks/useSmartSearchOptions';
 
 export default function SmartSearchOptionsContainer() {
   const { options, updateOption, clearOption, resetAll } = useSmartSearchOptions();
-
   const { handleSearch } = useSmartSearchNavigation();
 
   return (

@@ -36,6 +36,7 @@ function SmartSearchOptions({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const hasSearchParam = searchParams.size > 0;
 
   const handleSearch = () => {
     onSearch?.(options);
@@ -48,6 +49,7 @@ function SmartSearchOptions({
     // Reset page url to initial state
     // Compute current full URL and target URL
     const currentQuery = searchParams?.toString() ?? '';
+
     const currentUrl = currentQuery ? `${pathname}?${currentQuery}` : pathname;
     if (currentUrl === pathname) {
       // Already at the "reset" URL, no need to push/replace
@@ -91,7 +93,7 @@ function SmartSearchOptions({
           className={styles.actionBtn}
           variant="primary"
           onClick={handleSearch}
-          disabled={isDefaultOptions}
+          disabled={!hasSearchParam && isDefaultOptions}
         >
           Search
         </Button>
@@ -99,7 +101,7 @@ function SmartSearchOptions({
           className={styles.actionBtn}
           variant="secondary-outline"
           onClick={handleReset}
-          disabled={isDefaultOptions}
+          disabled={!hasSearchParam && isDefaultOptions}
         >
           Reset
         </Button>
