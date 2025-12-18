@@ -28,6 +28,8 @@ async function fetchMealsData({
   searchTags,
   calories,
   difficulty,
+  excludeIngredients,
+  includeIngredients,
 }: {
   pageParam?: number;
   search?: string;
@@ -38,6 +40,8 @@ async function fetchMealsData({
   limit?: number;
   calories?: CaloriesValue;
   difficulty?: DifficultyLevel;
+  excludeIngredients?: string[];
+  includeIngredients?: string[];
 }): Promise<MealsPagePayload['meals']> {
   const { cookTimeMin, cookTimeMax } = mapCookTimeToBounds(cookTime);
   const maxCalories = mapCalorieStringToNumber(calories);
@@ -50,6 +54,8 @@ async function fetchMealsData({
       cookTimeMin,
       cookTimeMax,
       searchTags,
+      includeIngredients,
+      excludeIngredients,
       maxCalories,
       limit,
       difficulty,

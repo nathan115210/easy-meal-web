@@ -26,6 +26,8 @@ export default async function SmartSearchPage({ searchParams }: SmartSearchPageP
     occasionTags,
     maxCalories,
     difficultyLevel,
+    excludeIngredients,
+    existIngredients,
   } = resolvedSearchParams;
   const extractedTags = [...dietaryPreferences, ...healthTags, ...specialTags, ...occasionTags];
 
@@ -44,6 +46,8 @@ export default async function SmartSearchPage({ searchParams }: SmartSearchPageP
             searchTags={extractedTags}
             maxCalories={maxCalories}
             difficultyLevel={difficultyLevel}
+            excludeIngredients={excludeIngredients}
+            includeIngredients={existIngredients}
           />
         </Grid>
       </div>

@@ -26,6 +26,8 @@ export default function MealsInfiniteList({
   searchTags,
   maxCalories,
   difficultyLevel,
+  excludeIngredients,
+  includeIngredients,
 }: {
   search?: string;
   mealType?: MealType[];
@@ -34,13 +36,25 @@ export default function MealsInfiniteList({
   gridLayout?: ColProps;
   searchTags?: string[];
   difficultyLevel?: DifficultyLevel;
+  excludeIngredients?: string[];
+  includeIngredients?: string[];
 }) {
   const pagePath = usePathname();
 
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
-    queryKey: ['meals', search, mealType, cookTime, searchTags, maxCalories, difficultyLevel],
+    queryKey: [
+      'meals',
+      search,
+      mealType,
+      cookTime,
+      searchTags,
+      maxCalories,
+      difficultyLevel,
+      excludeIngredients,
+      includeIngredients,
+    ],
     queryFn: ({ pageParam = 0, signal }) =>
       fetchMealsData({
         pageParam,
@@ -51,6 +65,8 @@ export default function MealsInfiniteList({
         searchTags,
         difficulty: difficultyLevel,
         calories: maxCalories,
+        excludeIngredients,
+        includeIngredients,
       }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {

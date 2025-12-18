@@ -7,6 +7,8 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
     $cookTimeMax: Int
     $maxCalories: Int
     $searchTags: [String!]
+    $includeIngredients: [String!]
+    $excludeIngredients: [String!]
     $limit: Int
     $offset: Int
   ) {
@@ -19,6 +21,8 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
         cookTimeMax: $cookTimeMax
         maxCalories: $maxCalories
         searchTags: $searchTags
+        includeIngredients: $includeIngredients
+        excludeIngredients: $excludeIngredients
       }
       pagination: { limit: $limit, offset: $offset }
     ) {
