@@ -136,14 +136,12 @@ const resolvers = {
         filtered = filtered.reduce<Meal[]>((res, item) => {
           const title = item.title.toLowerCase();
           const titleArr = stringToArray(title);
-          console.log(titleArr);
+
           if (hasAnyOverlap(searchKeys, titleArr)) {
             res.push(item);
           }
           return res;
         }, []);
-
-        //filtered = filtered.filter((meal) => meal.title.toLowerCase().includes(q));
       }
 
       // With mealTypes
@@ -177,7 +175,7 @@ const resolvers = {
       if (!!maxCalories) {
         filtered = filtered.filter((meal) => {
           if (meal.nutritionInfo?.calories == null) return false;
-          if (maxCalories <= meal.nutritionInfo.calories) return false;
+          if (meal.nutritionInfo.calories > maxCalories) return false;
           return true;
         });
       }

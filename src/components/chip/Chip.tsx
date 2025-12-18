@@ -76,7 +76,7 @@ export const Chip = forwardRef<HTMLDivElement | HTMLSpanElement, ChipProps>(
           className={commonClass}
           aria-disabled={disabled || undefined}
         >
-          {labelIcon && labelIcon}
+          {labelIcon}
           <span className={styles.label}>{label}</span>
         </span>
       );

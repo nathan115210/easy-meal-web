@@ -105,17 +105,17 @@ function normalizeSearchParams(params: {
   const cookTimeRaw = toString(params.cookTime);
   const cookTime: CookTimeValue = isCookTimeValue(cookTimeRaw) ? cookTimeRaw : CookTimeValue.Any;
 
-  const caloriesRow = toString(params.maxCalories);
-  const maxCalories: CaloriesValue = isMaxCaloriesValue(caloriesRow)
-    ? caloriesRow
+  const caloriesRaw = toString(params.maxCalories);
+  const maxCalories: CaloriesValue = isMaxCaloriesValue(caloriesRaw)
+    ? caloriesRaw
     : CaloriesValue.Any;
 
   const mealTypeRaw = toArray(params.mealType);
   const mealType: MealType[] = mealTypeRaw.filter(isMealType);
 
-  const difficultyLevelRow = toString(params.difficultyLevel);
-  const difficultyLevel = isDifficultyLevelValue(difficultyLevelRow)
-    ? difficultyLevelRow
+  const difficultyLevelRaw = toString(params.difficultyLevel);
+  const difficultyLevel = isDifficultyLevelValue(difficultyLevelRaw)
+    ? difficultyLevelRaw
     : DifficultyLevel.Any;
   return {
     existIngredients: toArray(params.existIngredients),
