@@ -1,8 +1,9 @@
 import { getMealBySlug, getMealsData } from '@/utils/data-server/getMealsData';
 import { createSchema } from 'graphql-yoga';
-import { DifficultyLevel, Meal, MealType } from '@/utils/types/meals';
+import { Meal, MealType } from '@/utils/types/meals';
 import { hasAnyOverlap, normalizeString, stringToArray } from '@/utils/lib/helpers';
 
+// GraphQL type definitions for meals, ingredients, instructions, and enums.
 const typeDefs = /* GraphQL */ `
   enum MealType {
     breakfast
@@ -33,7 +34,7 @@ const typeDefs = /* GraphQL */ `
   }
 
   input PaginationInput {
-    limit: Int = 8 #TODO: make it dynamic later, on mobile first 3 on desktop first 8
+    limit: Int = 8 # TODO: Make this dynamic for mobile/desktop
     offset: Int = 0
   }
 
@@ -49,10 +50,10 @@ const typeDefs = /* GraphQL */ `
   }
 
   type NutritionInfo {
-    calories: Int # per serving
-    protein: Int # grams
-    carbs: Int # grams
-    fat: Int # grams
+    calories: Int
+    protein: Int
+    carbs: Int
+    fat: Int
   }
 
   type Meal {
@@ -77,14 +78,12 @@ const typeDefs = /* GraphQL */ `
   }
 
   type Query {
-    # All meals
     meals(filter: MealsFilterInput, pagination: PaginationInput): MealsPage!
-
-    # Meal by slug
     meal(slug: String!): Meal
   }
 `;
 
+// TypeScript types for filter and pagination input
 export type MealsFilterInput = {
   search?: string | null;
   mealType?: MealType[] | null;
@@ -94,7 +93,11 @@ export type MealsFilterInput = {
   includeIngredients?: string[] | null;
   excludeIngredients?: string[] | null;
   maxCalories?: number | null;
-  difficulty?: DifficultyLevel | null;
+  // Keep this flexible because your TS DifficultyLevel type may be:
+  // - string union: "any" | "easy" | ...
+  // - string enum
+  // - or something else in your codebase
+  difficulty?: unknown;
 };
 
 export type PaginationInput = {
@@ -102,7 +105,24 @@ export type PaginationInput = {
   offset?: number | null;
 };
 
-// Basic resolvers using dummy data for now
+const ALLOWED_DIFFICULTY = new Set(['any', 'easy', 'medium', 'hard']);
+
+function normalizeDifficulty(input: unknown): string | null {
+  if (input == null) return null;
+
+  // Most common case: string union or string enum value
+  if (typeof input === 'string') return input.toLowerCase();
+
+  // If someone passes an enum object value weirdly (rare), attempt to stringify
+  try {
+    const s = String(input).toLowerCase();
+    return s;
+  } catch {
+    return null;
+  }
+}
+
+// GraphQL resolvers for querying meals and meal by slug
 const resolvers = {
   Query: {
     meals: async (
@@ -110,40 +130,35 @@ const resolvers = {
       args: { filter?: MealsFilterInput; pagination?: PaginationInput }
     ) => {
       const allMeals = await getMealsData();
-
       const { filter, pagination } = args;
-      const {
-        search,
-        mealType,
-        cookTimeMin,
-        cookTimeMax,
-        searchTags,
-        maxCalories,
-        excludeIngredients,
-        includeIngredients,
-        difficulty,
-      } = filter || {};
 
-      // Filtering
+      const search = filter?.search ?? null;
+      const mealType = filter?.mealType ?? null;
+      const cookTimeMin = filter?.cookTimeMin ?? null;
+      const cookTimeMax = filter?.cookTimeMax ?? null;
+      const searchTags = filter?.searchTags ?? null;
+      const maxCalories = filter?.maxCalories ?? null;
+      const excludeIngredients = filter?.excludeIngredients ?? null;
+      const includeIngredients = filter?.includeIngredients ?? null;
+
+      const difficultyRaw = filter?.difficulty ?? null;
+      const difficulty = normalizeDifficulty(difficultyRaw);
+
       let filtered: Meal[] = allMeals;
 
-      // With search keywords
+      // Filter by search keywords
       if (search) {
         const q = search.toLowerCase();
         const searchKeys = stringToArray(q);
 
         filtered = filtered.reduce<Meal[]>((res, item) => {
-          const title = item.title.toLowerCase();
-          const titleArr = stringToArray(title);
-
-          if (hasAnyOverlap(searchKeys, titleArr)) {
-            res.push(item);
-          }
+          const titleArr = stringToArray(item.title.toLowerCase());
+          if (hasAnyOverlap(searchKeys, titleArr)) res.push(item);
           return res;
         }, []);
       }
 
-      // With mealTypes
+      // Filter by mealType
       if (mealType && mealType.length > 0) {
         filtered = filtered.filter(
           (meal) =>
@@ -152,50 +167,56 @@ const resolvers = {
         );
       }
 
-      // With cookTime
-      if (!!cookTimeMin || !!cookTimeMax) {
+      // Filter by cookTime (handle 0 correctly)
+      if (cookTimeMin != null || cookTimeMax != null) {
         filtered = filtered.filter((meal) => {
           if (meal.cookTime == null) return false;
-          if (!!cookTimeMin && meal.cookTime < cookTimeMin) return false;
-          if (!!cookTimeMax && meal.cookTime > cookTimeMax) return false;
+          if (cookTimeMin != null && meal.cookTime < cookTimeMin) return false;
+          if (cookTimeMax != null && meal.cookTime > cookTimeMax) return false;
           return true;
         });
       }
 
-      // With searchTags
-      if (!!searchTags && searchTags.length > 0) {
+      // Filter by searchTags
+      if (searchTags && searchTags.length > 0) {
+        const wanted = searchTags.map((t) => normalizeString(t));
         filtered = filtered.filter((meal) => {
           if (!meal.tags || meal.tags.length === 0) return false;
-          return hasAnyOverlap(searchTags, meal.tags);
+          const have = meal.tags.map((t) => normalizeString(t));
+          return hasAnyOverlap(wanted, have);
         });
       }
 
-      // With maxCalories
-      if (!!maxCalories) {
+      // Filter by maxCalories (handle 0 correctly)
+      if (maxCalories != null) {
         filtered = filtered.filter((meal) => {
-          if (meal.nutritionInfo?.calories == null) return false;
-          if (meal.nutritionInfo.calories > maxCalories) return false;
-          return true;
+          const cals = meal.nutritionInfo?.calories;
+          if (cals == null) return false;
+          return cals <= maxCalories;
         });
       }
 
-      // With difficulty - only filter if difficulty is specified and not "any"
-      if (difficulty && difficulty !== DifficultyLevel.Any) {
-        filtered = filtered.filter((meal) => {
-          if (meal.difficulty == null) return false;
-          return meal.difficulty === difficulty;
-        });
+      // Filter by difficulty (only if specified and not "any")
+      if (difficulty) {
+        if (!ALLOWED_DIFFICULTY.has(difficulty)) {
+          throw new Error(`Invalid difficulty value: ${String(difficultyRaw)}`);
+        }
+
+        if (difficulty !== 'any') {
+          filtered = filtered.filter((meal) => {
+            if (meal.difficulty == null) return false;
+            return String(meal.difficulty).toLowerCase() === difficulty;
+          });
+        }
       }
 
-      // With excludeIngredients - filter out meals that contain any excluded ingredient
-      if (!!excludeIngredients && excludeIngredients.length > 0) {
+      // Filter out meals with excluded ingredients
+      if (excludeIngredients && excludeIngredients.length > 0) {
+        const excludedLower = excludeIngredients.map((ing) => normalizeString(ing));
+
         filtered = filtered.filter((meal) => {
           if (!meal.ingredients || meal.ingredients.length === 0) return true;
 
-          // Normalize excluded ingredients to lowercase for case-insensitive comparison
-          const excludedLower = excludeIngredients.map((ing) => normalizeString(ing));
-
-          // Check if any meal ingredient matches any excluded ingredient
           const hasExcludedIngredient = meal.ingredients.some((ingredient) => {
             const ingredientText = normalizeString(ingredient.text);
             return excludedLower.some(
@@ -203,59 +224,56 @@ const resolvers = {
             );
           });
 
-          // Only include meals that don't have excluded ingredients
           return !hasExcludedIngredient;
         });
       }
 
-      // With includeIngredients - only include meals that contain all included ingredients
-      if (!!includeIngredients && includeIngredients.length > 0) {
+      // Only include meals that contain all included ingredients
+      if (includeIngredients && includeIngredients.length > 0) {
+        const includedLower = includeIngredients.map((ing) => normalizeString(ing));
+
         filtered = filtered.filter((meal) => {
           if (!meal.ingredients || meal.ingredients.length === 0) return false;
 
-          // Normalize included ingredients to lowercase for case-insensitive comparison
-          const includedLower = includeIngredients.map((ing) => normalizeString(ing));
-
-          // Check if all included ingredients are present in the meal
-          const hasAllIncludedIngredients = includedLower.every((included) =>
+          return includedLower.every((included) =>
             meal.ingredients.some((ingredient) => {
               const ingredientText = normalizeString(ingredient.text);
               return ingredientText.includes(included) || included.includes(ingredientText);
             })
           );
-
-          // Only include meals that have all included ingredients
-          return hasAllIncludedIngredients;
         });
       }
 
+      // Pagination
       const total = filtered.length;
       const limit = pagination?.limit ?? 8;
       const offset = pagination?.offset ?? 0;
 
-      const items = filtered.slice(offset, offset + limit);
-      const hasMore = offset + limit < total;
+      const safeLimit = Math.max(0, limit);
+      const safeOffset = Math.max(0, offset);
 
-      return {
-        items,
-        total,
-        hasMore,
-      };
+      const items = filtered.slice(safeOffset, safeOffset + safeLimit);
+      const hasMore = safeOffset + safeLimit < total;
+
+      return { items, total, hasMore };
     },
+
     meal: async (_parent: unknown, args: { slug: string }) => {
       return getMealBySlug(args.slug);
     },
   },
 
   Meal: {
-    topTags: (meal: Meal) => {
-      // always return at most 3 tags; default to [] if undefined
-      return (meal.tags ?? []).slice(0, 3);
+    // Respect the `limit` argument from the schema
+    topTags: (meal: Meal, args: { limit?: number | null }) => {
+      const limit = args?.limit ?? 3;
+      return (meal.tags ?? []).slice(0, Math.max(0, limit));
     },
   },
 };
 
-export const mealsSchema = createSchema({
+// Export the schema for use in the GraphQL server
+export const mealSchema = createSchema({
   typeDefs,
   resolvers,
 });

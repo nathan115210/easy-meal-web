@@ -45,10 +45,10 @@ async function fetchMealsData({
 }): Promise<MealsPagePayload['meals']> {
   const { cookTimeMin, cookTimeMax } = mapCookTimeToBounds(cookTime);
   const maxCalories = mapCalorieStringToNumber(calories);
-  const data = await graphqlFetchClient<MealsPagePayload>(
-    '/api/all-meals',
-    ALL_MEALS_QUERY,
-    {
+  const data = await graphqlFetchClient<MealsPagePayload>({
+    apiEndPoint: '/api/all-meals',
+    query: ALL_MEALS_QUERY,
+    variables: {
       search,
       mealType,
       cookTimeMin,
@@ -61,8 +61,8 @@ async function fetchMealsData({
       difficulty,
       offset: pageParam,
     },
-    signal
-  );
+    signal,
+  });
 
   return data.meals;
 }

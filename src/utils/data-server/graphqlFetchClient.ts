@@ -1,11 +1,16 @@
 import { GraphQLResponse } from '@/utils/data-server/fetchGraphQL';
 
-export async function graphqlFetchClient<T>(
-  apiEndPoint: string,
-  query: string,
-  variables?: Record<string, unknown>,
-  signal?: AbortSignal
-): Promise<T> {
+export async function graphqlFetchClient<T>({
+  apiEndPoint,
+  query,
+  variables,
+  signal,
+}: {
+  apiEndPoint: string;
+  query: string;
+  variables?: Record<string, unknown>;
+  signal?: AbortSignal;
+}): Promise<T> {
   const res = await fetch(apiEndPoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
