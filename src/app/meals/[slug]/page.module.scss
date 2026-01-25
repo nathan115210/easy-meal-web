@@ -1,0 +1,114 @@
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+
+.detailsContainer {
+  padding: #{pxToRem(32)} #{pxToRem(16)};
+
+  &-leftCol {
+    &-image {
+      border-radius: #{pxToRem(8)};
+      margin-bottom: #{pxToRem(16)};
+      position: relative;
+      height: clamp(300px, 24vw, 800px);
+      width: clamp(100%, 58.333vw, 58.333%);
+      aspect-ratio: 5 / 4;
+      overflow: hidden;
+    }
+    .steps {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      flex-grow: 1;
+      // use start so buttons don’t get pushed too far apart on tall cards
+      justify-content: flex-start;
+
+      gap: #{pxToRem(8)};
+      border: 1px solid $color-muted-foreground;
+      padding: #{pxToRem(16)};
+      border-radius: #{pxToRem(8)};
+      background-color: $color-background-secondary;
+      .headingContainer {
+        display: flex;
+        gap: #{pxToRem(12)};
+        justify-content: space-between;
+      }
+      .heading {
+        display: flex;
+        gap: #{pxToRem(8)};
+        align-items: center;
+      }
+    }
+  }
+
+  &-rightCol {
+    &-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: pxToRem(16);
+      flex-grow: 1;
+      // use start so buttons don’t get pushed too far apart on tall cards
+      justify-content: flex-start;
+      .hotTag {
+      }
+
+      .nutrition {
+        display: flex;
+        flex-direction: column;
+        gap: #{pxToRem(8)};
+        border: 1px solid $color-muted-foreground;
+        padding: #{pxToRem(16)};
+        border-radius: #{pxToRem(8)};
+        background-color: $color-background-secondary;
+
+        h3 {
+          display: inline-flex;
+          align-items: center;
+          gap: #{pxToRem(8)};
+        }
+        &-list {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 1.5rem 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: #{pxToRem(4)};
+          flex-direction: column;
+          color: $color-muted-foreground;
+          li {
+            text-indent: #{pxToRem(32)};
+            position: relative;
+            font-weight: 700;
+            &:before {
+              content: '';
+              position: absolute;
+              width: #{pxToRem(8)};
+              height: #{pxToRem(8)};
+              background-color: $color-muted-foreground;
+              border-radius: 50%;
+              margin-left: -#{pxToRem(24)};
+              margin-top: #{pxToRem(6)};
+            }
+          }
+        }
+      }
+      .actions {
+        display: flex;
+        gap: #{pxToRem(12)};
+        flex-wrap: wrap;
+      }
+      .ingredients {
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .ingredientsList {
+        }
+      }
+    }
+  }
+}

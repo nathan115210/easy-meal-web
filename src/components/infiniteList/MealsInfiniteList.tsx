@@ -211,7 +211,7 @@ export default function MealsInfiniteList({
               )}
               {/* //TODO - END */}
 
-              <BaseLink href={`/${meal.slug}`} variant="primary" underline="hover">
+              <BaseLink href={`/meals/${meal.slug}`} variant="primary" underline="hover">
                 Learn More
               </BaseLink>
             </Card>

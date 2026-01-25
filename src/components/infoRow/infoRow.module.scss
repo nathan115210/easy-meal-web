@@ -1,0 +1,26 @@
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+
+.infoRowContainer {
+  width: 100%;
+  border-top: 2px solid #{$color-muted};
+  border-bottom: 2px solid #{$color-muted};
+  padding-block-start: #{pxToRem(16)};
+  padding-block-end: #{pxToRem(16)};
+  display: flex;
+  gap: #{pxToRem(12)};
+
+  .infoItem {
+    display: flex;
+    gap: #{pxToRem(4)};
+    .icon {
+      color: #{$color-muted-foreground};
+    }
+    .infoLabel {
+      font-size: pxToRem(16);
+      font-weight: 600;
+    }
+  }
+}

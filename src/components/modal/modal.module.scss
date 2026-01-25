@@ -1,0 +1,106 @@
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+.modal {
+  display: none;
+
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  /* Make dialog a column layout container */
+  flex-direction: column;
+
+  /* Critical: do NOT let the dialog scroll */
+  overflow: hidden;
+
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%) scale(0.98);
+
+  outline: none;
+  background-color: $color-background;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+
+  &[open] {
+    display: flex;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Sizing */
+  @include tablet {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  @include desktop {
+    width: min(92vw, 640px);
+
+    max-height: 90vh;
+    height: auto;
+    border-radius: $radius-xxl;
+  }
+}
+
+.header {
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  /* Sticky must have a top */
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  /* Sticky requires a background to cover scrolled content beneath */
+  background-color: $color-background;
+  .headerHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .headerChildren {
+    border: 2px solid red;
+  }
+}
+
+.content {
+  /* Take remaining space */
+  flex: 1 1 auto;
+
+  padding: 16px 20px;
+
+  /* The ONLY scroll container */
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Better scroll behavior */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.footer {
+  padding: 12px 20px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  /* Optional: sticky footer (recommended for actions) */
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background-color: $color-background;
+}

@@ -9,6 +9,7 @@
   --card-border-radius: #{$radius-lg};
 
   display: flex;
+
   flex-direction: column;
   padding: var(--card-padding);
   gap: pxToRem(10);
@@ -55,6 +56,11 @@
 
   .cardImg {
     border-radius: var(--card-border-radius);
+    position: relative;
+    height: clamp(300px, 24vw, 400px);
+    width: clamp(100%, 58.333vw, 58.333%);
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
   }
 
   .content {

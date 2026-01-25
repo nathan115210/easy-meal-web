@@ -49,6 +49,11 @@
     box-shadow 0.15s ease,
     transform 0.05s ease;
 
+  .buttonLabel {
+    display: inline-flex;
+    gap: var(--btn-gap);
+    align-items: center;
+  }
   &:focus-visible {
     outline: 2px solid $color-primary;
     outline-offset: 2px;

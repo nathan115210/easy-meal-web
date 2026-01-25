@@ -1,0 +1,52 @@
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.ingredients {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: #{pxToRem(8)};
+    .heading {
+      display: flex;
+      gap: #{pxToRem(8)};
+      align-items: center;
+    }
+    .convertorContainer {
+      display: flex;
+      align-items: center;
+
+      .servingCount {
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding: #{pxToRem(6)};
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+  .ingredientsList {
+    display: flex;
+    flex-direction: column;
+    gap: #{pxToRem(6)};
+    list-style: none;
+    li {
+      display: flex;
+      justify-content: space-between;
+      background-color: $color-secondary;
+      padding: #{pxToRem(12)} #{pxToRem(16)};
+      border-radius: $radius-md;
+      .ingredientText {
+        color: $color-secondary-foreground;
+        font-weight: 600;
+      }
+      .ingredientAmount {
+        color: $color-muted-foreground;
+        font-weight: 700;
+      }
+    }
+  }
+}

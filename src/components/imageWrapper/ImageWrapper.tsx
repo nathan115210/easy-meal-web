@@ -3,14 +3,13 @@
 import { type CSSProperties, memo, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './imageWrapper.module.scss';
-import { deviceMediaQueries } from '@/utils/constants/mediaQuery';
-import useMediaQuery from '@/utils/hooks/useMediaQuery';
 
 export type ImageSetType = {
   mobileSrc: string;
   tabletSrc?: string;
   desktopSrc?: string;
 };
+
 type ImageWrapperProps = {
   alt: string;
   imageSet: ImageSetType;
@@ -32,29 +31,22 @@ function ImageWrapper({
   objectFit = 'cover',
   objectPosition = 'center',
 }: ImageWrapperProps) {
-  const { mobileSrc, tabletSrc, desktopSrc } = imageSet;
-
-  const isDesktop = useMediaQuery(deviceMediaQueries.desktop);
-  const isTablet = useMediaQuery(deviceMediaQueries.tablet);
-
-  const currentSrc = useMemo(() => {
-    if (isDesktop === true && desktopSrc) return desktopSrc;
-    if (isTablet === true && tabletSrc) return tabletSrc;
-    return mobileSrc;
-  }, [isDesktop, isTablet, desktopSrc, tabletSrc, mobileSrc]);
+  // Use one src so Next can do responsive width selection via sizes/srcSet
+  const src = imageSet.desktopSrc ?? imageSet.tabletSrc ?? imageSet.mobileSrc;
 
   const computedSizes = useMemo(
-    () => sizes ?? `${deviceMediaQueries.desktop} 100vw, ${deviceMediaQueries.tablet} 100vw`,
+    () =>
+      sizes ??
+      ' (max-width: 240px) 81.6192vw,(max-width: 319px) 81.6192vw,(max-width: 360px) 81.6192vw,(max-width: 599px) 81.6192vw,(max-width: 720px) 81.6192vw,(max-width: 1080px) 81.6192vw,(max-width: 600px) 83.712vw,(max-width: 900px) 83.712vw,(max-width: 1200px) 41.856vw,(max-width: 1440px) 41.856vw,(max-width: 1900px) 41.9432vw,1073px',
     [sizes]
   );
-
   const cls = className ? `${styles.wrap} ${className}` : styles.wrap;
 
   return (
     <div className={cls} aria-hidden={ariaHidden}>
       <Image
         className={styles.image}
-        src={currentSrc}
+        src={src}
         alt={alt}
         fill
         sizes={computedSizes}

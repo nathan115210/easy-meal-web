@@ -93,7 +93,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       {isLoading && <span className={styles.spinner} aria-hidden="true" />}
 
       {/* If icon-only + loading, we can hide children visually */}
-      {!(isLoading && iconOnly) && <span aria-hidden={isLoading || undefined}>{children}</span>}
+      {!(isLoading && iconOnly) && (
+        <span className={styles.buttonLabel} aria-hidden={isLoading || undefined}>
+          {children}
+        </span>
+      )}
 
       {isLoading && (
         <span className={styles['sr-only']} role="status" aria-live="polite">
