@@ -5,11 +5,8 @@
 
 .detailsContainer {
   padding: #{pxToRem(32)} #{pxToRem(16)};
-  border: 2px solid black;
 
   &-leftCol {
-    border: 2px solid red;
-
     &-image {
       border-radius: #{pxToRem(8)};
       margin-bottom: #{pxToRem(16)};
@@ -33,6 +30,11 @@
       padding: #{pxToRem(16)};
       border-radius: #{pxToRem(8)};
       background-color: $color-background-secondary;
+      .headingContainer {
+        display: flex;
+        gap: #{pxToRem(12)};
+        justify-content: space-between;
+      }
       .heading {
         display: flex;
         gap: #{pxToRem(8)};
@@ -42,7 +44,6 @@
   }
 
   &-rightCol {
-    border: 2px solid green;
     &-content {
       width: 100%;
       display: flex;

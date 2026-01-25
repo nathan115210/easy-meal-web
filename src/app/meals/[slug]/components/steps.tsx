@@ -3,13 +3,12 @@ import styles from './steps.module.scss';
 import ImageWrapper from '@/components/imageWrapper/ImageWrapper';
 import React from 'react';
 
-export default function Steps({ steps }: { steps: MealInstruction[]; asCookMode?: boolean }) {
+export default function Steps({ steps }: { steps: MealInstruction[] }) {
   return (
     <ul className={styles.steps}>
       {steps.map((step, index) => {
         const { step: stepNumber, image, text } = step;
         const stepImage = image || '/placeholder.png';
-        console.log('stepImage', stepImage);
         return (
           <li className={styles['steps-item']} key={stepNumber ?? index}>
             <div className={styles['steps-item__text']}>

@@ -133,7 +133,7 @@ function scaleAmountString(amount: string, serving: number): string {
   return parsed.rest ? `${qty} ${parsed.rest}` : qty;
 }
 
-/**  Cache read for initial state (no setState-in-effect) */
+/**  Cache read for initial state */
 function getInitialServing(mealSlug: string): number {
   if (typeof window === 'undefined') return 1;
 

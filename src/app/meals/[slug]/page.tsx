@@ -14,7 +14,6 @@ import {
   CalendarPlus,
   ChefHat,
   Combine,
-  CookingPot,
   Flame,
   MapIcon,
   ShoppingBasket,
@@ -25,6 +24,7 @@ import ChipsGroup from '@/components/chip/ChipsGroup';
 import Ingredients from '@/app/meals/[slug]/components/ingredients';
 import Button from '@/components/button/Button';
 import Steps from './components/steps';
+import CookModeModal from './components/cookModeModal';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -79,12 +79,14 @@ export default function MealDetailPage({ params }: PageProps) {
           </div>
           {/* Steps */}
           <div className={styles.steps}>
-            <h3 className={styles.heading}>
-              <MapIcon />
-              Steps
-            </h3>
-
-            <Steps steps={instructions} asCookMode />
+            <div className={styles.headingContainer}>
+              <h3 className={styles.heading}>
+                <MapIcon />
+                Steps
+              </h3>
+              <CookModeModal instructions={instructions} />
+            </div>
+            <Steps steps={instructions} />
           </div>
         </Col>
 
@@ -163,12 +165,7 @@ export default function MealDetailPage({ params }: PageProps) {
                 <ShoppingBasket size={16} />
                 One-Click Groceries
               </Button>
-              {/* //TODO */}
 
-              <Button>
-                <CookingPot size={16} />
-                Start Cooking
-              </Button>
               {/* //TODO */}
 
               <Button variant={'secondary-outline'}>
