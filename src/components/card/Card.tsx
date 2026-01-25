@@ -19,7 +19,9 @@ function Card({ imageSet, heading, imageAlt, children, label, ...rest }: CardPro
       )}
       {/*Image*/}
       {imageSet && imageAlt && (
-        <ImageWrapper className={styles.cardImg} imageSet={imageSet} alt={imageAlt} />
+        <div className={styles.cardImg}>
+          <ImageWrapper imageSet={imageSet} alt={imageAlt} />
+        </div>
       )}
 
       {(children || heading) && (

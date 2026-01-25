@@ -27,6 +27,11 @@
 
   .imgWrapper {
     flex-basis: 40%;
+    position: relative;
+    height: clamp(250px, 24vw, 300px);
+    width: clamp(100%, 58.333vw, 58.333%);
+    aspect-ratio: 1;
+    overflow: hidden;
   }
 
   .contentContainer {

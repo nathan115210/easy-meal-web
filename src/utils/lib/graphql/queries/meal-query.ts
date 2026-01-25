@@ -8,6 +8,16 @@ export const MEAL_QUERY = /* GraphQL */ `
       tags
       topTags
       difficulty
+      description
+      instructions {
+        step
+        image
+        text
+      }
+      ingredients {
+        text
+        amount
+      }
       nutritionInfo {
         calories
         protein

@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: #{pxToRem(8)};
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $color-muted-foreground;
+    border-radius: $radius-md;
+    padding: #{pxToRem(10)};
+    gap: #{pxToRem(16)};
+    list-style: none;
+
+    &__image {
+      width: clamp(100%, 58.333vw, 58.333%);
+      height: clamp(300px, 24vw, 400px);
+    }
+
+    &__text {
+      display: flex;
+      gap: #{pxToRem(12)};
+      align-items: center;
+      font-size: #{pxToRem(18)};
+      font-weight: 700;
+    }
+
+    &__step-number {
+      width: #{pxToRem(24)};
+      height: #{pxToRem(24)};
+      border-radius: 50%;
+      background-color: $color-secondary;
+      color: $color-secondary-foreground;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: pxToRem(14);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+  }
+}

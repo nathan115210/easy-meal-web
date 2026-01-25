@@ -26,6 +26,7 @@
   --chip-fg-selected: #{$color-primary-foreground};
   --chip-border-selected: #{$color-primary};
 
+  width: fit-content;
   display: inline-flex;
   align-items: center;
   gap: var(--chip-gap);
