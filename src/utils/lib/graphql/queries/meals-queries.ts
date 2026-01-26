@@ -1,4 +1,7 @@
-export const ALL_MEALS_QUERY = /* GraphQL */ `
+import { MEAL_NUTRITION_FRAGMENT } from '../fragments/meal/nutrition-fragment';
+
+export const ALL_MEALS_QUERY =
+  /* GraphQL */ `
   query AllMeals(
     $search: String
     $mealType: [MealType!]
@@ -34,15 +37,10 @@ export const ALL_MEALS_QUERY = /* GraphQL */ `
         tags
         topTags
         difficulty
-        nutritionInfo {
-          calories
-          protein
-          fat
-          carbs
-        }
+        ...MealNutrition
       }
       total
       hasMore
     }
   }
-`;
+` + MEAL_NUTRITION_FRAGMENT;
