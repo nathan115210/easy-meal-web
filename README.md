@@ -12,12 +12,15 @@ It is optimized for **scalability**, **modern data fetching**, and **component-b
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Features](#features)
-- [Getting Started](#getting-started)
+- [🛠️ Getting Started](#️-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Tech Stack](#tech-stack)
-- [Project Architecture](#project-architecture)
+- [Project Architecture (High-Level)](#project-architecture-high-level)
 - [GraphQL API](#graphql-api)
-- [Caching Strategy](#caching-strategy)
+- [⚡ Caching Strategy](#-caching-strategy)
 - [Contributing](#contributing)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -54,7 +57,7 @@ pnpm dev
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Layer      | Technology                       |
 | ---------- | -------------------------------- |
@@ -67,7 +70,7 @@ pnpm dev
 
 ---
 
-## 🏛️ Project Architecture (High-Level)
+## Project Architecture (High-Level)
 
 ```
 UI (React Server Components)
@@ -82,7 +85,7 @@ Full architecture explained in
 
 ---
 
-## 🍽️ GraphQL API
+## GraphQL API
 
 The GraphQL endpoint is available at:
 
@@ -135,20 +138,20 @@ This ensures fast loading and fresh data when meals are added or updated.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome!
 Feel free to open issues or pull requests.
 
 ---
 
-## 📄 License
+## License
 
 MIT License © Nathan115210
 
 ---
 
-## 🌟 Acknowledgments
+## Acknowledgments
 
 Thanks to the open-source community for tools such as:
 

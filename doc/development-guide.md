@@ -1,10 +1,5 @@
 # Easy Meal — Development Guide
 
-This guide explains the internal architecture, data flow, GraphQL setup, caching, and development workflow for the Easy
-Meal application.
-
-# 📘 Easy Meal — Development Guide
-
 This guide explains the internal architecture, data flow, GraphQL setup, caching, and development workflow for the \*
 \*Easy Meal\*\* application.
 
@@ -14,37 +9,39 @@ If you're looking for installation instructions or general information, see **RE
 
 ## Table of Contents
 
+- [Easy Meal — Development Guide](#easy-meal--development-guide)
+  - [Table of Contents](#table-of-contents)
 - [Architecture Overview](#architecture-overview)
 - [Folder Structure](#folder-structure)
 - [Data Layer](#data-layer)
   - [Dummy Data](#dummy-data)
   - [Future DB Integration](#future-db-integration)
-
 - [GraphQL API](#graphql-api)
   - [Why GraphQL?](#why-graphql)
   - [Schema Definition](#schema-definition)
+    - [Types](#types)
+    - [Queries](#queries)
   - [Resolvers](#resolvers)
   - [GraphQL Route Handler](#graphql-route-handler)
   - [Testing with GraphiQL](#testing-with-graphiql)
   - [Example Queries](#example-queries)
+    - [Fetch all meals:](#fetch-all-meals)
+    - [Fetch a single meal:](#fetch-a-single-meal)
   - [Adding New Fields](#adding-new-fields)
   - [Extending with Mutations](#extending-with-mutations)
-
-- [Data Fetching in Next.js](#data-fetching-in-nextjs)
+- [🛰️ Data Fetching in Next.js](#️-data-fetching-in-nextjs)
   - [Direct fetch](#direct-fetch)
   - [Using apiFetchServer](#using-apifetchserver)
-
-- [Caching & Revalidation](#caching--revalidation)
+- [⚡ Caching \& Revalidation](#-caching--revalidation)
   - [ISR](#isr)
   - [Cache Tags](#cache-tags)
   - [Testing Tag Revalidation](#testing-tag-revalidation)
-
-- [Conventions & Best Practices](#conventions--best-practices)
+- [Conventions \& Best Practices](#conventions--best-practices)
 - [Future Improvements](#future-improvements)
 
 ---
 
-# 🏛️ Architecture Overview
+# Architecture Overview
 
 ```
 React Server Components (UI)
@@ -65,7 +62,7 @@ Key concepts:
 
 ---
 
-# 📁 Folder Structure
+# Folder Structure
 
 ```
 src/
@@ -96,7 +93,7 @@ public/
 
 ---
 
-# 🍱 Data Layer
+# Data Layer
 
 ## Dummy Data
 
@@ -125,7 +122,7 @@ Switch to PostgreSQL + Prisma (or Drizzle):
 
 ---
 
-# 🔮 GraphQL API
+# GraphQL API
 
 ## Why GraphQL?
 
@@ -363,7 +360,7 @@ revalidateTag('meals:list', undefined);
 
 ---
 
-# 📐 Conventions & Best Practices
+# Conventions & Best Practices
 
 - Keep schema as the main contract
 - UI never imports data directly
@@ -373,7 +370,7 @@ revalidateTag('meals:list', undefined);
 
 ---
 
-# 🚀 Future Improvements
+# Future Improvements
 
 - Add mutations
 - Add filtering & pagination
