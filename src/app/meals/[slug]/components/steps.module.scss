@@ -7,42 +7,53 @@
 .steps {
   display: flex;
   flex-direction: column;
-  gap: #{pxToRem(8)};
+  gap: var(--list-item-gap);
 
   &-item {
     display: flex;
     flex-direction: column;
-    border: 1px solid $color-muted-foreground;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
-    padding: #{pxToRem(10)};
+    padding: #{pxToRem(12)};
     gap: #{pxToRem(16)};
     list-style: none;
+    background-color: $color-card;
+    transition: border-color var(--duration-fast) var(--ease-base);
+
+    &:hover {
+      border-color: $color-muted-foreground;
+    }
 
     &__image {
       width: clamp(100%, 58.333vw, 58.333%);
       height: clamp(300px, 24vw, 400px);
+      border-radius: $radius-sm;
+      overflow: hidden;
     }
 
     &__text {
       display: flex;
       gap: #{pxToRem(12)};
-      align-items: center;
-      font-size: #{pxToRem(18)};
-      font-weight: 700;
+      align-items: flex-start;
+      font-size: var(--text-body);
+      font-weight: var(--font-medium);
+      line-height: var(--leading-normal);
+      color: $color-foreground;
     }
 
     &__step-number {
-      width: #{pxToRem(24)};
-      height: #{pxToRem(24)};
+      width: #{pxToRem(28)};
+      height: #{pxToRem(28)};
       border-radius: 50%;
-      background-color: $color-secondary;
-      color: $color-secondary-foreground;
+      background-color: $color-primary;
+      color: $color-primary-foreground;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: pxToRem(14);
-      font-weight: 600;
+      font-size: pxToRem(13);
+      font-weight: 700;
       flex-shrink: 0;
+      margin-top: #{pxToRem(1)};
     }
   }
 }

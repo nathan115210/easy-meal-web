@@ -41,6 +41,16 @@
       color: $color-sidebar-foreground;
       padding: pxToRem(10) pxToRem(12);
       border-radius: $radius-md;
+      cursor: pointer;
+      transition:
+        background var(--duration-fast) var(--ease-base),
+        color var(--duration-fast) var(--ease-base);
+
+      &:hover:not(.active) {
+        background: $color-sidebar-primary;
+        color: $color-sidebar-primary-foreground;
+      }
+
       &.active {
         color: $color-sidebar-primary-foreground;
         background: $color-sidebar-primary;

@@ -1,26 +1,33 @@
 @use 'sass:map';
 
-// ------------------------------------------
+// ──────────────────────────────────────────────
 // Z-Index System
-// ------------------------------------------
-// Base principle:
-// Each layer range reserves space for a feature area.
-// Never use hard-coded numbers like 9999 again.
-// ------------------------------------------
+// ──────────────────────────────────────────────
+// Audit (2026-03): Removed unused tokens (overlay, dropdown, tooltip, max).
+// Renamed 'content' → 'raised' to better reflect intent.
+// Replaced wildcard 'max' with scoped 'topbar'.
+//
+// Token guide:
+//   raised   → local stacking within a component (e.g. card tag above image)
+//   sticky   → sticky elements inside a scroll container (e.g. panel footer)
+//   topbar   → app-level sticky/fixed chrome (top navigation bar)
+//   modal    → reserved for non-native modal overlays
+//   toast    → notifications — above all content including modals
+//   dragging → dnd-kit active drag item
+//
+// Note: HTML <dialog> uses the browser top-layer — no z-index token needed.
+// ──────────────────────────────────────────────
 
 $z-index: (
   'base': 0,
-  'content': 10,
-  'overlay': 50,
-  'dropdown': 100,
-  'modal': 200,
-  'toast': 300,
-  'tooltip': 400,
+  'raised': 1,
+  'sticky': 20,
+  'topbar': 100,
+  'modal': 300,
+  'toast': 400,
   'dragging': 500,
-  'max': 9999,
 );
 
-// Helper function to get values
 @function zIndex($name) {
   @return map.get($z-index, $name);
 }

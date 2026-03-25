@@ -1,43 +1,59 @@
-$color-background: #ffffff;
-$color-background-secondary: #f3f4f6;
-$color-foreground: #000000;
-$color-border: #e8e8e8;
-$color-input: #f8f8f7;
+// ──────────────────────────────────────────────
+// Color Tokens
+// ──────────────────────────────────────────────
+// Raw palette — the only place literal hex values live.
+// All other color usage references these variables.
+// ──────────────────────────────────────────────
 
-/*Primary*/
-$color-primary: #242424;
+// ── Raw palette ──
+$color-bg: #faf8f7; // Hint of Red  — page background
+$color-text: #282237; // Steel Gray   — primary text
+$color-brand: #c38f59; // Twine         — main brand / primary action
+$color-accent-light: #7a5d4c; // Roman Coffee  — warm mid-tone accent
+$color-accent-dark: #64382a; // Irish Coffee  — deep warm accent
+
+// ── Derived neutrals ──
+$color-bg-secondary: #f0eae5; // warm off-white — panels, sections
+$color-bg-muted: #e8ddd6; // warm muted     — chips, secondary surfaces
+$color-border: #ddd0c8; // warm border
+$color-border-muted: #ede5e0; // subtle border
+
+// ── Semantic ──
+$color-primary: $color-brand;
 $color-primary-foreground: #ffffff;
 
-/*Secondary*/
-$color-secondary: #d3d3d3;
-$color-secondary-foreground: #242424;
+$color-secondary: $color-bg-muted;
+$color-secondary-foreground: $color-text;
 
-/*Muted*/
-$color-muted: #e8e8e8;
-$color-muted-foreground: #949494;
+$color-muted: $color-border;
+$color-muted-foreground: $color-accent-light;
 
-/*Success*/
-$color-success: #00c417;
+$color-success: #70a553;
 $color-success-foreground: #ffffff;
 
-/*Accent*/
-$color-accent: #242424;
-$color-accent-foreground: #ffffff;
-
-/*Destructive*/
-$color-destructive: #ff0000;
-$color-destructive-foreground: #ffffff;
-
-/*Warning*/
-$color-warning: #ff7308;
+$color-warning: #ed951b;
 $color-warning-foreground: #ffffff;
 
-/*Card*/
-$color-card: #fbfaf9;
-$color-card-foreground: #000000;
+$color-destructive: #f44336;
+$color-destructive-foreground: #ffffff;
 
-/*Sidebar*/
-$color-sidebar: #ffffff;
-$color-sidebar-foreground: #4a4a4a;
-$color-sidebar-primary: #e8e8e8;
-$color-sidebar-primary-foreground: #000000;
+$color-info: $color-text;
+$color-info-foreground: #ffffff;
+
+// ── Surface ──
+$color-card: #ffffff;
+$color-card-foreground: $color-text;
+$color-input: #f5efeb; // warm input background
+
+// ── Navigation ──
+$color-sidebar: $color-bg;
+$color-sidebar-foreground: $color-text;
+$color-sidebar-primary: $color-bg-muted;
+$color-sidebar-primary-foreground: $color-text;
+
+// ── Legacy aliases — backward compatibility ──
+$color-background: $color-bg;
+$color-background-secondary: $color-bg-secondary;
+$color-foreground: $color-text;
+$color-accent: $color-brand;
+$color-accent-foreground: $color-primary-foreground;

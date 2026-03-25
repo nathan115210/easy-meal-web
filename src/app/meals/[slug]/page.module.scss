@@ -2,13 +2,14 @@
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
 
 .detailsContainer {
-  padding: #{pxToRem(32)} #{pxToRem(16)};
+  padding: var(--page-padding-y) var(--page-padding-x);
 
   &-leftCol {
     &-image {
-      border-radius: #{pxToRem(8)};
+      border-radius: $radius-lg;
       margin-bottom: #{pxToRem(16)};
       position: relative;
       height: clamp(300px, 24vw, 800px);
@@ -20,15 +21,13 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-
       flex-grow: 1;
-      // use start so buttons don’t get pushed too far apart on tall cards
       justify-content: flex-start;
 
       gap: #{pxToRem(8)};
-      border: 1px solid $color-muted-foreground;
+      border: 1px solid $color-border;
       padding: #{pxToRem(16)};
-      border-radius: #{pxToRem(8)};
+      border-radius: $radius-md;
       background-color: $color-background-secondary;
       .headingContainer {
         display: flex;
@@ -50,18 +49,15 @@
       flex-direction: column;
       gap: pxToRem(16);
       flex-grow: 1;
-      // use start so buttons don’t get pushed too far apart on tall cards
       justify-content: flex-start;
-      .hotTag {
-      }
 
       .nutrition {
         display: flex;
         flex-direction: column;
         gap: #{pxToRem(8)};
-        border: 1px solid $color-muted-foreground;
+        border: 1px solid $color-border;
         padding: #{pxToRem(16)};
-        border-radius: #{pxToRem(8)};
+        border-radius: $radius-md;
         background-color: $color-background-secondary;
 
         h3 {
@@ -105,8 +101,6 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-        }
-        .ingredientsList {
         }
       }
     }

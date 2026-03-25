@@ -19,7 +19,7 @@
   --input-pad-y: #{pxToRem(10)};
   --input-pad-x: #{pxToRem(12)};
   --inline-gap: #{pxToRem(6)};
-  --transition-base: 0.15s ease;
+  --transition-base: var(--duration-fast) var(--ease-base);
 
   /* ──────────────────────────────
      Field container block
@@ -139,7 +139,7 @@
     padding: pxToRem(12) 0;
     background: $color-background-secondary;
     border-top: 4px solid $color-warning;
-    z-index: zIndex('max');
+    z-index: zIndex('sticky');
 
     .actionBtn {
       @include desktop {

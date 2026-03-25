@@ -20,8 +20,8 @@
       align-items: center;
 
       .servingCount {
-        font-size: 1.25rem;
-        font-weight: bold;
+        font-size: var(--text-h4);
+        font-weight: var(--font-bold);
         padding: #{pxToRem(6)};
         width: 100%;
         text-align: center;
@@ -31,21 +31,34 @@
   .ingredientsList {
     display: flex;
     flex-direction: column;
-    gap: #{pxToRem(6)};
+    gap: var(--list-item-gap);
     list-style: none;
     li {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       background-color: $color-secondary;
-      padding: #{pxToRem(12)} #{pxToRem(16)};
+      padding: var(--list-item-padding-y) var(--list-item-padding-x);
       border-radius: $radius-md;
+      border: 1px solid transparent;
+      transition:
+        background-color var(--duration-fast) var(--ease-base),
+        border-color var(--duration-fast) var(--ease-base);
+
+      &:hover {
+        background-color: $color-bg-muted;
+        border-color: $color-border;
+      }
+
       .ingredientText {
         color: $color-secondary-foreground;
-        font-weight: 600;
+        font-weight: var(--font-semibold);
+        font-size: var(--text-body);
       }
       .ingredientAmount {
         color: $color-muted-foreground;
-        font-weight: 700;
+        font-weight: var(--font-bold);
+        font-size: var(--text-body-sm);
       }
     }
   }

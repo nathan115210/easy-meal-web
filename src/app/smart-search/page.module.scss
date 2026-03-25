@@ -12,7 +12,7 @@
 
   .searchPanel {
     --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
-    border-right: 2px solid $color-border;
+    border-right: 1px solid $color-border;
     height: 100%;
     overflow: auto;
     flex-basis: 35%;
