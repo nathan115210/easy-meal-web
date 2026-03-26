@@ -19,8 +19,47 @@ Use this file as a summary of the repository's existing code review standards. P
 - Keep trailing commas compatible with the current Prettier setup.
 - Preserve LF line endings.
 
+## SCSS Expectations For Component Styles
+
+### For SCSS under `src/components`:
+
+- Place local CSS custom properties before standard declarations within the rule block when they are used as local styling variables.
+- Keep exactly one blank line between the last custom property and the first standard declaration.
+- In size-variant blocks, keep exactly one blank line immediately before the `min-height` declaration so `declaration-empty-line-before` remains compliant.
+- Do not reorder declarations in a way that places standard declarations above local custom properties when the block is using CSS variables as local configuration.
+
+### Preferred pattern:
+
+```scss
+.selector {
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+
+  border-right: 1px solid $color-border;
+}
+```
+
+### Preferred size-variant pattern:
+
+```scss
+.sizeSm {
+  --button-padding-inline: #{pxToRem(12)};
+
+  min-height: #{$btn-height-sm};
+}
+```
+
+### Avoid:
+
+```scss
+.selector {
+  border-right: 1px solid $color-border;
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+}
+```
+
 ## Review Priorities
 
+- **This project is mobile-first.** Flag any SCSS where the base rule targets desktop and media queries narrow it to mobile. Base styles must target the mobile viewport; tablet and desktop overrides must use `@include tablet` and `@include desktop`.
 - Respect existing Next.js App Router and TypeScript patterns already used in the repository.
 - Prefer minimal, reviewable changes over broad refactors.
 - Do not propose style-only churn when the existing code already satisfies Prettier and ESLint.

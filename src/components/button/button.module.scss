@@ -86,6 +86,7 @@
   --btn-padding-y: #{pxToRem(4)};
   --btn-padding-x: #{pxToRem(10)};
   --btn-font-size: #{pxToRem(13)};
+
   min-height: #{$btn-height-sm};
 }
 
@@ -93,6 +94,7 @@
   --btn-padding-y: #{pxToRem(10)};
   --btn-padding-x: #{pxToRem(18)};
   --btn-font-size: #{pxToRem(15)};
+
   min-height: #{$btn-height-lg};
 }
 
@@ -102,6 +104,7 @@
   --btn-padding-x: #{pxToRem(6)};
   --btn-font-size: #{pxToRem(12)};
   --btn-radius: #{$radius-pill};
+
   min-height: unset;
 }
 
@@ -109,6 +112,7 @@
 .button--icon-only {
   --btn-padding-y: #{pxToRem(8)};
   --btn-padding-x: #{pxToRem(8)};
+
   min-width: #{$touch-target};
   min-height: #{$touch-target};
 }
@@ -153,7 +157,7 @@
 
 /* ───── Variants ───── */
 
-/* Filled primary */
+/* Filled primary — intentionally mirrors .button defaults; kept as the authoritative variant definition */
 
 .button--primary {
   --btn-bg: #{$color-primary};

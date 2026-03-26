@@ -33,5 +33,7 @@ knowledge_base:
     filePatterns:
       - '**/.claude/docs/**/*.md'
       - '**/.github/copilot-instructions.md'
-      - '**/AGENTS.md'
+      # Reserve for future agent-guidance files, such as Codex-oriented AGENTS.md docs.
+      # - '**/AGENTS.md'
+      - '**/REVIEW.md'
       - '**/.cursorrules'

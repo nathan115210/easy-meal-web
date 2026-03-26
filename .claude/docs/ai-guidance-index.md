@@ -13,6 +13,7 @@ Use this file as the entry point for repository-specific AI guidance documents.
 - Code review: `code-review/review-guidelines.md`
 - Unit and API tests: `testing/unit-testing-guidelines.md`
 - Playwright e2e tests: `testing/e2e-testing-guidelines.md`
+- Component design system: `design/component-design-guidelines.md`
 
 ## Source Of Truth
 

@@ -29,10 +29,49 @@ This directory contains reusable UI components. Match the current component spli
 
 ## Styling
 
+- **Mobile-first.** Base styles always target the mobile viewport. Use `@include tablet` and `@include desktop` to layer wider-viewport overrides on top. Never write styles that start from desktop and narrow down to mobile.
 - Prefer SCSS Modules and existing naming/style conventions.
 - Avoid inline or ad hoc styling when the local pattern is SCSS Modules.
 - Reuse existing layout and spacing patterns where possible.
 - Preserve existing local class-composition patterns instead of introducing a new styling utility without a reason.
+
+### SCSS Declaration Ordering And Empty-Line Rules
+
+When editing SCSS in this directory:
+
+- Place local CSS custom properties first within a declaration block when they are used as local styling variables.
+- After the last custom property, add exactly one blank line before the first standard declaration.
+- In size-variant blocks, keep exactly one blank line immediately before the `min-height` declaration so `declaration-empty-line-before` remains compliant.
+- Do not reorder declarations in a way that places standard declarations above local custom properties when the block is using CSS variables as local configuration.
+
+### Preferred pattern:
+
+```scss
+.selector {
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+
+  border-right: 1px solid $color-border;
+}
+```
+
+### Preferred size-variant pattern:
+
+```scss
+.sizeSm {
+  --button-padding-inline: #{pxToRem(12)};
+
+  min-height: #{$btn-height-sm};
+}
+```
+
+### Avoid:
+
+```scss
+.selector {
+  border-right: 1px solid $color-border;
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+}
+```
 
 ## Testing
 

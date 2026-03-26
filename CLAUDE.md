@@ -50,6 +50,13 @@ Use this file for global project conventions. When a deeper `CLAUDE.md` exists i
 - Prefer narrow, predictable types over broad permissive ones.
 - Avoid `any` unless there is a strong and documented reason.
 
+## Responsive Design
+
+- **This project is mobile-first.** Base styles and layouts always target the smallest (mobile) viewport.
+- Tablet and desktop rules are layered on top using the SCSS mixins `@include tablet` and `@include desktop`.
+- Never write desktop-first styles and narrow down to mobile — mobile is always the default.
+- This applies everywhere: new components, new pages, SCSS edits, code review, and e2e tests.
+
 ## Testing Rules
 
 - Preserve and extend existing test patterns instead of inventing new ones.

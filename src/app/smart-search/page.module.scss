@@ -12,6 +12,7 @@
 
   .searchPanel {
     --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+
     border-right: 1px solid $color-border;
     height: 100%;
     overflow: auto;
@@ -26,14 +27,14 @@
     flex-basis: 65%;
   }
 
-  /* responsive behavior (use project mixins) */
   @include tablet {
     flex-direction: row;
   }
 
   @include desktop {
-    flex-direction: row;
     --smart-search-container-height: calc(100vh - var(--topbar-height));
-    --smart-search-panel-padding: pxToRem(32);
+    --smart-search-panel-padding: #{pxToRem(32)};
+
+    flex-direction: row;
   }
 }

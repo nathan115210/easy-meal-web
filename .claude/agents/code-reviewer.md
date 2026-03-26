@@ -36,6 +36,45 @@ Return findings in this order:
 - Prisma-generated code and build artifacts are out of scope; review their source inputs instead.
 - E2E tests should use stable selectors and response-based waits, not arbitrary sleeps.
 
+## SCSS Review Checks
+
+### For SCSS under `src/components`:
+
+- Local CSS custom properties should appear before standard declarations within the rule block when they are used as local styling variables.
+- There should be exactly one blank line between the last custom property and the first standard declaration.
+- In size-variant blocks, keep exactly one blank line immediately before the `min-height` declaration.
+- Flag declaration-order changes that move standard declarations above local custom properties when the block uses CSS variables as local configuration.
+- Treat these as repo-specific stylelint conventions, not optional formatting preferences.
+
+Preferred pattern:
+
+```scss
+.selector {
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+
+  border-right: 1px solid $color-border;
+}
+```
+
+### Preferred size-variant pattern:
+
+```scss
+.sizeSm {
+  --button-padding-inline: #{pxToRem(12)};
+
+  min-height: #{$btn-height-sm};
+}
+```
+
+### Avoid:
+
+```scss
+.selector {
+  border-right: 1px solid $color-border;
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+}
+```
+
 ## Review Style
 
 - Report concrete findings first.
@@ -43,3 +82,4 @@ Return findings in this order:
 - Prefer actionable suggestions over vague advice.
 - Do not nitpick formatting already handled by Prettier or ESLint.
 - If no issue is found, say so clearly.
+- Do not invent stylistic preferences that are not grounded in repo tooling or local conventions.
