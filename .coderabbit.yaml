@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-US
+
+reviews:
+  profile: chill
+  review_status: true
+  high_level_summary: true
+  review_details: false
+  path_filters:
+    - '!**/.next/**'
+    - '!**/out/**'
+    - '!**/build/**'
+    - '!**/coverage/**'
+    - '!**/node_modules/**'
+    - '!**/playwright-report/**'
+    - '!**/test-results/**'
+    - '!**/prisma/generated/prisma/**'
+    - '!**/*.tsbuildinfo'
+    - '!**/next-env.d.ts'
+    - '!**/.claude/agents/**'
+  auto_review:
+    enabled: true
+    drafts: false
+  tools:
+    eslint:
+      enabled: true
+      config_file: eslint.config.mjs
+    biome:
+      enabled: true
+      config_file: biome.jsonc
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - '**/.claude/docs/**/*.md'
+      - '**/.github/copilot-instructions.md'
+      - '**/AGENTS.md'
+      - '**/.cursorrules'
