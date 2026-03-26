@@ -43,7 +43,7 @@ export default function MealsInfiniteList({
 
   const watcherRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, status } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteQuery({
     queryKey: [
       'meals',
       search,
@@ -134,10 +134,11 @@ export default function MealsInfiniteList({
   // Error state
   if (status === 'error') {
     return (
-      <div data-testid="meals-list-error">
-        <span>Something went wrong.</span>
-        <pre>{(error as Error).message}</pre>
-      </div>
+      <Row data-testid="meals-list-error">
+        <div className={styles.errorState}>
+          <span>Something went wrong loading meals. Please try again.</span>
+        </div>
+      </Row>
     );
   }
 

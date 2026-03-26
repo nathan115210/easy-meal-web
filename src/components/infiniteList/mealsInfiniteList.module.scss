@@ -1,5 +1,6 @@
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
 
 .listContainer {
   margin-top: $grid-gutter;
@@ -15,4 +16,20 @@
       gap: pxToRem(2);
     }
   }
+}
+
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-8 $space-4;
+  text-align: center;
+  background-color: $color-destructive-soft;
+  border: 1px solid $color-destructive-soft-border;
+  border-radius: $radius-md;
+  color: $color-destructive-soft-foreground;
+  font-size: var(--text-body);
 }

@@ -21,7 +21,8 @@
     width: 100%;
     height: 100vh;
     padding: pxToRem(20);
-    border-inline-end: 1px solid $color-sidebar-primary;
+    border-inline-end: 1px solid $color-border;
+    background: $color-surface;
 
     flex-direction: column;
     gap: pxToRem(16);
@@ -47,22 +48,22 @@
         color var(--duration-fast) var(--ease-base);
 
       &:hover:not(.active) {
-        background: $color-sidebar-primary;
-        color: $color-sidebar-primary-foreground;
+        background: $color-bg-secondary;
+        color: $color-sidebar-foreground;
       }
 
       &.active {
-        color: $color-sidebar-primary-foreground;
-        background: $color-sidebar-primary;
+        background: $color-primary;
+        color: $color-primary-foreground;
       }
     }
   }
 
   .shortcutSection {
     h2 {
-      font-size: pxToRem(16);
-      margin-block-start: pxToRem(16);
-      font-weight: 500;
+      font-size: var(--text-body-lg);
+      margin-block-start: $space-4;
+      font-weight: var(--font-medium);
       color: $color-sidebar-foreground;
     }
   }
@@ -72,7 +73,8 @@
     width: 100%;
     height: 100vh;
     padding: pxToRem(20);
-    border-inline-end: 1px solid $color-sidebar-primary;
+    border-inline-end: 1px solid $color-border;
+    background: $color-surface;
     flex-direction: column;
     gap: pxToRem(16);
   }

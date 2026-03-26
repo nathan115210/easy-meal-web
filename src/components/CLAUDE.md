@@ -80,6 +80,21 @@ When editing SCSS in this directory:
 - Preserve stable `data-testid` attributes used by Playwright for critical flows.
 - In unit tests, remember the repo setup mocks `next/image`, `next/link`, and App Router hooks.
 
+## Product Design Context
+
+For component behavior rules tied to product context (Discover, Recipes, Recipe Detail, Meal Plan, Shopping List, Saved, Settings), read `.claude/docs/design/component-rules.md` sections 13–25.
+
+Easy Meal components should feel **premium, practical, and refined**. Match the component's behavior to its page context:
+
+- Discover components: more spacious, content-led, slightly looser
+- Recipe detail components: editorial, immersive, and premium
+- Recipe browsing components: structured, grid-friendly, still visually rich
+- Meal plan components: calm, structured, overview-oriented
+- Shopping list components: efficient first, polished second
+- Saved / collection components: curated and personal
+
+Do not make all components feel equally dense or equally visual. Vary by context while keeping one consistent design language.
+
 ## Review Expectations
 
 - Check accessibility, prop design, rendering boundaries, and test coverage.

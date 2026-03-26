@@ -3,7 +3,9 @@
     "allow": [
       "Bash(pnpm format:check)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm test:unit)"
+      "Bash(pnpm test:unit)",
+      "Bash(grep -E \"src/\\(components|app\\)/.*\\\\.tsx?$\")",
+      "Bash(ls:*)"
     ]
   }
 }

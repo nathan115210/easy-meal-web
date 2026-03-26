@@ -14,9 +14,9 @@
   display: flex;
   padding: pxToRem(16);
   position: sticky;
-  background-color: $color-background-secondary;
+  background-color: $color-topbar;
   top: 0;
-  border-bottom: 2px solid $color-border;
+  border-bottom: 1px solid $color-topbar-border;
   z-index: zIndex('topbar');
   max-height: 20rem;
   height: var(--topbar-height);

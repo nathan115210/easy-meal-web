@@ -1,33 +1,68 @@
 // ──────────────────────────────────────────────
 // Color Tokens
 // ──────────────────────────────────────────────
-// Raw palette — the only place literal hex values live.
-// All other color usage references these variables.
+// Raw palette — literal values only
 // ──────────────────────────────────────────────
 
 // ── Raw palette ──
-$color-bg: #faf8f7; // Hint of Red  — page background
-$color-text: #282237; // Steel Gray   — primary text
-$color-brand: #c38f59; // Twine         — main brand / primary action
-$color-accent-light: #7a5d4c; // Roman Coffee  — warm mid-tone accent
-$color-accent-dark: #64382a; // Irish Coffee  — deep warm accent
+$color-bg: #f5f5f4; // page background — neutral off-white
+$color-text: #282237; // deep neutral primary text / action base
+$color-brand: #c38f59; // warm editorial accent
+$color-accent-light: #7a5d4c; // warm mid-tone accent
+$color-accent-dark: #64382a; // deep warm accent
 
 // ── Derived neutrals ──
-$color-bg-secondary: #f0eae5; // warm off-white — panels, sections
-$color-bg-muted: #e8ddd6; // warm muted     — chips, secondary surfaces
-$color-border: #ddd0c8; // warm border
-$color-border-muted: #ede5e0; // subtle border
+$color-bg-secondary: #ededed; // neutral light — panels, sections
+$color-bg-muted: #e3e3e1; // neutral muted — chips, secondary surfaces
+$color-border: #d9d9d7; // standard border
+$color-border-muted: #e8e8e6; // subtle border
+$color-border-strong: #c8c7c5;
 
-// ── Semantic ──
-$color-primary: $color-brand;
+// ── Core semantic actions ──
+// Easy Meal is near-monochrome and restrained.
+// Primary actions should use deep neutral, not warm brand.
+$color-primary: $color-text;
 $color-primary-foreground: #ffffff;
 
+// Warm accent should be supportive/editorial, not the default CTA everywhere.
+$color-accent: $color-brand;
+$color-accent-foreground: #ffffff;
+
+// ── Secondary / muted ──
 $color-secondary: $color-bg-muted;
 $color-secondary-foreground: $color-text;
 
 $color-muted: $color-border;
 $color-muted-foreground: $color-accent-light;
 
+// ── Text scale ──
+$color-text-primary: $color-text;
+$color-text-secondary: rgba($color-text, 0.78);
+$color-text-muted: rgba($color-text, 0.58);
+$color-text-inverse: #ffffff;
+
+// ── Surface / card / input ──
+$color-input: #f0f0ef;
+$color-surface: #ffffff;
+$color-surface-muted: $color-bg-secondary;
+$color-surface-soft: $color-input;
+$color-surface-elevated: #ffffff;
+$color-surface-strong: $color-bg-muted;
+
+$color-card: $color-surface;
+$color-card-foreground: $color-text;
+
+// ── Interaction ──
+$color-hover: mix($color-primary, #ffffff, 8%);
+$color-active: mix($color-primary, #ffffff, 14%);
+$color-selected: mix($color-primary, #ffffff, 10%);
+$color-focus-ring: rgba($color-primary, 0.22);
+
+$color-disabled: #9f938c;
+$color-disabled-background: #efe8e3;
+$color-disabled-border: #e2d7d0;
+
+// ── Status colors: strong ──
 $color-success: #70a553;
 $color-success-foreground: #ffffff;
 
@@ -40,20 +75,39 @@ $color-destructive-foreground: #ffffff;
 $color-info: $color-text;
 $color-info-foreground: #ffffff;
 
-// ── Surface ──
-$color-card: #ffffff;
-$color-card-foreground: $color-text;
-$color-input: #f5efeb; // warm input background
+// ── Status colors: soft / calm surfaces ──
+$color-success-soft: #edf5e8;
+$color-success-soft-foreground: #4f7b39;
+$color-success-soft-border: #d9e8cf;
+
+$color-warning-soft: #fff4e5;
+$color-warning-soft-foreground: #9a5f09;
+$color-warning-soft-border: #f3d7ae;
+
+$color-destructive-soft: #fdeceb;
+$color-destructive-soft-foreground: #a43830;
+$color-destructive-soft-border: #f3c7c3;
+
+$color-info-soft: #f4f1f0;
+$color-info-soft-foreground: $color-text;
+$color-info-soft-border: #e4dcd8;
 
 // ── Navigation ──
 $color-sidebar: $color-bg;
 $color-sidebar-foreground: $color-text;
 $color-sidebar-primary: $color-bg-muted;
 $color-sidebar-primary-foreground: $color-text;
+$color-sidebar-hover: $color-bg-secondary;
+$color-sidebar-active: $color-bg-muted;
+
+$color-topbar: #ffffff;
+$color-topbar-foreground: $color-text;
+$color-topbar-border: $color-border-muted;
+
+// ── Overlay ──
+$color-overlay: rgba($color-text, 0.28);
 
 // ── Legacy aliases — backward compatibility ──
 $color-background: $color-bg;
 $color-background-secondary: $color-bg-secondary;
 $color-foreground: $color-text;
-$color-accent: $color-brand;
-$color-accent-foreground: $color-primary-foreground;

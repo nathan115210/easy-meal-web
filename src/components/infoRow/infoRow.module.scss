@@ -19,8 +19,8 @@
       color: #{$color-muted-foreground};
     }
     .infoLabel {
-      font-size: pxToRem(16);
-      font-weight: 600;
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-semibold);
     }
   }
 }

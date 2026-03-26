@@ -30,6 +30,9 @@
   --color-primary: #{$color-primary};
   --color-primary-fg: #{$color-primary-foreground};
 
+  --color-accent: #{$color-accent};
+  --color-accent-fg: #{$color-accent-foreground};
+
   --color-secondary: #{$color-secondary};
   --color-secondary-fg: #{$color-secondary-foreground};
 
@@ -48,23 +51,64 @@
   --color-info: #{$color-info};
   --color-info-fg: #{$color-info-foreground};
 
+  // ── Status: soft / calm surfaces ──
+  --color-success-soft: #{$color-success-soft};
+  --color-success-soft-fg: #{$color-success-soft-foreground};
+  --color-success-soft-border: #{$color-success-soft-border};
+
+  --color-warning-soft: #{$color-warning-soft};
+  --color-warning-soft-fg: #{$color-warning-soft-foreground};
+  --color-warning-soft-border: #{$color-warning-soft-border};
+
+  --color-danger-soft: #{$color-destructive-soft};
+  --color-danger-soft-fg: #{$color-destructive-soft-foreground};
+  --color-danger-soft-border: #{$color-destructive-soft-border};
+
+  --color-info-soft: #{$color-info-soft};
+  --color-info-soft-fg: #{$color-info-soft-foreground};
+  --color-info-soft-border: #{$color-info-soft-border};
+
   // ── Surface & border ──
-  --color-surface: #{$color-card};
-  --color-surface-elevated: #ffffff;
-  --color-surface-muted: #{$color-bg-secondary};
+  --color-surface: #{$color-surface};
+  --color-surface-elevated: #{$color-surface-elevated};
+  --color-surface-muted: #{$color-surface-muted};
+  --color-surface-soft: #{$color-input};
+  --color-surface-strong: #{$color-surface-strong};
   --color-border: #{$color-border};
   --color-border-muted: #{$color-border-muted};
+  --color-border-strong: #{$color-border-strong};
+
+  // ── Text scale ──
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-muted: #{$color-text-muted};
+  --color-text-inverse: #{$color-text-inverse};
 
   // ── Interactive states ──
-  --color-hover: color-mix(in srgb, #{$color-primary} 12%, #{$color-bg} 88%);
-  --color-active: color-mix(in srgb, #{$color-primary} 20%, #{$color-bg} 80%);
-  --color-disabled: #{$color-bg-muted};
-  --color-focus-ring: #{$color-primary};
+  --color-hover: #{$color-hover};
+  --color-active: #{$color-active};
+  --color-selected: #{$color-selected};
+  --color-focus-ring: #{$color-focus-ring};
+  --color-disabled: #{$color-disabled};
+  --color-disabled-bg: #{$color-disabled-background};
+  --color-disabled-border: #{$color-disabled-border};
+  --color-overlay: #{$color-overlay};
 
   --color-primary-hover: color-mix(in srgb, #{$color-primary} 85%, #000 15%);
   --color-primary-active: color-mix(in srgb, #{$color-primary} 72%, #000 28%);
   --color-danger-hover: color-mix(in srgb, #{$color-destructive} 85%, #000 15%);
   --color-danger-active: color-mix(in srgb, #{$color-destructive} 72%, #000 28%);
+
+  // ── Navigation ──
+  --color-sidebar: #{$color-sidebar};
+  --color-sidebar-fg: #{$color-sidebar-foreground};
+  --color-sidebar-primary: #{$color-sidebar-primary};
+  --color-sidebar-primary-fg: #{$color-sidebar-primary-foreground};
+  --color-sidebar-hover: #{$color-sidebar-hover};
+  --color-sidebar-active: #{$color-sidebar-active};
+  --color-topbar: #{$color-topbar};
+  --color-topbar-fg: #{$color-topbar-foreground};
+  --color-topbar-border: #{$color-topbar-border};
 }
 
 // ── Dark mode scaffold ──

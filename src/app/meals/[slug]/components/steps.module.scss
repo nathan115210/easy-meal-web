@@ -42,18 +42,12 @@
     }
 
     &__step-number {
-      width: #{pxToRem(28)};
-      height: #{pxToRem(28)};
-      border-radius: 50%;
-      background-color: $color-primary;
-      color: $color-primary-foreground;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: pxToRem(13);
-      font-weight: 700;
+      color: $color-accent;
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-bold);
       flex-shrink: 0;
       margin-top: #{pxToRem(1)};
+      line-height: 1;
     }
   }
 }

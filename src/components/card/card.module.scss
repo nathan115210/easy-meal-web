@@ -22,12 +22,10 @@
   box-shadow: var(--shadow-sm);
   transform: translateY(0);
   will-change: transform, box-shadow;
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out);
+  transition: var(--transition-surface);
 
   &:hover {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-card-hover);
   }
 
@@ -41,7 +39,6 @@
   .cardImg {
     border-radius: var(--card-border-radius);
     position: relative;
-    height: clamp(300px, 24vw, 400px);
     width: 100%;
     aspect-ratio: 5 / 4;
     overflow: hidden;

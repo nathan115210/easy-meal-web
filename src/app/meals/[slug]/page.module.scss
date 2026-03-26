@@ -4,6 +4,23 @@
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/border-radius' as *;
 
+.stateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  min-height: 40vh;
+  padding: var(--page-padding-y) var(--page-padding-x);
+
+  .stateMessage {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-normal);
+    color: $color-muted-foreground;
+    text-align: center;
+  }
+}
+
 .detailsContainer {
   padding: var(--page-padding-y) var(--page-padding-x);
 
@@ -47,9 +64,13 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: pxToRem(16);
+      gap: $space-5;
       flex-grow: 1;
       justify-content: flex-start;
+
+      @include tablet {
+        gap: $space-6;
+      }
 
       .nutrition {
         display: flex;
@@ -68,7 +89,7 @@
         &-list {
           list-style: none;
           padding: 0;
-          margin: 0 0 1.5rem 0;
+          margin-bottom: $space-6;
           display: flex;
           flex-wrap: wrap;
           gap: #{pxToRem(4)};
