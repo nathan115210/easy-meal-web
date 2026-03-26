@@ -43,4 +43,6 @@ next-env.d.ts
 # Testing
 /test-results
 /playwright-report
-.claude
+
+# Prevents claude worktree contents from appearing as untracked files in main repository.
+.claude/worktrees/
