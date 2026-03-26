@@ -24,10 +24,8 @@ reviews:
   tools:
     eslint:
       enabled: true
-      config_file: eslint.config.mjs
     biome:
       enabled: true
-      config_file: biome.jsonc
 
 knowledge_base:
   code_guidelines:
