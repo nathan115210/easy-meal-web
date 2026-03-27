@@ -37,7 +37,9 @@ $icon-size-sm: pxToRem(16);
 $icon-size: pxToRem(20);
 $icon-size-lg: pxToRem(24);
 
-$touch-target: pxToRem(44); // minimum touch target (WCAG)
+$touch-target: pxToRem(
+  44
+); // recommended touch target size (Apple HIG / Material; WCAG 2.5.5 enhanced; WCAG minimum is 24px)
 
 // ── Layout ──
 $side-navigation-width: pxToRem(219);

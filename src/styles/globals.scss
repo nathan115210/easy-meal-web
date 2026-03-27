@@ -1,5 +1,4 @@
 @use './tokens/colors' as *;
-@use './tokens/spacing' as *;
 @use './typography';
 @use './elevation';
 @use './motion';
@@ -94,10 +93,10 @@
   --color-disabled-border: #{$color-disabled-border};
   --color-overlay: #{$color-overlay};
 
-  --color-primary-hover: color-mix(in srgb, #{$color-primary} 85%, #000 15%);
-  --color-primary-active: color-mix(in srgb, #{$color-primary} 72%, #000 28%);
-  --color-danger-hover: color-mix(in srgb, #{$color-destructive} 85%, #000 15%);
-  --color-danger-active: color-mix(in srgb, #{$color-destructive} 72%, #000 28%);
+  --color-primary-hover: color-mix(in srgb, #{$color-primary} 85%, #{$color-black} 15%);
+  --color-primary-active: color-mix(in srgb, #{$color-primary} 72%, #{$color-black} 28%);
+  --color-danger-hover: color-mix(in srgb, #{$color-destructive} 85%, #{$color-black} 15%);
+  --color-danger-active: color-mix(in srgb, #{$color-destructive} 72%, #{$color-black} 28%);
 
   // ── Navigation ──
   --color-sidebar: #{$color-sidebar};

@@ -10,6 +10,7 @@ $color-text: #282237; // deep neutral primary text / action base
 $color-brand: #c38f59; // warm editorial accent
 $color-accent-light: #7a5d4c; // warm mid-tone accent
 $color-accent-dark: #64382a; // deep warm accent
+$color-black: #000000; // pure black — used only for color-mix darkening
 
 // ── Derived neutrals ──
 $color-bg-secondary: #ededed; // neutral light — panels, sections
@@ -31,7 +32,6 @@ $color-accent-foreground: #ffffff;
 // ── Secondary / muted ──
 $color-secondary: $color-bg-muted;
 $color-secondary-foreground: $color-text;
-
 $color-muted: $color-border;
 $color-muted-foreground: $color-accent-light;
 
@@ -65,13 +65,10 @@ $color-disabled-border: #e2d7d0;
 // ── Status colors: strong ──
 $color-success: #70a553;
 $color-success-foreground: #ffffff;
-
 $color-warning: #ed951b;
 $color-warning-foreground: #ffffff;
-
 $color-destructive: #f44336;
 $color-destructive-foreground: #ffffff;
-
 $color-info: $color-text;
 $color-info-foreground: #ffffff;
 

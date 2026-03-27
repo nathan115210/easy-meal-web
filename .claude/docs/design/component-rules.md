@@ -149,7 +149,7 @@ $icon-size-sm: 1rem     // 16px
 $icon-size:    1.25rem  // 20px
 $icon-size-lg: 1.5rem   // 24px
 
-$touch-target: 2.75rem  // 44px — WCAG minimum
+$touch-target: 2.75rem  // 44px — recommended size (Apple HIG / Material; WCAG 2.5.5 enhanced)
 ```
 
 ### pxToRem helper
@@ -480,7 +480,7 @@ Do not convert a component to client-side purely for convenience.
 - Icon-only buttons **must** have an `aria-label` (the `Button` component enforces this with a dev-mode warning)
 - Loading states set `aria-busy={true}` on the element
 - Use `aria-pressed` for toggle buttons
-- Minimum touch target size: `$touch-target` (44px) per WCAG 2.5.5
+- Minimum touch target size: `$touch-target` (44px) — recommended size per Apple HIG and Material; WCAG 2.5.5 Enhanced requires 44px, WCAG 2.2 minimum (2.5.8) is 24px
 - Do not hide content from assistive technology unless it is decorative
 
 ### Accessibility behavior rules
