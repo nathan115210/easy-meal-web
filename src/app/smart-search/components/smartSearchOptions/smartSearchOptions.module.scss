@@ -1,15 +1,12 @@
 @use '@/styles/tokens/spacing' as *;
-@use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/border-radius' as *;
-@use '@styles/tokens/z-index' as *;
 
 /* Root container */
 .smartSearchOptions {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 100%;
   gap: pxToRem(16);
 
   /* ──────────────────────────────
@@ -118,32 +115,6 @@
       &:focus-visible {
         outline: 2px solid var(--color-focus-ring);
         outline-offset: 2px;
-      }
-    }
-  }
-
-  /* ──────────────────────────────
-     Sticky footer actions
-     ────────────────────────────── */
-  .actions {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: flex;
-    align-items: center;
-    gap: pxToRem(8);
-
-    margin-top: auto;
-    padding: pxToRem(12) 0;
-    background: $color-background-secondary;
-    border-top: 1px solid $color-border;
-    z-index: zIndex('sticky');
-
-    .actionBtn {
-      @include desktop {
-        width: 100%;
       }
     }
   }
