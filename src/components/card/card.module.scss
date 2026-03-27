@@ -9,74 +9,63 @@
   --card-border-radius: #{$radius-lg};
 
   display: flex;
-
   flex-direction: column;
   padding: var(--card-padding);
-  gap: pxToRem(10);
-  background-color: $color-card;
-  border-radius: var(--card-border-radius);
-  border: 1px solid $color-muted;
-  box-shadow:
-    0 6px 14px rgba(15, 23, 42, 0.12),
-    0 1px 3px rgba(15, 23, 42, 0.06);
-
-  // start at rest
-  transform: translateY(0);
-  // smooth animation
-  transition:
-    transform 220ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    box-shadow 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
-
-  // hint for the browser
-  will-change: transform, box-shadow;
-
-  &:hover {
-    //outline: 1px solid $color-accent;
-    transform: translateY(-4px) scale(1.02);
-    box-shadow:
-      0 14px 30px rgba(15, 23, 42, 0.18),
-      0 4px 10px rgba(15, 23, 42, 0.12);
-  }
-  // Fill the column width instead of capping it
+  gap: $space-3;
   width: 100%;
   min-width: calc(100vw - $grid-gutter * 4);
-
-  // Avoid odd flex-line packing; let children stack naturally
   align-content: normal;
-
-  // If images can overflow, this helps contain them
   overflow: hidden;
+  background-color: $color-card;
+  border-radius: var(--card-border-radius);
+  border: 1px solid $color-border;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(0);
+  will-change: transform, box-shadow;
+  transition: var(--transition-surface);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+  }
 
   .cardTag {
     position: absolute;
     top: calc(var(--card-padding) * 2);
     right: calc(var(--card-padding) * 2);
-    z-index: zIndex('content');
+    z-index: zIndex('raised');
   }
 
   .cardImg {
     border-radius: var(--card-border-radius);
     position: relative;
-    height: clamp(300px, 24vw, 400px);
-    width: clamp(100%, 58.333vw, 58.333%);
+    width: 100%;
     aspect-ratio: 5 / 4;
     overflow: hidden;
+  }
+
+  .heading {
+    font-size: var(--text-h4);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-snug);
+    color: $color-card-foreground;
   }
 
   .content {
     display: flex;
     flex-direction: column;
-    gap: pxToRem(16);
+    gap: $space-4;
     flex-grow: 1;
-    // use start so buttons don’t get pushed too far apart on tall cards
     justify-content: flex-start;
   }
-  @include tablet {
+
+  // Unset the mobile min-width for all viewport sizes above mobile
+  @media (min-width: $bp-tablet-min) {
     min-width: unset;
   }
+
   @include desktop {
     --card-padding: #{pxToRem(20)};
-    min-width: unset;
   }
 
   &-withOverlay {

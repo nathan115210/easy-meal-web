@@ -31,6 +31,7 @@ Use this file for AI-assisted Playwright test generation in Easy Meal Web. Prefe
 
 ## Playwright Style In This Repo
 
+- **This project is mobile-first.** The Playwright config runs every test on both `Desktop Chrome` and `iPhone 15 Pro Max`. New tests must pass on both. When a test exercises a layout-dependent flow, verify that the mobile viewport is the baseline behavior.
 - Prefer `data-testid` selectors for key UI states and components.
 - Use accessibility-first queries where they are stable and clear.
 - Structure tests around the current repo pattern:

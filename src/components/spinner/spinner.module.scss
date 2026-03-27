@@ -10,8 +10,8 @@
   gap: pxToRem(12);
 
   .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: $color-secondary-foreground;
+    border: 4px solid $color-border-muted;
+    border-left-color: $color-text-primary;
     border-radius: 50%;
     width: pxToRem(36);
     height: pxToRem(36);

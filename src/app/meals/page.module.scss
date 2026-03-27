@@ -1,22 +1,21 @@
-// scss
-@use 'sass:math';
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
 
 .mealsList {
-  --meas-list-Padding: #{pxToRem(24)} #{pxToRem(16)};
-  padding: var(--meas-list-Padding);
+  --meals-list-padding: #{pxToRem(24)} #{pxToRem(16)};
+
+  padding: var(--meals-list-padding);
 
   @include tablet {
-    --banner-padding: #{pxToRem(32)} #{pxToRem(16)};
+    --meals-list-padding: #{pxToRem(32)} #{pxToRem(16)};
   }
 
   .emptyList {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: $space-3;
     text-align: center;
     width: 100%;
   }

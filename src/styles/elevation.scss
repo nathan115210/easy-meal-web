@@ -1,0 +1,32 @@
+// ──────────────────────────────────────────────
+// Elevation System
+// ──────────────────────────────────────────────
+// Systematic shadow tokens. Keep elevation restrained and intentional.
+//
+// Usage guide:
+//   sm              → resting cards, list items with subtle depth
+//   md              → hovered cards, sticky panels, search results
+//   lg              → modals, drawers, floating menus
+//   card-hover      → elevated state on card hover
+//
+// Border-only: use when the surface color is close to the page
+// background (e.g., muted panels on the warm bg). Add a shadow when
+// you need perceived depth or interactive lift.
+//
+// Shadow tints use the Steel Gray (#282237) base to stay warm and
+// on-palette rather than cold blue-grey.
+// ──────────────────────────────────────────────
+
+:root {
+  // Subtle — resting cards, list items
+  --shadow-sm: 0 1px 3px rgba(40, 34, 55, 0.06), 0 1px 2px rgba(40, 34, 55, 0.04);
+
+  // Medium — hovered panels, sticky surfaces
+  --shadow-md: 0 4px 12px rgba(40, 34, 55, 0.1), 0 2px 4px rgba(40, 34, 55, 0.06);
+
+  // Strong — modals, overlays, floating menus
+  --shadow-lg: 0 12px 32px rgba(40, 34, 55, 0.14), 0 4px 10px rgba(40, 34, 55, 0.08);
+
+  // Card hover — pronounced lift for interactive cards
+  --shadow-card-hover: 0 16px 40px rgba(40, 34, 55, 0.16), 0 4px 12px rgba(40, 34, 55, 0.1);
+}

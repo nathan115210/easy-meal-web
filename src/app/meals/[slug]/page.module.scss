@@ -2,13 +2,31 @@
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.stateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+  min-height: 40vh;
+  padding: var(--page-padding-y) var(--page-padding-x);
+
+  .stateMessage {
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-normal);
+    color: $color-muted-foreground;
+    text-align: center;
+  }
+}
 
 .detailsContainer {
-  padding: #{pxToRem(32)} #{pxToRem(16)};
+  padding: var(--page-padding-y) var(--page-padding-x);
 
   &-leftCol {
     &-image {
-      border-radius: #{pxToRem(8)};
+      border-radius: $radius-lg;
       margin-bottom: #{pxToRem(16)};
       position: relative;
       height: clamp(300px, 24vw, 800px);
@@ -20,15 +38,13 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-
       flex-grow: 1;
-      // use start so buttons don’t get pushed too far apart on tall cards
       justify-content: flex-start;
 
       gap: #{pxToRem(8)};
-      border: 1px solid $color-muted-foreground;
+      border: 1px solid $color-border;
       padding: #{pxToRem(16)};
-      border-radius: #{pxToRem(8)};
+      border-radius: $radius-md;
       background-color: $color-background-secondary;
       .headingContainer {
         display: flex;
@@ -48,20 +64,21 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: pxToRem(16);
+      gap: $space-5;
       flex-grow: 1;
-      // use start so buttons don’t get pushed too far apart on tall cards
       justify-content: flex-start;
-      .hotTag {
+
+      @include tablet {
+        gap: $space-6;
       }
 
       .nutrition {
         display: flex;
         flex-direction: column;
         gap: #{pxToRem(8)};
-        border: 1px solid $color-muted-foreground;
+        border: 1px solid $color-border;
         padding: #{pxToRem(16)};
-        border-radius: #{pxToRem(8)};
+        border-radius: $radius-md;
         background-color: $color-background-secondary;
 
         h3 {
@@ -72,7 +89,7 @@
         &-list {
           list-style: none;
           padding: 0;
-          margin: 0 0 1.5rem 0;
+          margin-bottom: $space-6;
           display: flex;
           flex-wrap: wrap;
           gap: #{pxToRem(4)};
@@ -105,8 +122,6 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-        }
-        .ingredientsList {
         }
       }
     }

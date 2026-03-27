@@ -1,0 +1,52 @@
+@use './tokens/spacing' as *;
+
+// ──────────────────────────────────────────────
+// Typography System
+// ──────────────────────────────────────────────
+// Font family, size scale, weights, line heights, letter spacing.
+// Use these CSS variables in components; avoid hardcoded font sizes.
+// ──────────────────────────────────────────────
+
+:root {
+  // ── Font families ──
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Roboto Mono', monospace;
+
+  // ── Type scale ──
+  //   display  → hero headings / splash
+  //   h1–h4   → page, section, sub-section, card headings
+  //   body-lg  → featured copy / intro paragraphs
+  //   body     → default content
+  //   body-sm  → secondary / supporting text
+  //   label    → form labels, metadata, captions
+  //   caption  → footnotes, timestamps
+  --text-display: #{pxToRem(48)};
+  --text-h1: #{pxToRem(36)};
+  --text-h2: #{pxToRem(28)};
+  --text-h3: #{pxToRem(22)};
+  --text-h4: #{pxToRem(18)};
+  --text-body-lg: #{pxToRem(17)};
+  --text-body: #{pxToRem(15)};
+  --text-body-sm: #{pxToRem(13)};
+  --text-label: #{pxToRem(13)};
+  --text-caption: #{pxToRem(11)};
+
+  // ── Line heights ──
+  --leading-tight: 1.1; // headings
+  --leading-snug: 1.25; // sub-headings
+  --leading-normal: 1.5; // body text
+  --leading-relaxed: 1.65; // long-form paragraphs
+
+  // ── Font weights ──
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  // ── Letter spacing ──
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+  --tracking-widest: 0.12em;
+}

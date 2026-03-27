@@ -5,8 +5,8 @@
 
 .infoRowContainer {
   width: 100%;
-  border-top: 2px solid #{$color-muted};
-  border-bottom: 2px solid #{$color-muted};
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
   padding-block-start: #{pxToRem(16)};
   padding-block-end: #{pxToRem(16)};
   display: flex;
@@ -19,8 +19,8 @@
       color: #{$color-muted-foreground};
     }
     .infoLabel {
-      font-size: pxToRem(16);
-      font-weight: 600;
+      font-size: var(--text-body-lg);
+      font-weight: var(--font-semibold);
     }
   }
 }

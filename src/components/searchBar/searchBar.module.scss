@@ -11,10 +11,16 @@
     padding: pxToRem(10) pxToRem(12);
     width: 100%;
     max-width: 100%;
+    min-height: #{$input-height};
     border: 2px solid $color-border;
     border-radius: $radius-md;
-    color: $color-primary;
+    color: $color-foreground;
     background-color: $color-input;
+    font: inherit;
+    font-size: pxToRem(15);
+    transition:
+      border-color var(--duration-fast) var(--ease-base),
+      box-shadow var(--duration-fast) var(--ease-base);
 
     &::placeholder {
       color: rgba($color-muted-foreground, 0.6);
@@ -23,6 +29,12 @@
     &::-webkit-input-placeholder {
       color: rgba($color-muted-foreground, 0.6);
       opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px $color-focus-ring;
     }
 
     @include desktop {

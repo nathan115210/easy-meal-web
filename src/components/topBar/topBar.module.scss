@@ -14,10 +14,10 @@
   display: flex;
   padding: pxToRem(16);
   position: sticky;
-  background-color: $color-background-secondary;
+  background-color: $color-topbar;
   top: 0;
-  border-bottom: 2px solid $color-border;
-  z-index: zIndex('max');
+  border-bottom: 1px solid $color-topbar-border;
+  z-index: zIndex('topbar');
   max-height: 20rem;
   height: var(--topbar-height);
 
@@ -56,12 +56,12 @@
 
   .userBtn {
     margin-left: auto; /* push button to the far right */
-    border: 1rem solid red;
     border-radius: 50%;
-    width: pxToRem(27);
-    height: pxToRem(27);
+    width: pxToRem(36);
+    height: pxToRem(36);
     box-sizing: border-box;
     max-height: 100%;
+    overflow: hidden;
 
     /* first row, after logo */
     order: 2;

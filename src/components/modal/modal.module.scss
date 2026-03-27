@@ -21,11 +21,11 @@
   transform: translate(-50%, -50%) scale(0.98);
 
   outline: none;
-  background-color: $color-background;
+  background-color: $color-surface;
 
   transition:
-    opacity 160ms ease,
-    transform 160ms ease;
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 
   &[open] {
     display: flex;
@@ -56,7 +56,7 @@
 
 .header {
   padding: 20px 20px 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid $color-border-muted;
 
   /* Sticky must have a top */
   position: sticky;
@@ -64,14 +64,14 @@
   z-index: 2;
 
   /* Sticky requires a background to cover scrolled content beneath */
-  background-color: $color-background;
+  background-color: $color-surface;
   .headerHeading {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .headerChildren {
-    border: 2px solid red;
+    margin-top: pxToRem(8);
   }
 }
 
@@ -92,7 +92,7 @@
 
 .footer {
   padding: 12px 20px 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid $color-border-muted;
 
   display: flex;
   justify-content: flex-end;
@@ -102,5 +102,5 @@
   position: sticky;
   bottom: 0;
   z-index: 2;
-  background-color: $color-background;
+  background-color: $color-surface;
 }

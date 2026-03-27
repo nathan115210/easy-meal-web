@@ -29,10 +29,49 @@ This directory contains reusable UI components. Match the current component spli
 
 ## Styling
 
+- **Mobile-first.** Base styles always target the mobile viewport. Use `@include tablet` and `@include desktop` to layer wider-viewport overrides on top. Never write styles that start from desktop and narrow down to mobile.
 - Prefer SCSS Modules and existing naming/style conventions.
 - Avoid inline or ad hoc styling when the local pattern is SCSS Modules.
 - Reuse existing layout and spacing patterns where possible.
 - Preserve existing local class-composition patterns instead of introducing a new styling utility without a reason.
+
+### SCSS Declaration Ordering And Empty-Line Rules
+
+When editing SCSS in this directory:
+
+- Place local CSS custom properties first within a declaration block when they are used as local styling variables.
+- After the last custom property, add exactly one blank line before the first standard declaration.
+- In size-variant blocks, keep exactly one blank line immediately before the `min-height` declaration so `declaration-empty-line-before` remains compliant.
+- Do not reorder declarations in a way that places standard declarations above local custom properties when the block is using CSS variables as local configuration.
+
+### Preferred pattern:
+
+```scss
+.selector {
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+
+  border-right: 1px solid $color-border;
+}
+```
+
+### Preferred size-variant pattern:
+
+```scss
+.sizeSm {
+  --button-padding-inline: #{pxToRem(12)};
+
+  min-height: #{$btn-height-sm};
+}
+```
+
+### Avoid:
+
+```scss
+.selector {
+  border-right: 1px solid $color-border;
+  --smart-search-panel-padding: #{pxToRem(8) pxToRem(16) 0 pxToRem(16)};
+}
+```
 
 ## Testing
 
@@ -40,6 +79,21 @@ This directory contains reusable UI components. Match the current component spli
 - Test user-visible behavior rather than implementation details.
 - Preserve stable `data-testid` attributes used by Playwright for critical flows.
 - In unit tests, remember the repo setup mocks `next/image`, `next/link`, and App Router hooks.
+
+## Product Design Context
+
+For component behavior rules tied to product context (Discover, Recipes, Recipe Detail, Meal Plan, Shopping List, Saved, Settings), read `.claude/docs/design/component-rules.md` sections 13–25.
+
+Easy Meal components should feel **premium, practical, and refined**. Match the component's behavior to its page context:
+
+- Discover components: more spacious, content-led, slightly looser
+- Recipe detail components: editorial, immersive, and premium
+- Recipe browsing components: structured, grid-friendly, still visually rich
+- Meal plan components: calm, structured, overview-oriented
+- Shopping list components: efficient first, polished second
+- Saved / collection components: curated and personal
+
+Do not make all components feel equally dense or equally visual. Vary by context while keeping one consistent design language.
 
 ## Review Expectations
 

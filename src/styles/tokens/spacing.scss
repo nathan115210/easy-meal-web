@@ -5,14 +5,47 @@
   @return $remValue;
 }
 
-/*Side navigation*/
-$side-navigation-width: pxToRem(219); // 219px
-$side-navigation-collapsed-width: pxToRem(64); // 64px
+// ──────────────────────────────────────────────
+// Spacing Scale
+// ──────────────────────────────────────────────
+// Base unit: 4px. Scale follows a 4-point grid.
+// Use named tokens instead of arbitrary values.
+// ──────────────────────────────────────────────
 
-/*Bottom navigation*/
+$space-0: 0;
+$space-1: pxToRem(4); //  4px — tight gap, label-to-input
+$space-2: pxToRem(8); //  8px — icon gap, chip internal
+$space-3: pxToRem(12); // 12px — inline group gap
+$space-4: pxToRem(16); // 16px — standard padding
+$space-5: pxToRem(20); // 20px — medium padding
+$space-6: pxToRem(24); // 24px — section gap (mobile)
+$space-8: pxToRem(32); // 32px — section gap (desktop)
+$space-10: pxToRem(40); // 40px — large section gap
+$space-12: pxToRem(48); // 48px — page section breathing room
+$space-16: pxToRem(64); // 64px — hero-level spacing
 
-$bottom-navigation-height: pxToRem(64); // 64px
+// ── Component sizing ──
+$input-height-sm: pxToRem(36);
+$input-height: pxToRem(44); // standard input
+$input-height-lg: pxToRem(52);
 
-/*Grid*/
+$btn-height-sm: pxToRem(32);
+$btn-height: pxToRem(40);
+$btn-height-lg: pxToRem(48);
+
+$icon-size-sm: pxToRem(16);
+$icon-size: pxToRem(20);
+$icon-size-lg: pxToRem(24);
+
+$touch-target: pxToRem(
+  44
+); // recommended touch target size (Apple HIG / Material; WCAG 2.5.5 enhanced; WCAG minimum is 24px)
+
+// ── Layout ──
+$side-navigation-width: pxToRem(219);
+$side-navigation-collapsed-width: pxToRem(64);
+$bottom-navigation-height: pxToRem(64);
+
+// ── Grid ──
 $grid-gutter: 16px;
 $grid-columns: 12;

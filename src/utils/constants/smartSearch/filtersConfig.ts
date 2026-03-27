@@ -1,4 +1,4 @@
-import type { SmartFilterConfigType } from '@/components/smartSearchOptions/SmartFilterSection';
+import type { SmartFilterConfigType } from '@/app/smart-search/components/smartSearchOptions/SmartFilterSection';
 import smartSearchData from '@/utils/constants/smartSearch/smartSearchData';
 
 const {

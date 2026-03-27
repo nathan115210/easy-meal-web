@@ -20,7 +20,7 @@
   .bottomNavigation {
     height: 100%;
     width: 100%;
-    border-top: 2px solid $color-border;
+    border-top: 1px solid $color-border;
 
     &-list {
       display: flex;
@@ -49,9 +49,20 @@
         gap: var(--bottom-nav-item-gap);
 
         &.active {
-          background: $color-primary;
-          color: $color-primary-foreground;
-          border-radius: $radius-xl;
+          color: $color-primary;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: pxToRem(4);
+            left: 50%;
+            transform: translateX(-50%);
+            width: pxToRem(4);
+            height: pxToRem(4);
+            border-radius: 50%;
+            background-color: $color-accent;
+          }
         }
       }
     }

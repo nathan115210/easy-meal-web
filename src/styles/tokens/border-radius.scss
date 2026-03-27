@@ -1,6 +1,14 @@
-$radius-sm: 4px;
-$radius-md: 8px;
-$radius-lg: 12px;
-$radius-xl: 16px;
-$radius-xxl: 20px;
-$radius-xxxl: 24px;
+// ──────────────────────────────────────────────
+// Border Radius Tokens
+// ──────────────────────────────────────────────
+// Softer, friendlier scale for a food-focused app.
+// Use md/lg for most surfaces; pill for tags and badges.
+// ──────────────────────────────────────────────
+
+$radius-sm: 6px; // subtle  — small badges, tight containers
+$radius-md: 10px; // default — inputs, list items, small cards
+$radius-lg: 16px; // prominent — cards, panels, image containers
+$radius-xl: 24px; // generous — chips, compact buttons, nav items
+$radius-xxl: 32px; // maximum — modals, hero images
+$radius-xxxl: 40px; // extra large — kept for any legacy usage
+$radius-pill: 9999px; // fully rounded — tags, badges, toggle pills

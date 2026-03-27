@@ -41,12 +41,12 @@
   white-space: nowrap;
   user-select: none;
   transition:
-    background 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease;
+    background var(--duration-fast) var(--ease-base),
+    color var(--duration-fast) var(--ease-base),
+    border-color var(--duration-fast) var(--ease-base);
 
   &:focus-visible {
-    outline: 2px solid $color-primary;
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
 
@@ -61,7 +61,7 @@
 
 /* ───────────────────── Variants ───────────────────── */
 
-/* Muted (default / “neutral”) */
+/* Muted (default / "neutral") */
 .variantMuted {
   --chip-bg: #{$color-muted};
   --chip-fg: #{$color-muted-foreground};
@@ -139,10 +139,10 @@
   --chip-border-selected: #{$color-warning};
 }
 
-/* Destructive – error / danger */
+/* Destructive – error / danger (light tint base; solid only when selected) */
 .variantDestructive {
-  --chip-bg: #{$color-destructive};
-  --chip-fg: #{$color-destructive-foreground};
+  --chip-bg: color-mix(in srgb, #{$color-destructive} 10%, #{$color-background} 90%);
+  --chip-fg: #{$color-destructive};
   --chip-border-color: color-mix(in srgb, #{$color-destructive} 40%, #{$color-border} 60%);
 
   --chip-bg-hover: color-mix(in srgb, #{$color-destructive} 18%, #{$color-background} 82%);
@@ -186,20 +186,38 @@
   cursor: default;
 }
 
+/* ───────────────────── Sizes ───────────────────── */
+
 .sm {
   --chip-padding-y: #{pxToRem(2)};
   --chip-padding-x: #{pxToRem(8)};
   --chip-font-size: #{pxToRem(12)};
   --chip-gap: #{pxToRem(2)};
 }
+
 .lg {
   --chip-padding-y: #{pxToRem(4)};
   --chip-padding-x: #{pxToRem(10)};
   --chip-font-size: #{pxToRem(16)};
+  --chip-gap: #{pxToRem(10)};
 }
+
+/* ───────────────────── Type hooks ───────────────────── */
+
+/* Selector hooks for type-specific overrides; ARIA roles handle semantic differentiation */
+.singleSelect {
+  --chip-type: single-select;
+}
+
+.multiSelect {
+  --chip-type: multi-select;
+}
+
+/* ───────────────────── Inner elements ───────────────────── */
 
 .label {
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
@@ -216,11 +234,11 @@
   border-radius: 50%;
 
   &:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.08);
+    background: color-mix(in srgb, currentColor 8%, transparent 92%);
   }
 
   &:focus-visible {
-    outline: 2px solid $color-primary;
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
 }
@@ -228,6 +246,7 @@
 /* Group container */
 .chipsGroup {
   --chip-gap: #{pxToRem(6)};
+
   width: 100%;
   display: flex;
   flex-wrap: wrap;

@@ -25,6 +25,7 @@ import Ingredients from '@/app/meals/[slug]/components/ingredients';
 import Button from '@/components/button/Button';
 import Steps from './components/steps';
 import CookModeModal from './components/cookModeModal';
+import Spinner from '@/components/spinner/Spinner';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -35,7 +36,6 @@ export default function MealDetailPage({ params }: PageProps) {
     data: mealData,
     isLoading,
     isError,
-    error,
   } = useQuery<Meal | null>({
     queryKey: ['meal', slug],
     queryFn: ({ signal }) => fetchMealDataBySlug(slug, signal),
@@ -48,9 +48,25 @@ export default function MealDetailPage({ params }: PageProps) {
 
   const showInfoRow = Boolean(mealData?.cookTime || mealData?.difficulty || calories);
 
-  if (isLoading) return <div>Loading…</div>;
-  if (isError) return <div>Error: {(error as Error).message}</div>;
-  if (!mealData) return <div>Not found</div>;
+  if (isLoading)
+    return (
+      <div className={styles.stateContainer}>
+        <Spinner />
+        <p className={styles.stateMessage}>Loading recipe…</p>
+      </div>
+    );
+  if (isError)
+    return (
+      <div className={styles.stateContainer} data-testid="meal-detail-error">
+        <p className={styles.stateMessage}>Something went wrong loading this recipe.</p>
+      </div>
+    );
+  if (!mealData)
+    return (
+      <div className={styles.stateContainer} data-testid="meal-detail-notfound">
+        <p className={styles.stateMessage}>Recipe not found.</p>
+      </div>
+    );
 
   const {
     title,

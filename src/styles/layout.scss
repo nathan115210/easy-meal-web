@@ -1,0 +1,50 @@
+@use './tokens/spacing' as *;
+
+// ──────────────────────────────────────────────
+// Layout Foundation
+// ──────────────────────────────────────────────
+// Container widths, content strategy, section rhythm,
+// and spacing rules for forms, cards, and lists.
+//
+// Column strategy:
+//   - Single column: default on mobile, forms always
+//   - Two columns: tablet+ for detail pages (image + info)
+//   - Cards: responsive grid via .grid / .col-* utilities
+//
+// Alignment rules:
+//   - Page headings + actions: space-between flex row
+//   - Form labels: left-aligned, stacked above inputs
+//   - Grouped controls: consistent gap, never mixed spacing
+// ──────────────────────────────────────────────
+
+:root {
+  // ── Container widths ──
+  --container-sm: 560px; // narrow: forms, dialogs
+  --container-md: 768px; // standard content column
+  --container-lg: 1040px; // wide: two-column detail pages
+  --container-xl: 1280px; // max page width
+
+  // ── Page padding ──
+  --page-padding-x: #{$space-4}; // 16px
+  --page-padding-y: #{$space-6}; // 24px
+
+  // ── Section spacing ──
+  --section-gap-sm: #{$space-6}; // 24px — mobile
+  --section-gap-md: #{$space-8}; // 32px — tablet
+  --section-gap-lg: #{$space-10}; // 40px — desktop
+
+  // ── Card spacing ──
+  --card-padding-sm: #{$space-4}; // 16px — mobile
+  --card-padding-lg: #{$space-5}; // 20px — desktop
+
+  // ── Form spacing ──
+  --form-field-gap: #{$space-4}; // 16px — between fields
+  --form-label-gap: #{$space-1}; // 4px  — label → input
+  --form-helper-gap: #{$space-1}; // 4px  — input → helper/error
+  --form-section-gap: #{$space-6}; // 24px — between form sections
+
+  // ── List / item spacing ──
+  --list-item-gap: #{$space-2}; // 8px
+  --list-item-padding-y: #{$space-3}; // 12px
+  --list-item-padding-x: #{$space-4}; // 16px
+}

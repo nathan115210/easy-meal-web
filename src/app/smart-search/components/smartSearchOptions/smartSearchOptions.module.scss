@@ -1,15 +1,12 @@
 @use '@/styles/tokens/spacing' as *;
-@use '@styles/tokens/mixins' as *;
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/border-radius' as *;
-@use '@styles/tokens/z-index' as *;
 
 /* Root container */
 .smartSearchOptions {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 100%;
   gap: pxToRem(16);
 
   /* ──────────────────────────────
@@ -19,7 +16,7 @@
   --input-pad-y: #{pxToRem(10)};
   --input-pad-x: #{pxToRem(12)};
   --inline-gap: #{pxToRem(6)};
-  --transition-base: 0.15s ease;
+  --transition-base: var(--duration-fast) var(--ease-base);
 
   /* ──────────────────────────────
      Field container block
@@ -111,39 +108,13 @@
       }
 
       &:hover:not(:disabled) {
-        background: $color-secondary;
-        color: $color-secondary-foreground;
+        background: color-mix(in srgb, #{$color-primary} 85%, #{$color-background} 15%);
+        color: $color-primary-foreground;
       }
 
       &:focus-visible {
-        outline: 2px solid $color-accent;
+        outline: 2px solid var(--color-focus-ring);
         outline-offset: 2px;
-      }
-    }
-  }
-
-  /* ──────────────────────────────
-     Sticky footer actions
-     ────────────────────────────── */
-  .actions {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: flex;
-    align-items: center;
-    gap: pxToRem(8);
-
-    margin-top: auto;
-    padding: pxToRem(12) 0;
-    background: $color-background-secondary;
-    border-top: 4px solid $color-warning;
-    z-index: zIndex('max');
-
-    .actionBtn {
-      @include desktop {
-        width: 100%;
       }
     }
   }
