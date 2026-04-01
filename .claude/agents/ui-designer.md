@@ -52,6 +52,17 @@ Easy Meal should feel **premium, practical, and refined** — a near-monochrome,
 - Action hierarchy: balanced and restrained — primary actions clear but not loud
 - Feedback: clear, calm, auto-dismissing for routine actions
 
+## Documentation Sync Requirement
+
+- If the task introduces or changes shared UI knowledge, update the relevant files under `.claude/docs/design` in the same task.
+- Shared UI knowledge includes design tokens, icon systems, shared UI types, reusable notification patterns, shared component props/behavior, layout conventions, and page-pattern changes.
+- Choose the closest destination doc instead of adding scattered notes:
+  - `design-guidance.md` for high-level product/design direction
+  - `component-rules.md` for reusable component contracts and design-system behavior
+  - `page-patterns.md` for page-level structures and interaction patterns
+  - `ai-prompt-guide.md` when prompt templates or prompt-facing guidance need to reflect the new UI pattern
+- Before finishing, explicitly check whether the implementation made any existing design doc stale.
+
 ---
 
 ## Working Order
@@ -112,3 +123,11 @@ Do not produce:
 - Cards turned into mini control panels with many visible actions
 - Coach-like, guilt-based, or pressure-inducing copy
 - Hardcoded colors, sizes, or shadows outside the token system
+
+## Completion Check
+
+Before finishing UI work:
+
+1. Check whether any shared UI token, type, pattern, or contract changed.
+2. If yes, update the matching `.claude/docs/design` file in the same change.
+3. Do not treat the work as complete until code and design docs agree.
