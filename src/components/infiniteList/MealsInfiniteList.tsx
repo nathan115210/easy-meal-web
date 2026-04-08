@@ -3,8 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Col, ColProps, Row } from '@/components/grid/Grid';
-import Card from '@/components/card/Card';
-import BaseLink from '@/components/baseLink/BaseLink';
+import RecipeCard from '@/components/recipeCard/RecipeCard';
 import Spinner from '@/components/spinner/Spinner';
 import BottomLine from '@/components/bottomLine/BottomLine';
 import EmptyList from '@/app/meals/components/EmptyList';
@@ -12,11 +11,7 @@ import CardsListSkeleton from '@/components/skeleton/cardsListSkeleton/CardsList
 import { CaloriesValue, CookTimeValue, DifficultyLevel, MealType } from '@/utils/types/meals';
 import fetchMealsData from '@/utils/data-server/fetchMealsData';
 import { usePathname } from 'next/navigation';
-import ChipsGroup from '@/components/chip/ChipsGroup';
-import Chip, { ChipVariant } from '@/components/chip/Chip';
-import { underscoreToTitle } from '@/utils/lib/helpers';
 import styles from './mealsInfiniteList.module.scss';
-import { Check, ChefHat, Flame } from 'lucide-react';
 
 export default function MealsInfiniteList({
   search,
@@ -126,7 +121,7 @@ export default function MealsInfiniteList({
   if (status === 'pending') {
     return (
       <Row>
-        <CardsListSkeleton />
+        <CardsListSkeleton gridLayout={gridLayout} />
       </Row>
     );
   }
@@ -158,64 +153,22 @@ export default function MealsInfiniteList({
   return (
     <Row data-testid="meals-infinite-list">
       {items.map((meal, index) => {
-        const { difficulty, nutritionInfo: { calories } = {} } = meal;
-        const quickInfo = [parseCalories(calories), parseDifficulty(difficulty)].filter(Boolean);
-        const tags = new Set([...(meal.topTags ?? []), ...(searchTags ?? [])]);
-
-        const cardTags = extractTagsFromMealsSearchParams(meal.topTags, searchTags);
-
         return (
-          <Col className={styles.listContainer} key={`${meal.slug}-${index}`} {...gridLayout}>
-            <Card
-              data-testid="meal-card"
-              heading={meal.title}
+          <Col
+            data-testid="meal-card"
+            className={styles.listContainer}
+            key={`${meal.slug}-${index}`}
+            {...gridLayout}
+          >
+            <RecipeCard
+              title={meal.title}
               imageSet={{ mobileSrc: meal.image }}
               imageAlt={meal.title}
-              label={`${meal.cookTime} mins`}
-            >
-              {/*Quick Info*/}
-              <div className={styles.quickInfo}>
-                {quickInfo.map(
-                  (item, index) =>
-                    item && (
-                      <span key={`${-item}-${index}`} className={styles['quickInfo-item']}>
-                        {isDifficulty(item) && <ChefHat size={12} />}
-                        {isCalories(item) && <Flame size={12} />}
-
-                        {item}
-                      </span>
-                    )
-                )}
-              </div>
-              {/*//TODO - Start: Add new feature for displaying dynamic tags
-                1. if there is no tags from search params, show topTags from meal
-                2. if there are tags from search params, show those tags and highlight them. if the tag is not in meal.topTags, add meal.topTags at the end
-              */}
-              {/*Top tags*/}
-              {tags.size > 0 && (
-                <ChipsGroup ariaLabel={`${meal.title} - top tags`}>
-                  {[...cardTags].map((tag, index) => {
-                    const isHighlighted = searchTags?.includes(tag);
-                    const variant: ChipVariant = isHighlighted ? 'success' : 'secondary';
-                    return (
-                      <Chip
-                        key={`${meal.title}-${tag}-${index}`}
-                        label={underscoreToTitle(tag)}
-                        size={'sm'}
-                        variant={variant}
-                        type={'label'}
-                        labelIcon={isHighlighted ? <Check size={14} /> : undefined}
-                      />
-                    );
-                  })}
-                </ChipsGroup>
-              )}
-              {/* //TODO - END */}
-
-              <BaseLink href={`/meals/${meal.slug}`} variant="primary" underline="hover">
-                Learn More
-              </BaseLink>
-            </Card>
+              time={meal.cookTime ? `${meal.cookTime} mins` : ''}
+              difficulty={parseDifficulty(meal.difficulty)}
+              category={meal.mealType?.[0] ?? meal.topTags?.[0] ?? ''}
+              href={`/meals/${meal.slug}`}
+            />
           </Col>
         );
       })}
@@ -258,29 +211,4 @@ function parseDifficulty(value?: string | null): ExtractDifficultyLevelType {
   if (lower === 'easy') return 'Easy';
   if (lower === 'hard') return 'Hard';
   return 'Med';
-}
-
-function parseCalories(value?: number): string | undefined {
-  if (value) return `${value} Kcal`;
-  return undefined;
-}
-
-function isCalories(value: unknown): boolean {
-  return typeof value === 'string' && value.includes('Kcal');
-}
-
-// Reordering each meal's topTags and searchTags. Put searchTags first in the list.
-function extractTagsFromMealsSearchParams(topTags?: string[], searchTags?: string[]): string[] {
-  if (!topTags || topTags.length === 0) return [];
-  if (!searchTags || searchTags.length === 0) return [...topTags];
-
-  const priority = new Set(searchTags);
-  const inPriority: string[] = [];
-  const rest: string[] = [];
-
-  for (const item of topTags) {
-    (priority.has(item) ? inPriority : rest).push(item);
-  }
-
-  return [...inPriority, ...rest];
 }

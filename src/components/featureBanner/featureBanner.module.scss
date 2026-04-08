@@ -1,0 +1,263 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: $radius-xxl;
+  border: 1px solid $color-border-muted;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  width: 100%;
+
+  // ── Image fills the full banner area ──
+  .imageWrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+      transition: transform var(--duration-slow) var(--ease-out);
+    }
+  }
+
+  &:hover .imageWrap img {
+    transform: scale(1.04);
+  }
+
+  // ── Gradient overlay ──
+  .gradient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .gradientLeft {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.82) 0%,
+      rgba(0, 0, 0, 0.44) 50%,
+      transparent 100%
+    );
+  }
+
+  .gradientBottom {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.22) 55%,
+      transparent 100%
+    );
+  }
+
+  // ── Overlay content (shared) ──
+  .overlayContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    color: $color-text-inverse;
+  }
+
+  // ── Shared icon box ──
+  .icon {
+    --feature-icon-size: #{pxToRem(48)};
+
+    width: var(--feature-icon-size);
+    height: var(--feature-icon-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-lg;
+    flex-shrink: 0;
+  }
+
+  // ── Shared heading / description / cta ──
+  .heading {
+    font-size: var(--text-h3);
+    font-weight: var(--font-regular);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+
+    @include desktop {
+      font-size: var(--text-h2);
+    }
+  }
+
+  .description {
+    font-size: var(--text-body-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  .ctaLink {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: var(--text-label);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-top: $space-2;
+    transition: gap var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      gap: $space-3;
+    }
+  }
+
+  // ── overlayLeft variant ──
+  &.overlayLeft {
+    height: pxToRem(380);
+
+    .overlayContent {
+      padding: $space-8;
+      justify-content: center;
+      height: 100%;
+      max-width: pxToRem(480);
+    }
+
+    .heading,
+    .description,
+    .ctaLink {
+      color: $color-text-inverse;
+    }
+
+    .description {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: var(--text-body);
+    }
+
+    .icon {
+      background-color: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      color: $color-text-inverse;
+    }
+
+    @include tablet {
+      height: pxToRem(640);
+
+      .overlayContent {
+        padding: $space-10 $space-12;
+      }
+    }
+
+    @include desktop {
+      height: pxToRem(910);
+
+      .overlayContent {
+        padding: $space-12 pxToRem(80);
+        max-width: pxToRem(560);
+      }
+    }
+  }
+
+  // ── overlayBottom variant ──
+  &.overlayBottom {
+    aspect-ratio: 5 / 3;
+
+    .overlayContent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: $space-8;
+    }
+
+    .heading,
+    .description,
+    .ctaLink {
+      color: $color-text-inverse;
+    }
+
+    .description {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .icon {
+      background-color: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      color: $color-text-inverse;
+    }
+  }
+
+  // ── split variant ──
+  &.split {
+    background-color: $color-surface;
+    display: flex;
+    flex-direction: column;
+    position: static;
+
+    .splitContent {
+      padding: $space-8;
+      display: flex;
+      flex-direction: column;
+      gap: $space-4;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .splitImage {
+      position: relative;
+      flex: 1;
+      min-height: pxToRem(260);
+    }
+
+    .splitImageInner {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .icon {
+      background-color: $color-bg-secondary;
+      color: $color-text;
+    }
+
+    .heading {
+      color: $color-text;
+    }
+
+    .description {
+      color: $color-text-secondary;
+      max-width: pxToRem(380);
+    }
+
+    .ctaLink {
+      color: $color-text;
+    }
+
+    @include tablet {
+      flex-direction: row;
+      min-height: pxToRem(400);
+
+      .splitContent {
+        padding: $space-10 $space-12;
+        flex: 1;
+      }
+
+      .splitImage {
+        min-height: unset;
+        flex: 1;
+      }
+    }
+
+    @include desktop {
+      flex-direction: row;
+      height: pxToRem(400);
+
+      .splitContent {
+        padding: $space-10 pxToRem(64);
+        flex: 1;
+      }
+
+      .splitImage {
+        min-height: unset;
+        flex: 1;
+      }
+    }
+  }
+}

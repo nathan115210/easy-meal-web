@@ -9,6 +9,9 @@
   flex-direction: column;
   height: var(--smart-search-container-height);
   min-height: var(--smart-search-container-height);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  width: 100%;
 
   position: relative;
 

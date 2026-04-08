@@ -5,7 +5,10 @@
       "Bash(pnpm lint:*)",
       "Bash(pnpm test:unit)",
       "Bash(grep -E \"src/\\(components|app\\)/.*\\\\.tsx?$\")",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prettier:*)",
+      "Bash(node:*)"
     ]
   }
 }

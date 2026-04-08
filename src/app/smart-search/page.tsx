@@ -39,7 +39,7 @@ export default async function SmartSearchPage({ searchParams }: SmartSearchPageP
       <div className={styles.searchResults}>
         <Grid>
           <MealsInfiniteList
-            gridLayout={{ sm: 12, xl: 6 }}
+            gridLayout={{ sm: 12, xl: 4 }}
             cookTime={cookTime}
             mealType={mealType}
             search={search}

@@ -1,20 +1,24 @@
 // src/app/meals/components/MealsSkeletonCards.tsx
 import React from 'react';
-import { Col } from '@/components/grid/Grid';
+import { Col, ColProps } from '@/components/grid/Grid';
 import Skeleton from '@/components/skeleton/Skeleton';
 import styles from './cardsListSkeleton.module.scss';
 
 type Props = {
   count?: number;
+  gridLayout?: ColProps;
 };
 
-export default function CardsListSkeleton({ count = 8 }: Props) {
+export default function CardsListSkeleton({
+  count = 9,
+  gridLayout = { sm: 12, md: 6, lg: 4, xl: 3 },
+}: Props) {
   const items = Array.from({ length: Math.max(1, count) });
 
   return (
     <>
       {items.map((_, i) => (
-        <Col key={i} sm={12} md={6} lg={4} xl={3}>
+        <Col key={i} {...gridLayout}>
           <div className={styles.cardContainer} aria-hidden="true">
             {/* image */}
             <Skeleton.Rect className={styles.img} width={'100%'} height={200} radius={6} />
