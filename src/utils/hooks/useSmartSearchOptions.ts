@@ -31,29 +31,17 @@ export type ClearOptionFn = (key: keyof SmartSearchOptionsState) => void;
 const storageKey = 'easy-meal:smart-search';
 
 const useSmartSearchOptions = (initial?: Partial<SmartSearchOptionsState>) => {
-  const [options, setOptions] = useState<SmartSearchOptionsState>({
-    ...DEFAULT_SMART_OPTIONS,
-    ...initial,
-  });
-
-  useEffect(() => {
+  const [options, setOptions] = useState<SmartSearchOptionsState>(() => {
+    const base = { ...DEFAULT_SMART_OPTIONS, ...initial };
     try {
       const raw = window.localStorage.getItem(storageKey);
-      if (!raw) return;
-
+      if (!raw) return base;
       const parsed = JSON.parse(raw) as Partial<SmartSearchOptionsState>;
-
-      // Avoid synchronous setState in effect — use microtask
-      queueMicrotask(() => {
-        setOptions((prev) => ({
-          ...prev,
-          ...parsed,
-        }));
-      });
+      return { ...base, ...parsed };
     } catch {
-      // ignore
+      return base;
     }
-  }, []);
+  });
 
   // Persist to localStorage when options change (client only)
   useEffect(() => {
@@ -91,7 +79,6 @@ const useSmartSearchOptions = (initial?: Partial<SmartSearchOptionsState>) => {
     updateOption,
     clearOption,
     resetAll,
-    setOptions,
   };
 };
 

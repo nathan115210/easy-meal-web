@@ -106,7 +106,7 @@ export default function MealsInfiniteList({
           void fetchNextPage();
         }
       },
-      { root: null, rootMargin: '0px', threshold: 1.0 }
+      { root: null, rootMargin: '0px', threshold: 0 }
     );
 
     observer.observe(node);

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '@/styles/tokens/spacing' as *;
 @use '@/styles/tokens/colors' as *;
 @use '@styles/tokens/mixins' as *;
@@ -42,9 +43,9 @@
 }
 
 .brand {
-  --notification-bg: #{mix($color-brand, #ffffff, 12%)};
+  --notification-bg: #{color.mix($color-brand, #ffffff, 12%)};
   --notification-fg: #{$color-accent-dark};
-  --notification-border: #{mix($color-brand, #ffffff, 30%)};
+  --notification-border: #{color.mix($color-brand, #ffffff, 30%)};
 }
 
 .muted {
@@ -56,19 +57,19 @@
 .successFilled {
   --notification-bg: #{$color-success};
   --notification-fg: #{$color-success-foreground};
-  --notification-border: #{mix($color-success, $color-black, 80%)};
+  --notification-border: #{color.mix($color-success, $color-black, 80%)};
 }
 
 .warningFilled {
   --notification-bg: #{$color-warning};
   --notification-fg: #{$color-warning-foreground};
-  --notification-border: #{mix($color-warning, $color-black, 80%)};
+  --notification-border: #{color.mix($color-warning, $color-black, 80%)};
 }
 
 .errorFilled {
   --notification-bg: #{$color-destructive};
   --notification-fg: #{$color-destructive-foreground};
-  --notification-border: #{mix($color-destructive, $color-black, 80%)};
+  --notification-border: #{color.mix($color-destructive, $color-black, 80%)};
 }
 
 .brandFilled {
@@ -78,19 +79,19 @@
 }
 
 .reminder {
-  --notification-bg: #{mix($color-accent-light, #ffffff, 10%)};
+  --notification-bg: #{color.mix($color-accent-light, #ffffff, 10%)};
   --notification-fg: #{$color-accent-light};
-  --notification-border: #{mix($color-accent-light, #ffffff, 25%)};
+  --notification-border: #{color.mix($color-accent-light, #ffffff, 25%)};
 }
 
 .flipUp {
   overflow: hidden;
-  background-color: #{mix($color-accent-light, #ffffff, 10%)};
+  background-color: #{color.mix($color-accent-light, #ffffff, 10%)};
 }
 
 .flipUpSlide {
   animation: notification-carousel 900ms var(--ease-out);
-  background-color: #{mix($color-accent-light, #ffffff, 10%)};
+  background-color: #{color.mix($color-accent-light, #ffffff, 10%)};
   will-change: transform;
 }
 

@@ -31,10 +31,14 @@ const tips: Omit<LiveTipItem, 'sentAt'>[] = [
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const indexParam = searchParams.get('index');
-  const selectedTip =
-    indexParam !== null
-      ? tips[Number(indexParam) % tips.length]
-      : tips[Math.floor(Math.random() * tips.length)];
+  const parsed = indexParam !== null ? parseInt(indexParam, 10) : NaN;
+  const selectedTip = !isNaN(parsed)
+    ? tips[parsed % tips.length]
+    : tips[Math.floor(Math.random() * tips.length)];
+
+  if (!selectedTip) {
+    return new Response('Not found', { status: 404 });
+  }
 
   const tip: LiveTipItem = {
     ...selectedTip,

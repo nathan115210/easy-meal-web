@@ -2,12 +2,14 @@ import 'dotenv/config';
 import { prisma } from '@/utils/lib/prisma';
 import { mealsSeedData } from './seedData';
 import { DifficultyLevel } from '@/utils/types/meals';
+import { slugify } from '@/utils/lib/helpers';
 
 export async function main() {
   for (const meal of mealsSeedData) {
     await prisma.meal.create({
       data: {
         title: meal.title,
+        slug: slugify(meal.title),
         description: meal.description,
         image: meal.image,
         mealType: meal.mealType,

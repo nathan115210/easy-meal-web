@@ -156,9 +156,13 @@ function useLiveTips() {
 
     return () => {
       didCancel = true;
-      hasConnectionErrorRef.current = false;
+      socket.onopen = null;
+      socket.onmessage = null;
+      socket.onerror = null;
+      socket.onclose = null;
       socket.close();
       socketRef.current = null;
+      hasConnectionErrorRef.current = false;
     };
   }, []);
 

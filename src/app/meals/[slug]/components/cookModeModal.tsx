@@ -1,3 +1,5 @@
+'use client';
+
 import Modal from '@/components/modal/Modal';
 import Button from '@/components/button/Button';
 import { CookingPot } from 'lucide-react';

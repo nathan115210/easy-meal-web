@@ -81,8 +81,7 @@ type ModalTriggerProps =
   | { asChild: true; children: ClickableChild }; // asChild mode clones child
 
 function ModalTrigger(props: ModalTriggerProps) {
-  const { setOpen, open } = useModalContext('Modal.Trigger');
-  console.log('open', open);
+  const { setOpen } = useModalContext('Modal.Trigger');
   if (!props.asChild) {
     return (
       <button type="button" onClick={() => setOpen(true)}>

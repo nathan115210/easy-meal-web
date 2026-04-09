@@ -1,8 +1,5 @@
-'use client';
-
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMealDataBySlug } from '@/utils/data-server/fetchMealDataBySlug';
+import { notFound } from 'next/navigation';
+import { getMealBySlug, getAllMealSlugs } from '@/utils/data-server/getMealsData';
 import type { Meal } from '@/utils/types/meals';
 import styles from './page.module.scss';
 import { Col, Grid, Row } from '@/components/grid/Grid';
@@ -25,48 +22,22 @@ import Ingredients from '@/app/meals/[slug]/components/ingredients';
 import Button from '@/components/button/Button';
 import Steps from './components/steps';
 import CookModeModal from './components/cookModeModal';
-import Spinner from '@/components/spinner/Spinner';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-export default function MealDetailPage({ params }: PageProps) {
-  const { slug } = React.use(params);
+export const revalidate = 3600; // ISR: revalidate at most every hour
 
-  const {
-    data: mealData,
-    isLoading,
-    isError,
-  } = useQuery<Meal | null>({
-    queryKey: ['meal', slug],
-    queryFn: ({ signal }) => fetchMealDataBySlug(slug, signal),
-    enabled: Boolean(slug),
-  });
+export async function generateStaticParams() {
+  const slugs = await getAllMealSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
-  // Derive safely without hooks
-  const nutritionInfo = mealData?.nutritionInfo;
-  const { calories, carbs, fat, protein } = nutritionInfo || {};
+export default async function MealDetailPage({ params }: PageProps) {
+  const { slug } = await params;
 
-  const showInfoRow = Boolean(mealData?.cookTime || mealData?.difficulty || calories);
+  const mealData: Meal | undefined = await getMealBySlug(slug);
 
-  if (isLoading)
-    return (
-      <div className={styles.stateContainer}>
-        <Spinner />
-        <p className={styles.stateMessage}>Loading recipe…</p>
-      </div>
-    );
-  if (isError)
-    return (
-      <div className={styles.stateContainer} data-testid="meal-detail-error">
-        <p className={styles.stateMessage}>Something went wrong loading this recipe.</p>
-      </div>
-    );
-  if (!mealData)
-    return (
-      <div className={styles.stateContainer} data-testid="meal-detail-notfound">
-        <p className={styles.stateMessage}>Recipe not found.</p>
-      </div>
-    );
+  if (!mealData) notFound();
 
   const {
     title,
@@ -78,8 +49,12 @@ export default function MealDetailPage({ params }: PageProps) {
     ingredients,
     description,
     instructions,
+    nutritionInfo,
   } = mealData;
+
+  const { calories, carbs, fat, protein } = nutritionInfo || {};
   const hotTag: string | null = topTags?.[0] || tags?.[0] || null;
+  const showInfoRow = Boolean(cookTime || difficulty || calories);
 
   return (
     <Grid data-testid="meal-details-page">

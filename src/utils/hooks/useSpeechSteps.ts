@@ -60,10 +60,10 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
 
     loadVoices();
     // Some browsers load voices async
-    window.speechSynthesis.onvoiceschanged = loadVoices;
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
 
     return () => {
-      if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = null;
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
