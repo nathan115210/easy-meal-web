@@ -225,4 +225,63 @@ describe('useLiveTips', () => {
       expect(result.current.connectionStatus).toBe('closed');
     });
   });
+
+  it('SHOULD keep the live WS tip when the slower /api/tips fetch resolves after it', async () => {
+    // Arrange: hold the fetch response until we manually release it.
+    let releaseFetch!: () => void;
+    const fetchGate = new Promise<void>((resolve) => {
+      releaseFetch = resolve;
+    });
+
+    const fetchTip: LiveTipItem = {
+      id: 'tip-fetch',
+      icon: 'BookOpen',
+      label: 'Tip from fetch',
+      sentAt: '2026-04-01T00:00:00Z',
+    };
+
+    const wsTip: LiveTipItem = {
+      id: 'tip-ws-race',
+      icon: 'Flame',
+      label: 'Tip from WebSocket',
+      sentAt: '2026-04-01T00:01:00Z',
+    };
+
+    mswServer.use(
+      http.get('/api/tips', async () => {
+        await fetchGate;
+        return HttpResponse.json({ tip: fetchTip });
+      })
+    );
+
+    const { result } = renderHook(() => useLiveTips());
+
+    // Wait for the WebSocket to be constructed (hook mounted).
+    await waitFor(() => expect(MockWebSocket.latest).not.toBeNull());
+
+    // WebSocket tip arrives before the fetch resolves.
+    MockWebSocket.latest!.triggerMessage({ type: 'tip', tip: wsTip });
+
+    await waitFor(() => {
+      expect(result.current.notificationState.kind).toBe('tip');
+    });
+
+    expect(
+      result.current.notificationState.kind === 'tip' && result.current.notificationState.tip.id
+    ).toBe('tip-ws-race');
+
+    // Now let the slower fetch complete.
+    act(() => {
+      releaseFetch();
+    });
+
+    // Give the fetch a chance to settle — the WS tip must survive.
+    await waitFor(() => {
+      // notificationState should still be the live WS tip, not overwritten by the fetch.
+      expect(result.current.notificationState.kind).toBe('tip');
+      expect(
+        result.current.notificationState.kind === 'tip' && result.current.notificationState.tip.id
+      ).toBe('tip-ws-race');
+    });
+  });
 });

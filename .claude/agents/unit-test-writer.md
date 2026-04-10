@@ -25,6 +25,7 @@ Use this subagent for adding or updating unit and API tests.
 ## Repo-Specific Expectations
 
 - Unit and API tests run under `pnpm test:unit`.
+- **Test files must be named `*.spec.ts` or `*.spec.tsx`.** The vitest config only picks up `.spec.*` files — `.test.*` files will not run.
 - Global setup already provides `whatwg-fetch`, RTL matchers, MSW lifecycle hooks, and common Next.js mocks.
 - GraphQL helper tests should match the real endpoint path, query name, and variable shape.
 - Avoid introducing Playwright-style tests into unit-test files.
