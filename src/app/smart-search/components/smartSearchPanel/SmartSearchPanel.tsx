@@ -35,7 +35,7 @@ function SmartSearchPanel() {
 
   const handleSearchClick = () => {
     handleSearch(options);
-    setIsExpanded(false);
+    isMobile && setIsExpanded(false);
   };
 
   const handleReset = () => {

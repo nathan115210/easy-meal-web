@@ -3,7 +3,6 @@ import TopBar from '@/components/topBar/TopBar';
 import RecipeCard from '@/components/recipeCard/RecipeCard';
 import { Col, Row } from '@/components/grid/Grid';
 import FeatureBanner from '@/components/featureBanner/FeatureBanner';
-import Footer from '@/components/footer/Footer';
 import homePageContents from '@/utils/constants/homePageContents';
 import { ArrowRight, Search, Calendar, ShoppingCart, MessageSquare, Sparkles } from 'lucide-react';
 import type { FeatureBannerIconName } from '@/utils/constants/homePageContents';
@@ -19,7 +18,6 @@ const featureIconMap: Record<FeatureBannerIconName, ReactElement> = {
 
 export default function Home() {
   const { hero, trendingRecipes, featureBanners } = homePageContents;
-  console.log('featureBanners', featureBanners);
   return (
     <div className={styles.homePage}>
       <TopBar />

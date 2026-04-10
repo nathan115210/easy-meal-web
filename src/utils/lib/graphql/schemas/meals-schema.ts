@@ -105,7 +105,7 @@ const resolvers = {
   Query: {
     meals: async (
       _parent: unknown,
-      args: { filter?: MealsFilterInput; pagination?: PaginationInput },
+      args: { filter?: MealsFilterInput; pagination?: PaginationInput }
     ) => {
       return getMealsData(
         {
@@ -122,7 +122,7 @@ const resolvers = {
         {
           limit: args.pagination?.limit,
           offset: args.pagination?.offset,
-        },
+        }
       );
     },
 

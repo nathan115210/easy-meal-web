@@ -1,5 +1,5 @@
 import styles from './footer.module.scss';
-import { ChefHat, Instagram, Twitter, Github } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const exploreLinks = [
@@ -21,26 +21,12 @@ function Footer() {
         <div className={styles.columns}>
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <div className={styles.logoIcon}>
-                <ChefHat size={18} aria-hidden="true" />
-              </div>
-              <span className={styles.logoName}>Easy Meal</span>
+              <Image src="/logo.svg" alt="Easy Meal" width={120} height={26} />
             </div>
             <p className={styles.tagline}>
               Refining the way you prepare, plan, and enjoy food. A discovery-first companion for
               the modern kitchen.
             </p>
-            <div className={styles.social}>
-              <Link href="/" className={styles.socialLink} aria-label="Instagram">
-                <Instagram size={20} aria-hidden="true" />
-              </Link>
-              <Link href="/" className={styles.socialLink} aria-label="Twitter">
-                <Twitter size={20} aria-hidden="true" />
-              </Link>
-              <Link href="/" className={styles.socialLink} aria-label="GitHub">
-                <Github size={20} aria-hidden="true" />
-              </Link>
-            </div>
           </div>
 
           <nav className={styles.navColumn} aria-label="Explore">
@@ -84,7 +70,9 @@ function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copyright}>© 2026 Easy Meal Project. All rights reserved.</p>
+          <p className={styles.copyright}>
+            © {new Date().getFullYear()} Easy Meal Project. All rights reserved.
+          </p>
           <div className={styles.legal}>
             <Link href="/" className={styles.legalLink}>
               Terms

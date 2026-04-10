@@ -1,0 +1,236 @@
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/border-radius' as *;
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+// Each message occupies 1/5 of the cycle (20%) with a brief fade window.
+// Total cycle: 5 × 2.5s = 12.5s. Fade in at 0%, hold to 16%, fade out by 20%.
+@keyframes cycle-message {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  4% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  16% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progress {
+  0% {
+    transform: translateX(-100%);
+    width: 20%;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    transform: translateX(250%);
+    width: 20%;
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(1.5);
+  }
+  50% {
+    opacity: 0.05;
+    transform: scale(1.8);
+  }
+}
+
+// ── Reduced motion: freeze all decorative animations ──
+@media (prefers-reduced-motion: reduce) {
+  .icon,
+  .shimmer,
+  .ringPulse,
+  .logoBox {
+    animation: none !important;
+  }
+
+  // Show only the first message statically
+  .message {
+    animation: none !important;
+    opacity: 0 !important;
+
+    &:first-child {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  .progressBar {
+    animation: none !important;
+    width: 40% !important;
+    transform: none !important;
+  }
+}
+
+.root {
+  position: fixed;
+  inset: 0;
+  background: $color-bg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+// Soft ambient glow behind the logo
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 37.5rem;
+  height: 37.5rem;
+  background: radial-gradient(circle, $color-bg-muted 0%, transparent 70%);
+  border-radius: $radius-pill;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// ── Logo section ──────────────────────────────
+
+.logoWrapper {
+  position: relative;
+  margin-bottom: $space-12;
+}
+
+// Pulsing outer ring
+.ringPulse {
+  position: absolute;
+  inset: -16px;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-muted;
+  animation: pulse-ring 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.logoBox {
+  position: relative;
+  padding: $space-6 $space-8;
+  background: $color-surface;
+  border-radius: $radius-xl;
+  border: 1px solid $color-border-muted;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: float 4s ease-in-out infinite;
+}
+
+// Shimmer sweep across the logo box
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, $color-bg-secondary 50%, transparent 100%);
+  animation: shimmer 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+}
+
+// ── Text section ─────────────────────────────
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+}
+
+.heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-h4);
+  font-weight: var(--font-regular);
+  letter-spacing: var(--tracking-tight);
+  color: $color-text;
+  margin: 0;
+}
+
+// Fixed-height container; messages are stacked absolutely so only
+// one is visible at a time without causing layout shift.
+.messageSlot {
+  position: relative;
+  height: 1.25rem;
+  width: 260px;
+  text-align: center;
+}
+
+.message {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: var(--font-regular);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: $color-text-muted;
+  margin: 0;
+  opacity: 0;
+  // duration matches 5 messages × 2.5s per message
+  animation: cycle-message 12.5s ease-in-out infinite;
+}
+
+// ── Progress bar ──────────────────────────────
+
+.progressTrack {
+  margin-top: $space-12;
+  width: 192px;
+  height: 2px;
+  background: $color-border-muted;
+  border-radius: $radius-pill;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: $color-text;
+  border-radius: $radius-pill;
+  animation: progress 2s ease-in-out infinite;
+}

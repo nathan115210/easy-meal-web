@@ -11,6 +11,12 @@
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   width: 100%;
+  &:hover {
+    .imageWrap img,
+    .splitImage .splitImageInner img {
+      transform: scale(1.04);
+    }
+  }
 
   // ── Image fills the full banner area ──
   .imageWrap {
@@ -20,12 +26,9 @@
     height: 100%;
 
     img {
-      transition: transform var(--duration-slow) var(--ease-out);
+      transition: transform var(--duration-editorial) var(--ease-out);
+      will-change: transform; // Optimizes performance for slow zooms
     }
-  }
-
-  &:hover .imageWrap img {
-    transform: scale(1.04);
   }
 
   // ── Gradient overlay ──
@@ -210,6 +213,11 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
+
+      img {
+        transition: transform var(--duration-editorial) var(--ease-out);
+        will-change: transform; // Optimizes performance for slow zooms
+      }
     }
 
     .icon {

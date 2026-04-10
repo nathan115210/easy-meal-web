@@ -3,7 +3,9 @@
 @use '@styles/tokens/colors' as *;
 
 .smartSearch {
-  --smart-search-container-height: calc(100vh - var(--topbar-height) - var(--bottom-nav-height, 0));
+  --smart-search-container-height: calc(
+    100vh - var(--topbar-height) - var(--bottom-nav-height, 0) - var(--notification-height, 0)
+  );
 
   display: flex;
   flex-direction: column;
@@ -45,7 +47,9 @@
   }
 
   @include desktop {
-    --smart-search-container-height: calc(100vh - var(--topbar-height));
+    --smart-search-container-height: calc(
+      100vh - var(--topbar-height) - var(--notification-height, 0)
+    );
 
     position: static;
     flex-direction: row;

@@ -463,25 +463,25 @@ Use `NotificationBar` with one of the types below. Prefer soft types by default 
 
 **Soft types — calm, non-blocking**
 
-| Type | When to use |
-|---|---|
-| `info` | Generic tips, guidance, or live content with no urgency |
-| `success` | Routine action confirmation (save, add, remove) — auto-dismiss |
-| `warning` | Something needs attention but is not blocking |
-| `error` | Something went wrong — always explain what happened and what to do next |
-| `neutral` | Low-emphasis system notices with no semantic meaning |
-| `muted` | Quietest level — supplementary or background context only |
-| `brand` | Editorial or promotional callouts tied to product identity |
-| `reminder` | Gentle nudges, time-based prompts, or action-based suggestions |
+| Type       | When to use                                                             |
+| ---------- | ----------------------------------------------------------------------- |
+| `info`     | Generic tips, guidance, or live content with no urgency                 |
+| `success`  | Routine action confirmation (save, add, remove) — auto-dismiss          |
+| `warning`  | Something needs attention but is not blocking                           |
+| `error`    | Something went wrong — always explain what happened and what to do next |
+| `neutral`  | Low-emphasis system notices with no semantic meaning                    |
+| `muted`    | Quietest level — supplementary or background context only               |
+| `brand`    | Editorial or promotional callouts tied to product identity              |
+| `reminder` | Gentle nudges, time-based prompts, or action-based suggestions          |
 
 **Filled types — high-visibility, use sparingly**
 
-| Type | When to use |
-|---|---|
-| `successFilled` | Completion of a significant flow milestone |
-| `warningFilled` | Urgent caution that must not be missed |
-| `errorFilled` | Critical blocking errors at page or section level |
-| `brandFilled` | Prominent promotional or onboarding moments |
+| Type            | When to use                                       |
+| --------------- | ------------------------------------------------- |
+| `successFilled` | Completion of a significant flow milestone        |
+| `warningFilled` | Urgent caution that must not be missed            |
+| `errorFilled`   | Critical blocking errors at page or section level |
+| `brandFilled`   | Prominent promotional or onboarding moments       |
 
 **Rules**
 

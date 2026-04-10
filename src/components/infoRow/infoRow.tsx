@@ -106,4 +106,6 @@ export const InfoRow = Object.assign(InfoRowRoot, {
   Label: InfoRowLabel,
 });
 
+export { InfoRowItem, InfoRowIcon, InfoRowLabel };
+
 export default InfoRow;

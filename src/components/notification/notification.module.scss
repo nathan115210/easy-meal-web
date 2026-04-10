@@ -3,6 +3,10 @@
 @use '@/styles/tokens/colors' as *;
 @use '@styles/tokens/mixins' as *;
 
+:root {
+  --notification-height: #{pxToRem(48)};
+}
+
 .notification {
   --notification-bg: #{$color-info-soft};
   --notification-fg: #{$color-info-soft-foreground};

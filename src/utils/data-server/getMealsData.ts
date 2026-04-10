@@ -41,7 +41,7 @@ const DEFAULT_PAGE_SIZE = 8;
  */
 export async function getMealsData(
   filter?: MealsFilter,
-  pagination?: MealsPagination,
+  pagination?: MealsPagination
 ): Promise<MealsPage> {
   const where = buildWhereClause(filter ?? {});
 
@@ -86,10 +86,12 @@ export async function getAllMealSlugs(): Promise<string[]> {
  * Returns undefined when no meal matches the slug.
  */
 export async function getMealBySlug(slug: string): Promise<Meal | undefined> {
+  console.log('[getMealBySlug] input slug:', slug);
   const mealDb = await prisma.meal.findUnique({
     where: { slug },
     include: { ingredients: true, instructions: true },
   });
+  console.log('[getMealBySlug] result:', mealDb);
 
   if (!mealDb) return undefined;
   return extractDbToMeal(mealDb);

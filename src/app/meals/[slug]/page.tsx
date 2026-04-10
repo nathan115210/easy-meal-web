@@ -5,7 +5,7 @@ import styles from './page.module.scss';
 import { Col, Grid, Row } from '@/components/grid/Grid';
 import { slugify, titleCase } from '@/utils/lib/helpers';
 import Chip from '@/components/chip/Chip';
-import InfoRow from '../../../components/infoRow/infoRow';
+import InfoRow, { InfoRowItem, InfoRowIcon, InfoRowLabel } from '@/components/infoRow/infoRow';
 import {
   Bookmark,
   CalendarPlus,
@@ -55,7 +55,22 @@ export default async function MealDetailPage({ params }: PageProps) {
   const { calories, carbs, fat, protein } = nutritionInfo || {};
   const hotTag: string | null = topTags?.[0] || tags?.[0] || null;
   const showInfoRow = Boolean(cookTime || difficulty || calories);
-
+  console.log({
+    Grid,
+    Row,
+    Col,
+    Chip,
+    InfoRow,
+    InfoRowItem: InfoRow?.Item,
+    InfoRowIcon: InfoRow?.Icon,
+    InfoRowLabel: InfoRow?.Label,
+    ImageWrapper,
+    ChipsGroup,
+    Ingredients,
+    Button,
+    Steps,
+    CookModeModal,
+  });
   return (
     <Grid data-testid="meal-details-page">
       <Row className={styles.detailsContainer}>
@@ -110,24 +125,24 @@ export default async function MealDetailPage({ params }: PageProps) {
             {showInfoRow && (
               <InfoRow>
                 {cookTime && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<Timer size={16} />} />
-                    <InfoRow.Label>{`${cookTime} min`}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<Timer size={16} />} />
+                    <InfoRowLabel>{`${cookTime} min`}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
 
                 {calories && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<Flame size={16} />} />
-                    <InfoRow.Label>{`${calories} Kcal`}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<Flame size={16} />} />
+                    <InfoRowLabel>{`${calories} Kcal`}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
 
                 {difficulty && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<ChefHat size={16} />} />
-                    <InfoRow.Label>{titleCase(difficulty)}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<ChefHat size={16} />} />
+                    <InfoRowLabel>{titleCase(difficulty)}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
               </InfoRow>
             )}

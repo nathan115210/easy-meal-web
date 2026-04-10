@@ -53,18 +53,6 @@
     gap: $space-2;
   }
 
-  .logoIcon {
-    width: pxToRem(32);
-    height: pxToRem(32);
-    background-color: $color-text;
-    border-radius: $radius-md;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $color-text-inverse;
-    flex-shrink: 0;
-  }
-
   .logoName {
     font-size: var(--text-h4);
     font-weight: var(--font-bold);
@@ -77,34 +65,6 @@
     line-height: var(--leading-relaxed);
     color: $color-text-muted;
     max-width: pxToRem(280);
-  }
-
-  .social {
-    display: flex;
-    gap: $space-3;
-    margin-top: $space-1;
-  }
-
-  .socialLink {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $space-2;
-    color: $color-text-muted;
-    border: 1px solid $color-border-muted;
-    border-radius: $radius-md;
-    text-decoration: none;
-    transition: var(--transition-color);
-
-    &:hover {
-      color: $color-text;
-      border-color: $color-border;
-    }
-
-    &:focus-visible {
-      outline: 2px solid $color-focus-ring;
-      outline-offset: 2px;
-    }
   }
 
   // ── Nav columns ──

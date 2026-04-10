@@ -1,7 +1,17 @@
 'use client';
 
 import React from 'react';
-import { AlertTriangle, Bell, CheckCircle, Info, MessageSquare, Minus, Sparkles, X, XCircle } from 'lucide-react';
+import {
+  AlertTriangle,
+  Bell,
+  CheckCircle,
+  Info,
+  MessageSquare,
+  Minus,
+  Sparkles,
+  X,
+  XCircle,
+} from 'lucide-react';
 import styles from './notification.module.scss';
 
 export type NotificationType =

@@ -28,6 +28,14 @@
     .imageFill {
       position: absolute;
       inset: 0;
+      img {
+        transition: transform var(--duration-editorial) var(--ease-out);
+        will-change: transform; // Optimizes performance for slow zooms
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
     }
 
     &:hover .imageOverlay {
