@@ -51,9 +51,10 @@ const icons: Record<NotificationType, React.ReactNode> = {
 };
 
 function Notification({ icon, message, type = 'info', onDismiss }: NotificationProps) {
+  const typeClass = styles[type] ? ` ${styles[type]}` : '';
   return (
     <div
-      className={`${styles.notification} ${styles[type]}`}
+      className={`${styles.notification}${typeClass}`}
       role="alert"
       aria-live="polite"
       data-testid="global-notification"

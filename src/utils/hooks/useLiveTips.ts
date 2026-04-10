@@ -92,7 +92,9 @@ function useLiveTips() {
           payload.tip === null ||
           typeof payload.tip.id !== 'string' ||
           typeof payload.tip.label !== 'string' ||
-          typeof payload.tip.sentAt !== 'string'
+          typeof payload.tip.sentAt !== 'string' ||
+          typeof payload.tip.icon !== 'string' ||
+          !payload.tip.icon.trim()
         ) {
           return;
         }

@@ -8,6 +8,8 @@ import {
 
 const TIP_BROADCAST_INTERVAL_MS = 6000; // 6 seconds
 
+const debug = process.env.NODE_ENV !== 'production';
+
 // Configuration for the live-tips websocket feature.
 //
 // Right now the only dependency is the app base URL so the websocket transport
@@ -24,9 +26,11 @@ export function createTipsWebSocketServer(
   // belongs to this feature and hands the socket to this instance.
   const webSocketServer = new WebSocketServer({ noServer: true });
 
-  console.log('[ws/live-tips] websocket server created', {
-    appBaseUrl: options.appBaseUrl,
-  });
+  if (debug) {
+    console.log('[ws/live-tips] websocket server created', {
+      appBaseUrl: options.appBaseUrl,
+    });
+  }
 
   webSocketServer.on('connection', (webSocket, request) => {
     const clientLabel = getClientLabel(request);
@@ -37,13 +41,15 @@ export function createTipsWebSocketServer(
     });
 
     // Send an immediate acknowledgement so the client knows the websocket is
-    // open before the first 5-second broadcast happens.
+    // open before the first 6-second broadcast happens.
     const connectedEvent = buildConnectedEvent();
 
-    console.log('[ws/live-tips] sending connected event', {
-      client: clientLabel,
-      payload: connectedEvent,
-    });
+    if (debug) {
+      console.log('[ws/live-tips] sending connected event', {
+        client: clientLabel,
+        payload: connectedEvent,
+      });
+    }
 
     sendJson(webSocket, connectedEvent);
 
@@ -61,20 +67,24 @@ export function createTipsWebSocketServer(
     let tipIndex = 0;
 
     const pushTipAndScheduleNextRun = async () => {
-      console.log('[ws/live-tips] broadcast loop tick started', {
-        client: clientLabel,
-        connectionClosed,
-        readyState: getReadyStateLabel(webSocket.readyState),
-      });
-
-      // Guard against races where the timer fires after the socket has already
-      // started closing.
-      if (connectionClosed || webSocket.readyState !== WebSocket.OPEN) {
-        console.log('[ws/live-tips] skipping tick because socket is not open', {
+      if (debug) {
+        console.log('[ws/live-tips] broadcast loop tick started', {
           client: clientLabel,
           connectionClosed,
           readyState: getReadyStateLabel(webSocket.readyState),
         });
+      }
+
+      // Guard against races where the timer fires after the socket has already
+      // started closing.
+      if (connectionClosed || webSocket.readyState !== WebSocket.OPEN) {
+        if (debug) {
+          console.log('[ws/live-tips] skipping tick because socket is not open', {
+            client: clientLabel,
+            connectionClosed,
+            readyState: getReadyStateLabel(webSocket.readyState),
+          });
+        }
 
         return;
       }
@@ -82,25 +92,31 @@ export function createTipsWebSocketServer(
       try {
         // Tip content comes from the HTTP API so there is only one source of
         // truth for tip selection and payload shape.
-        console.log('[ws/live-tips] fetching next tip event', {
-          client: clientLabel,
-          endpoint: `${options.appBaseUrl}/api/tips`,
-          tipIndex,
-        });
+        if (debug) {
+          console.log('[ws/live-tips] fetching next tip event', {
+            client: clientLabel,
+            endpoint: `${options.appBaseUrl}/api/tips`,
+            tipIndex,
+          });
+        }
 
         const tipEvent = await fetchTipEvent(options.appBaseUrl, tipIndex);
         tipIndex += 1;
 
-        console.log('[ws/live-tips] tip event fetched successfully', {
-          client: clientLabel,
-          payload: tipEvent,
-        });
-
-        if (webSocket.readyState === WebSocket.OPEN) {
-          console.log('[ws/live-tips] sending tip event', {
+        if (debug) {
+          console.log('[ws/live-tips] tip event fetched successfully', {
             client: clientLabel,
             payload: tipEvent,
           });
+        }
+
+        if (webSocket.readyState === WebSocket.OPEN) {
+          if (debug) {
+            console.log('[ws/live-tips] sending tip event', {
+              client: clientLabel,
+              payload: tipEvent,
+            });
+          }
 
           sendJson(webSocket, tipEvent);
         }
@@ -123,10 +139,12 @@ export function createTipsWebSocketServer(
       // Reschedule the next broadcast only after the current async work has
       // completed. This is the actual loop.
       if (!connectionClosed) {
-        console.log('[ws/live-tips] scheduling next broadcast', {
-          client: clientLabel,
-          delayMs: TIP_BROADCAST_INTERVAL_MS,
-        });
+        if (debug) {
+          console.log('[ws/live-tips] scheduling next broadcast', {
+            client: clientLabel,
+            delayMs: TIP_BROADCAST_INTERVAL_MS,
+          });
+        }
 
         nextBroadcastTimerId = setTimeout(() => {
           void pushTipAndScheduleNextRun();
@@ -135,10 +153,12 @@ export function createTipsWebSocketServer(
     };
 
     // Kick off the recurring loop for this specific client connection.
-    console.log('[ws/live-tips] scheduling first broadcast', {
-      client: clientLabel,
-      delayMs: TIP_BROADCAST_INTERVAL_MS,
-    });
+    if (debug) {
+      console.log('[ws/live-tips] scheduling first broadcast', {
+        client: clientLabel,
+        delayMs: TIP_BROADCAST_INTERVAL_MS,
+      });
+    }
 
     nextBroadcastTimerId = setTimeout(() => {
       void pushTipAndScheduleNextRun();
@@ -156,9 +176,11 @@ export function createTipsWebSocketServer(
 
       // Stop any pending future broadcast once the client disconnects.
       if (nextBroadcastTimerId) {
-        console.log('[ws/live-tips] clearing scheduled broadcast after close', {
-          client: clientLabel,
-        });
+        if (debug) {
+          console.log('[ws/live-tips] clearing scheduled broadcast after close', {
+            client: clientLabel,
+          });
+        }
 
         clearTimeout(nextBroadcastTimerId);
       }
@@ -176,9 +198,11 @@ export function createTipsWebSocketServer(
       // Treat socket errors the same way as close: stop scheduling work for a
       // connection that is no longer healthy.
       if (nextBroadcastTimerId) {
-        console.log('[ws/live-tips] clearing scheduled broadcast after error', {
-          client: clientLabel,
-        });
+        if (debug) {
+          console.log('[ws/live-tips] clearing scheduled broadcast after error', {
+            client: clientLabel,
+          });
+        }
 
         clearTimeout(nextBroadcastTimerId);
       }

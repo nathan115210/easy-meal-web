@@ -1,6 +1,7 @@
 'use client';
 
-import { BookOpen, ChefHat, Flame, MapIcon, Timer, type LucideIcon } from 'lucide-react';
+import { BookOpen, ChefHat, Flame, MapIcon, Sparkles, Timer, type LucideIcon } from 'lucide-react';
+import { useState } from 'react';
 import useLiveTips from '@/utils/hooks/useLiveTips';
 import type { LiveTipIcon } from '@/utils/types/liveTips';
 import NotificationBar from './NotificationBar';
@@ -15,7 +16,8 @@ const liveTipIcons: Record<LiveTipIcon, LucideIcon> = {
 };
 
 function LiveTipsNotificationBar() {
-  const { notificationState, connectionStatus, disconnect } = useLiveTips();
+  const { notificationState, connectionStatus } = useLiveTips();
+  const [dismissed, setDismissed] = useState<string | null>(null);
 
   if (
     connectionStatus === 'error' ||
@@ -26,16 +28,20 @@ function LiveTipsNotificationBar() {
     return null;
   }
 
-  const Icon = liveTipIcons[notificationState.tip.icon];
-
   const tipKey = `${notificationState.tip.id}-${notificationState.tip.sentAt}`;
+
+  if (dismissed === tipKey) {
+    return null;
+  }
+
+  const Icon = liveTipIcons[notificationState.tip.icon] ?? Sparkles;
 
   return (
     <div key={tipKey} className={styles.flipUp}>
       <div className={styles.flipUpSlide}>
         <NotificationBar
           dismissible
-          onDismiss={() => disconnect()}
+          onDismiss={() => setDismissed(tipKey)}
           icon={<Icon size={18} aria-hidden />}
           message={notificationState.tip.label}
           type="brand"

@@ -47,7 +47,11 @@ export async function fetchTipEvent(appBaseUrl: string, tipIndex: number): Promi
     typeof payload.tip !== 'object' ||
     payload.tip === null ||
     typeof payload.tip.id !== 'string' ||
-    typeof payload.tip.label !== 'string'
+    typeof payload.tip.label !== 'string' ||
+    typeof payload.tip.icon !== 'string' ||
+    payload.tip.icon.trim().length === 0 ||
+    typeof payload.tip.sentAt !== 'string' ||
+    Number.isNaN(Date.parse(payload.tip.sentAt))
   ) {
     throw new Error('Tips API returned an invalid tip payload');
   }

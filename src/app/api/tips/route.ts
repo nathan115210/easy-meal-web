@@ -33,7 +33,7 @@ export async function GET(request: Request) {
   const indexParam = searchParams.get('index');
   const parsed = indexParam !== null ? parseInt(indexParam, 10) : NaN;
   const selectedTip = !isNaN(parsed)
-    ? tips[parsed % tips.length]
+    ? tips[((parsed % tips.length) + tips.length) % tips.length]
     : tips[Math.floor(Math.random() * tips.length)];
 
   if (!selectedTip) {

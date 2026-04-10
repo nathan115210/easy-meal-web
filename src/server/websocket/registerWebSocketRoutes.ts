@@ -54,7 +54,13 @@ export function registerWebSocketRoutes(
       pathname,
     });
 
-    void options.handleUpgrade(request, socket, head);
+    void options.handleUpgrade(request, socket, head).catch((error) => {
+      console.error('[ws] error forwarding upgrade back to Next', {
+        pathname,
+        error,
+      });
+      socket.destroy();
+    });
   });
 }
 
