@@ -1,5 +1,4 @@
 import styles from './spinner.module.scss';
-import React from 'react';
 
 function Spinner({ loadingLabel, ...rest }: { loadingLabel?: string }) {
   return (

@@ -25,6 +25,7 @@ enum MealType {
 model Meal {
   id           Int               @id @default(autoincrement())
   title        String
+  slug         String            @unique
   description  String
   image        String
   ingredients  Ingredient[]

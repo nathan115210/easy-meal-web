@@ -5,7 +5,9 @@
 .smartSearchPanel {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
-  height: calc(100vh - var(--bottom-nav-height, 0) - var(--topbar-height));
+  height: calc(
+    100vh - var(--bottom-nav-height, 0) - var(--topbar-height) - var(--notification-height, 0)
+  );
   max-width: 100%;
   overflow: hidden;
   background: $color-background-secondary;

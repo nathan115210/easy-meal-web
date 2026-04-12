@@ -23,6 +23,7 @@
   --duration-fast: 120ms;
   --duration-normal: 200ms;
   --duration-slow: 300ms;
+  --duration-editorial: 2000ms;
 
   // ── Easings ──
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -54,5 +55,6 @@
     --duration-fast: 1ms;
     --duration-normal: 1ms;
     --duration-slow: 1ms;
+    --duration-editorial: 1ms;
   }
 }

@@ -19,7 +19,7 @@ afterAll(() => {
 // next/image → plain <img> so RTL can find it
 vi.mock('next/image', () => {
   const MockNextImage = (props: NextImageProps) => {
-    const { priority, placeholder, loader, unoptimized, ...imgProps } = props;
+    const { ...imgProps } = props;
     return React.createElement('img', imgProps as React.ImgHTMLAttributes<HTMLImageElement>);
   };
 

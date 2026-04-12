@@ -9,7 +9,8 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
     // Only run unit tests from src/** and ignore Playwright e2e specs.
-    include: ['src/**/*.{spec,test}.{ts,tsx}'],
+    // Files must use .spec.ts or .spec.tsx — .test.* files are excluded.
+    include: ['src/**/*.spec.{ts,tsx}'],
     exclude: ['e2e/**/*', '**/node_modules/**', '**/dist/**', '**/.next/**'],
     css: {
       // SCSS modules “just work”; this keeps class names readable in tests

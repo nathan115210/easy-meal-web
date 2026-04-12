@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // ──────────────────────────────────────────────
 // Color Tokens
 // ──────────────────────────────────────────────
@@ -53,9 +55,9 @@ $color-card: $color-surface;
 $color-card-foreground: $color-text;
 
 // ── Interaction ──
-$color-hover: mix($color-primary, #ffffff, 8%);
-$color-active: mix($color-primary, #ffffff, 14%);
-$color-selected: mix($color-primary, #ffffff, 10%);
+$color-hover: color.mix($color-primary, #ffffff, 8%);
+$color-active: color.mix($color-primary, #ffffff, 14%);
+$color-selected: color.mix($color-primary, #ffffff, 10%);
 $color-focus-ring: rgba($color-primary, 0.22);
 
 $color-disabled: #9f938c;

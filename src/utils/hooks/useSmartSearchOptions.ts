@@ -31,28 +31,22 @@ export type ClearOptionFn = (key: keyof SmartSearchOptionsState) => void;
 const storageKey = 'easy-meal:smart-search';
 
 const useSmartSearchOptions = (initial?: Partial<SmartSearchOptionsState>) => {
-  const [options, setOptions] = useState<SmartSearchOptionsState>({
+  const [options, setOptions] = useState<SmartSearchOptionsState>(() => ({
     ...DEFAULT_SMART_OPTIONS,
     ...initial,
-  });
+  }));
 
+  // Hydrate from localStorage on the client after mount
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(storageKey);
       if (!raw) return;
-
       const parsed = JSON.parse(raw) as Partial<SmartSearchOptionsState>;
-
-      // Avoid synchronous setState in effect — use microtask
-      queueMicrotask(() => {
-        setOptions((prev) => ({
-          ...prev,
-          ...parsed,
-        }));
-      });
+      setOptions((prev) => ({ ...prev, ...parsed }));
     } catch {
       // ignore
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Persist to localStorage when options change (client only)
@@ -91,7 +85,6 @@ const useSmartSearchOptions = (initial?: Partial<SmartSearchOptionsState>) => {
     updateOption,
     clearOption,
     resetAll,
-    setOptions,
   };
 };
 

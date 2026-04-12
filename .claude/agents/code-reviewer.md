@@ -35,6 +35,7 @@ Return findings in this order:
 - Hooks in `src/utils/hooks` are client-side and should stay thin and dependency-safe.
 - Prisma-generated code and build artifacts are out of scope; review their source inputs instead.
 - E2E tests should use stable selectors and response-based waits, not arbitrary sleeps.
+- For UI-related changes, check whether shared design guidance under `.claude/docs/design` should also have been updated. Flag missing design-doc sync when tokens, shared UI types, reusable component behavior, icon systems, or page patterns changed in code without corresponding doc updates.
 
 ## SCSS Review Checks
 

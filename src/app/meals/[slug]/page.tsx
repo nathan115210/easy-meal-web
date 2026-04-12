@@ -1,14 +1,11 @@
-'use client';
-
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMealDataBySlug } from '@/utils/data-server/fetchMealDataBySlug';
+import { notFound } from 'next/navigation';
+import { getMealBySlug, getAllMealSlugs } from '@/utils/data-server/getMealsData';
 import type { Meal } from '@/utils/types/meals';
 import styles from './page.module.scss';
 import { Col, Grid, Row } from '@/components/grid/Grid';
 import { slugify, titleCase } from '@/utils/lib/helpers';
 import Chip from '@/components/chip/Chip';
-import InfoRow from '../../../components/infoRow/infoRow';
+import InfoRow, { InfoRowItem, InfoRowIcon, InfoRowLabel } from '@/components/infoRow/infoRow';
 import {
   Bookmark,
   CalendarPlus,
@@ -25,48 +22,22 @@ import Ingredients from '@/app/meals/[slug]/components/ingredients';
 import Button from '@/components/button/Button';
 import Steps from './components/steps';
 import CookModeModal from './components/cookModeModal';
-import Spinner from '@/components/spinner/Spinner';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-export default function MealDetailPage({ params }: PageProps) {
-  const { slug } = React.use(params);
+export const revalidate = 3600; // ISR: revalidate at most every hour
 
-  const {
-    data: mealData,
-    isLoading,
-    isError,
-  } = useQuery<Meal | null>({
-    queryKey: ['meal', slug],
-    queryFn: ({ signal }) => fetchMealDataBySlug(slug, signal),
-    enabled: Boolean(slug),
-  });
+export async function generateStaticParams() {
+  const slugs = await getAllMealSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
-  // Derive safely without hooks
-  const nutritionInfo = mealData?.nutritionInfo;
-  const { calories, carbs, fat, protein } = nutritionInfo || {};
+export default async function MealDetailPage({ params }: PageProps) {
+  const { slug } = await params;
 
-  const showInfoRow = Boolean(mealData?.cookTime || mealData?.difficulty || calories);
+  const mealData: Meal | undefined = await getMealBySlug(slug);
 
-  if (isLoading)
-    return (
-      <div className={styles.stateContainer}>
-        <Spinner />
-        <p className={styles.stateMessage}>Loading recipe…</p>
-      </div>
-    );
-  if (isError)
-    return (
-      <div className={styles.stateContainer} data-testid="meal-detail-error">
-        <p className={styles.stateMessage}>Something went wrong loading this recipe.</p>
-      </div>
-    );
-  if (!mealData)
-    return (
-      <div className={styles.stateContainer} data-testid="meal-detail-notfound">
-        <p className={styles.stateMessage}>Recipe not found.</p>
-      </div>
-    );
+  if (!mealData) notFound();
 
   const {
     title,
@@ -78,9 +49,28 @@ export default function MealDetailPage({ params }: PageProps) {
     ingredients,
     description,
     instructions,
+    nutritionInfo,
   } = mealData;
-  const hotTag: string | null = topTags?.[0] || tags?.[0] || null;
 
+  const { calories, carbs, fat, protein } = nutritionInfo || {};
+  const hotTag: string | null = topTags?.[0] || tags?.[0] || null;
+  const showInfoRow = Boolean(cookTime || difficulty || calories);
+  console.log({
+    Grid,
+    Row,
+    Col,
+    Chip,
+    InfoRow,
+    InfoRowItem: InfoRow?.Item,
+    InfoRowIcon: InfoRow?.Icon,
+    InfoRowLabel: InfoRow?.Label,
+    ImageWrapper,
+    ChipsGroup,
+    Ingredients,
+    Button,
+    Steps,
+    CookModeModal,
+  });
   return (
     <Grid data-testid="meal-details-page">
       <Row className={styles.detailsContainer}>
@@ -135,24 +125,24 @@ export default function MealDetailPage({ params }: PageProps) {
             {showInfoRow && (
               <InfoRow>
                 {cookTime && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<Timer size={16} />} />
-                    <InfoRow.Label>{`${cookTime} min`}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<Timer size={16} />} />
+                    <InfoRowLabel>{`${cookTime} min`}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
 
                 {calories && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<Flame size={16} />} />
-                    <InfoRow.Label>{`${calories} Kcal`}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<Flame size={16} />} />
+                    <InfoRowLabel>{`${calories} Kcal`}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
 
                 {difficulty && (
-                  <InfoRow.Item>
-                    <InfoRow.Icon icon={<ChefHat size={16} />} />
-                    <InfoRow.Label>{titleCase(difficulty)}</InfoRow.Label>
-                  </InfoRow.Item>
+                  <InfoRowItem>
+                    <InfoRowIcon icon={<ChefHat size={16} />} />
+                    <InfoRowLabel>{titleCase(difficulty)}</InfoRowLabel>
+                  </InfoRowItem>
                 )}
               </InfoRow>
             )}

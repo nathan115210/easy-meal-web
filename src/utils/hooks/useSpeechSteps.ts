@@ -36,6 +36,7 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
   const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
+  const [isSupported, setIsSupported] = useState<boolean>(false);
   const [status, setStatus] = useState<SpeechStatus>('idle');
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
@@ -48,6 +49,8 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
   // init speech synthesis once
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!('speechSynthesis' in window)) return;
+    setIsSupported(true);
     synthRef.current = window.speechSynthesis;
 
     const loadVoices = () => {
@@ -60,10 +63,12 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
 
     loadVoices();
     // Some browsers load voices async
-    window.speechSynthesis.onvoiceschanged = loadVoices;
+    const synth = synthRef.current;
+    if (!synth) return;
+    synth.addEventListener('voiceschanged', loadVoices);
 
     return () => {
-      if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = null;
+      synth.removeEventListener('voiceschanged', loadVoices);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -158,6 +163,16 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
 
   const speakAll = useCallback(() => speakFrom(0), [speakFrom]);
 
+  // Stop on Escape key
+  useEffect(() => {
+    if (status === 'idle') return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') stop();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [status, stop]);
+
   // Clean up when unmounting (important in App Router)
   useEffect(() => stop, [stop]);
 
@@ -169,6 +184,6 @@ export function useSpeechSteps(steps: string[], options: UseSpeechStepsOptions =
     pause,
     resume,
     stop,
-    isSupported: typeof window !== 'undefined' && 'speechSynthesis' in window,
+    isSupported,
   };
 }

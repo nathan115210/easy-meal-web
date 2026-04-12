@@ -22,6 +22,14 @@ Use this file for global project conventions. When a deeper `CLAUDE.md` exists i
 - Use `.claude/docs/design/ai-prompt-guide.md` for prompt templates when generating pages or components.
 - When building components, also apply the closest local `CLAUDE.md` for the path under development.
 
+## Design Doc Sync
+
+- When UI-related work changes shared design knowledge, update the relevant `.claude` design docs in the same change.
+- This applies to changes such as shared colors, typography, spacing, elevation, icon mappings, reusable UI types, component behavior contracts, notification patterns, layout rules, and page patterns.
+- Treat `.claude/docs/design` as part of the implementation surface for shared UI decisions, not as optional follow-up.
+- Do not update design docs for purely local copy edits or one-off styling tweaks that do not create reusable guidance.
+- When in doubt, update the closest matching file under `.claude/docs/design` and mention the doc sync in the change summary or review.
+
 ## Current Project Setup
 
 - Framework: Next.js 16 App Router

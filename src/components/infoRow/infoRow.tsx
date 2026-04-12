@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, PropsWithChildren, useContext, useMemo } from 'react';
 import styles from './infoRow.module.scss';
 
@@ -103,5 +105,7 @@ export const InfoRow = Object.assign(InfoRowRoot, {
   Icon: InfoRowIcon,
   Label: InfoRowLabel,
 });
+
+export { InfoRowItem, InfoRowIcon, InfoRowLabel };
 
 export default InfoRow;

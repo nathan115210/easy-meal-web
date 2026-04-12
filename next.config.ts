@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path from 'path';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'res.cloudinary.com' }],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
   },
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev'],
 };

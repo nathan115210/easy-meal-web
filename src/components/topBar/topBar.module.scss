@@ -9,67 +9,70 @@
     --topbar-height: #{pxToRem(75)};
   }
 }
-
-.topBar {
-  display: flex;
-  padding: pxToRem(16);
+.topBarContainer {
   position: sticky;
-  background-color: $color-topbar;
   top: 0;
-  border-bottom: 1px solid $color-topbar-border;
   z-index: zIndex('topbar');
-  max-height: 20rem;
-  height: var(--topbar-height);
 
-  /* mobile-first: allow wrapping so we can create two rows */
-  flex-wrap: wrap;
-  align-items: center;
-  gap: pxToRem(8);
-  row-gap: pxToRem(8);
+  .topBar {
+    display: flex;
+    background-color: $color-topbar;
+    padding: pxToRem(16);
+    border-bottom: 1px solid $color-topbar-border;
+    max-height: 20rem;
+    min-height: var(--topbar-height);
 
-  .logo {
-    max-height: pxToRem(27);
+    /* mobile-first: allow wrapping so we can create two rows */
+    flex-wrap: wrap;
+    align-items: center;
+    gap: pxToRem(8);
+    row-gap: pxToRem(8);
 
-    /* first row */
-    order: 1;
-    flex: 0 0 auto;
+    .logo {
+      max-height: pxToRem(27);
 
-    /* hide on desktop as before */
-    @include desktop {
-      display: none;
+      /* first row */
+      order: 1;
+      flex: 0 0 auto;
+
+      /* hide on desktop as before */
+      @include desktop {
+        display: none;
+      }
     }
-  }
 
-  .searchBar {
-    /* force full width on mobile so it wraps to second row */
-    order: 3;
-    flex: 1 1 100%;
-    min-width: 0; /* prevent overflow inside flex item */
+    .searchBar {
+      /* force full width on mobile so it wraps to second row */
+      order: 3;
+      flex: 1 1 100%;
+      min-width: 0; /* prevent overflow inside flex item */
 
-    /* restore single-row behavior on desktop */
-    @include desktop {
-      order: 0;
-      flex: 1 1 auto;
-      min-width: initial;
+      /* restore single-row behavior on desktop */
+      @include desktop {
+        order: 0;
+        flex: 1 1 auto;
+        min-width: initial;
+      }
     }
-  }
 
-  .userBtn {
-    margin-left: auto; /* push button to the far right */
-    border-radius: 50%;
-    width: pxToRem(36);
-    height: pxToRem(36);
-    box-sizing: border-box;
-    max-height: 100%;
-    overflow: hidden;
+    .userBtn {
+      margin-left: auto; /* push button to the far right */
+      border-radius: 50%;
+      width: pxToRem(36);
+      height: pxToRem(36);
+      box-sizing: border-box;
+      max-height: 100%;
+      overflow: hidden;
+      background-color: red;
 
-    /* first row, after logo */
-    order: 2;
-    flex: 0 0 auto;
+      /* first row, after logo */
+      order: 2;
+      flex: 0 0 auto;
 
-    @include desktop {
-      margin-left: initial; /* restore desktop layout */
-      order: 0;
+      @include desktop {
+        margin-left: initial; /* restore desktop layout */
+        order: 0;
+      }
     }
   }
 }

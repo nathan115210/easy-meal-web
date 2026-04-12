@@ -1,0 +1,136 @@
+@use '@styles/tokens/spacing' as *;
+@use '@styles/tokens/mixins' as *;
+@use '@styles/tokens/colors' as *;
+@use '@styles/tokens/border-radius' as *;
+
+.cardLink {
+  display: contents;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+  cursor: pointer;
+
+  .imageContainer {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: $radius-xxl;
+    overflow: hidden;
+    background-color: $color-bg-secondary;
+    border: 1px solid $color-border-muted;
+    box-shadow: var(--shadow-sm);
+
+    .imageFill {
+      position: absolute;
+      inset: 0;
+      img {
+        transition: transform var(--duration-editorial) var(--ease-out);
+        will-change: transform; // Optimizes performance for slow zooms
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    &:hover .imageOverlay {
+      opacity: 0;
+    }
+
+    &:hover .bookmarkBtn {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .imageOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-base);
+  }
+
+  .bookmarkBtn {
+    position: absolute;
+    top: $space-4;
+    right: $space-4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-3;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: $radius-pill;
+    color: $color-text;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    box-shadow: var(--shadow-sm);
+    transition:
+      opacity var(--duration-normal) var(--ease-out),
+      transform var(--duration-normal) var(--ease-out);
+
+    &:hover {
+      background-color: $color-surface;
+    }
+
+    &:focus-visible {
+      opacity: 1;
+      transform: scale(1);
+      outline: 2px solid $color-focus-ring;
+      outline-offset: 2px;
+    }
+  }
+
+  .categoryBadge {
+    position: absolute;
+    bottom: $space-6;
+    left: $space-6;
+    padding: $space-2 $space-4;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid $color-border-muted;
+    border-radius: $radius-pill;
+    font-size: var(--text-caption);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: $color-text;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  .title {
+    font-size: var(--text-h3);
+    font-weight: var(--font-medium);
+    color: $color-foreground;
+    line-height: var(--leading-snug);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: $space-6;
+  }
+
+  .metaItem {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    color: $color-text-muted;
+    font-size: var(--text-caption);
+    font-weight: var(--font-medium);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+}

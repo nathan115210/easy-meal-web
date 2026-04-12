@@ -1,0 +1,147 @@
+@use 'sass:color';
+@use '@/styles/tokens/spacing' as *;
+@use '@/styles/tokens/colors' as *;
+@use '@styles/tokens/mixins' as *;
+
+:root {
+  --notification-height: #{pxToRem(48)};
+}
+
+.notification {
+  --notification-bg: #{$color-info-soft};
+  --notification-fg: #{$color-info-soft-foreground};
+  --notification-border: #{$color-info-soft-border};
+
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+
+  background-color: var(--notification-bg);
+  color: var(--notification-fg);
+  border-bottom: 1px solid var(--notification-border);
+}
+
+.success {
+  --notification-bg: #{$color-success-soft};
+  --notification-fg: #{$color-success-soft-foreground};
+  --notification-border: #{$color-success-soft-border};
+}
+
+.warning {
+  --notification-bg: #{$color-warning-soft};
+  --notification-fg: #{$color-warning-soft-foreground};
+  --notification-border: #{$color-warning-soft-border};
+}
+
+.error {
+  --notification-bg: #{$color-destructive-soft};
+  --notification-fg: #{$color-destructive-soft-foreground};
+  --notification-border: #{$color-destructive-soft-border};
+}
+
+.neutral {
+  --notification-bg: #{$color-bg-secondary};
+  --notification-fg: #{$color-text};
+  --notification-border: #{$color-border};
+}
+
+.brand {
+  --notification-bg: #{color.mix($color-brand, #ffffff, 12%)};
+  --notification-fg: #{$color-accent-dark};
+  --notification-border: #{color.mix($color-brand, #ffffff, 30%)};
+}
+
+.muted {
+  --notification-bg: #{$color-surface-soft};
+  --notification-fg: #{$color-text-muted};
+  --notification-border: #{$color-border-muted};
+}
+
+.successFilled {
+  --notification-bg: #{$color-success};
+  --notification-fg: #{$color-success-foreground};
+  --notification-border: #{color.mix($color-success, $color-black, 80%)};
+}
+
+.warningFilled {
+  --notification-bg: #{$color-warning};
+  --notification-fg: #{$color-warning-foreground};
+  --notification-border: #{color.mix($color-warning, $color-black, 80%)};
+}
+
+.errorFilled {
+  --notification-bg: #{$color-destructive};
+  --notification-fg: #{$color-destructive-foreground};
+  --notification-border: #{color.mix($color-destructive, $color-black, 80%)};
+}
+
+.brandFilled {
+  --notification-bg: #{$color-brand};
+  --notification-fg: #{$color-accent-foreground};
+  --notification-border: #{$color-accent-dark};
+}
+
+.reminder {
+  --notification-bg: #{color.mix($color-accent-light, #ffffff, 10%)};
+  --notification-fg: #{$color-accent-light};
+  --notification-border: #{color.mix($color-accent-light, #ffffff, 25%)};
+}
+
+.flipUp {
+  overflow: hidden;
+  background-color: #{color.mix($color-accent-light, #ffffff, 10%)};
+}
+
+.flipUpSlide {
+  animation: notification-carousel 900ms var(--ease-out);
+  background-color: #{color.mix($color-accent-light, #ffffff, 10%)};
+  will-change: transform;
+}
+
+@keyframes notification-carousel {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  font-size: pxToRem(14);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: $space-1;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    opacity: 1;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

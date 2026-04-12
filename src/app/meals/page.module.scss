@@ -5,6 +5,9 @@
 .mealsList {
   --meals-list-padding: #{pxToRem(24)} #{pxToRem(16)};
 
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  width: 100%;
   padding: var(--meals-list-padding);
 
   @include tablet {

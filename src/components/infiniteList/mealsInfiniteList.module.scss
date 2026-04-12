@@ -4,18 +4,6 @@
 
 .listContainer {
   margin-top: $grid-gutter;
-  .quickInfo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: pxToRem(8);
-    &-item {
-      font-size: pxToRem(12);
-      color: $color-muted-foreground;
-      display: flex;
-      align-items: center;
-      gap: pxToRem(2);
-    }
-  }
 }
 
 .errorState {

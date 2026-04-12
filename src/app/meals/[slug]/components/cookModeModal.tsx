@@ -1,8 +1,9 @@
+'use client';
+
 import Modal from '@/components/modal/Modal';
 import Button from '@/components/button/Button';
 import { CookingPot } from 'lucide-react';
 import Steps from '@/app/meals/[slug]/components/steps';
-import React from 'react';
 import { MealInstruction } from '@/utils/types/meals';
 import ButtonGroup from '@/components/buttonGroup/ButtonGroup';
 import { CookingNavigator } from '@/app/meals/[slug]/components/cookNavigator';

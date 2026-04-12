@@ -1,112 +1,147 @@
-import { BannerImagePositionType, BannerProps } from '@/components/banner/Banner';
-import { LinkProps } from '@/components/baseLink/BaseLink';
-import { ButtonProps } from '@/components/button/Button';
+import { ImageSetType } from '@/components/imageWrapper/ImageWrapper';
+import { FeatureBannerVariant } from '@/components/featureBanner/FeatureBanner';
 
-type CtaGroupItemType = (LinkProps | ButtonProps) & { type: 'link' | 'button' };
+export type TrendingRecipeItem = {
+  id: number;
+  title: string;
+  imageSet: ImageSetType;
+  imageAlt: string;
+  time: string;
+  difficulty: string;
+  category: string;
+  href: string;
+};
 
-type FeatureItemType = BannerProps & { link: LinkProps };
+export type FeatureBannerIconName = 'search' | 'calendar' | 'shopping-cart' | 'message-square';
+
+export type FeatureBannerItem = {
+  heading: string;
+  description: string;
+  imageSet: ImageSetType;
+  imageAlt: string;
+  ctaText: string;
+  ctaHref: string;
+  iconName: FeatureBannerIconName;
+  variant: FeatureBannerVariant;
+};
 
 interface HomePageContentsProps {
-  heroBanner: BannerProps & { ctaGroup?: CtaGroupItemType[] };
-  featuresSection: FeatureItemType[];
+  hero: {
+    eyebrow: string;
+    heading: string;
+    headingEmphasis: string;
+    ctaText: string;
+    ctaHref: string;
+  };
+  trendingRecipes: TrendingRecipeItem[];
+  featureBanners: FeatureBannerItem[];
 }
 
 const homePageContents: HomePageContentsProps = {
-  heroBanner: {
-    heading: 'Welcome to Our Website',
-    description: 'Discover amazing content and connect with others.',
-    bannerImageSet: {
-      mobileSrc: '/placeholder.png',
-      tabletSrc: '/placeholder-tablet.svg',
-      desktopSrc: '/placeholder-desktop.svg',
-    },
-    bannerImageAlt: 'Hero banner showing a scenic view',
-    imagePosition: BannerImagePositionType.RIGHT,
-    ctaGroup: [
-      {
-        type: 'link',
-        href: '/get-started',
-        variant: 'primary',
-        underline: 'hover',
-        pressed: true,
-        children: 'Start Planning',
-      },
-      {
-        type: 'link',
-        variant: 'secondary',
-        href: '/meals',
-        children: 'Browse Recipes',
-      },
-    ],
+  hero: {
+    eyebrow: 'The Art of Modern Cooking',
+    heading: 'Refined planning for the',
+    headingEmphasis: 'intentional',
+    ctaText: 'Explore Recipes',
+    ctaHref: '/meals',
   },
-  featuresSection: [
+  trendingRecipes: [
+    {
+      id: 1,
+      title: 'Miso Glazed Black Cod',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&q=80&w=800',
+      },
+      imageAlt: 'Miso glazed black cod on a ceramic plate',
+      time: '25 min',
+      difficulty: 'Easy',
+      category: 'Trending',
+      href: '/meals/1',
+    },
+    {
+      id: 2,
+      title: 'Hand-Pulled Biang Biang Noodles',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=800',
+      },
+      imageAlt: 'Hand-pulled Biang Biang noodles in a bowl with chilli oil',
+      time: '45 min',
+      difficulty: 'Medium',
+      category: "Editor's Choice",
+      href: '/meals/2',
+    },
+    {
+      id: 3,
+      title: 'Burrata with Heirloom Tomatoes',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&q=80&w=800',
+      },
+      imageAlt: 'Burrata cheese with heirloom tomatoes and basil on a wooden board',
+      time: '15 min',
+      difficulty: 'Beginner',
+      category: 'Seasonal',
+      href: '/meals/3',
+    },
+  ],
+  featureBanners: [
     {
       heading: 'Smart Recipe Search',
       description:
-        'Describe what you have on hand and get tailored recipes. Understand substitutions and dietary fits instantly.',
-      bannerImageSet: {
-        mobileSrc: '/placeholder.png',
-        tabletSrc: '/placeholder-tablet.svg',
-        desktopSrc: '/placeholder-desktop.svg',
+        "Find inspiration by what's already in your pantry. Filter by cuisine, diet, or complexity with our concierge-guided search engine.",
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1600',
       },
-      bannerImageAlt:
-        'Smart Recipe Search — describe ingredients to get tailored recipes with substitutions and dietary suggestions.',
-      link: {
-        href: '/get-started',
-        pressed: true,
-        children: 'Try It Now',
-      },
+      imageAlt: 'A chef preparing food in a bright modern kitchen',
+      ctaText: 'Try Smart Discovery',
+      ctaHref: '/meals',
+      iconName: 'search',
+      variant: 'overlayLeft',
     },
     {
-      heading: 'Weekly Planner & Reminders',
+      heading: 'Planner & Reminders',
       description:
-        'Drag recipes into a weekly calendar and get prep reminders so dinner is on time, every time.',
-      bannerImageSet: {
-        mobileSrc: '/placeholder.png',
-        tabletSrc: '/placeholder-tablet.svg',
-        desktopSrc: '/placeholder-desktop.svg',
+        'A balanced calendar for your life. Get timely prep notifications and never forget an ingredient again.',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1435527173128-983b87201f4d?auto=format&fit=crop&q=80&w=800',
       },
-      bannerImageAlt:
-        'Weekly planner and reminders — schedule recipes in a calendar and receive prep reminders.',
-      link: {
-        href: '/get-started',
-        pressed: true,
-        children: 'Start Planning',
-      },
+      imageAlt: 'Weekly planner open on a desk with a coffee cup',
+      ctaText: 'View Planner',
+      ctaHref: '/get-started',
+      iconName: 'calendar',
+      variant: 'overlayBottom',
     },
     {
-      heading: 'One-Click Shopping Lists',
+      heading: 'One-Click Lists',
       description:
-        'Turn any plan into a clean grocery list grouped by aisle, ready to share or check off in-store.',
-      bannerImageSet: {
-        mobileSrc: '/placeholder.png',
-        tabletSrc: '/placeholder-tablet.svg',
-        desktopSrc: '/placeholder-desktop.svg',
+        'Efficiency meets refinement. Instantly generate organised checklists from your weekly plan and export to any device.',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
       },
-      bannerImageAlt:
-        'One-click shopping lists — generate aisle-grouped grocery lists from your meal plans.',
-      link: {
-        href: '/get-started',
-        pressed: true,
-        children: 'Go Shopping List',
-      },
+      imageAlt: 'Fresh vegetables and produce at a grocery market',
+      ctaText: 'Manage Lists',
+      ctaHref: '/get-started',
+      iconName: 'shopping-cart',
+      variant: 'overlayBottom',
     },
     {
-      heading: 'Community Reviews & Tips',
+      heading: 'Community & Tips',
       description:
-        'See what real cooks say. Save tips, tweaks, and ratings to make every recipe your own.',
-      bannerImageSet: {
-        mobileSrc: '/placeholder.png',
-        tabletSrc: '/placeholder-tablet.svg',
-        desktopSrc: '/placeholder-desktop.svg',
+        'A curated collection of wisdom. Share feedback, discover shortcuts, and learn from a community of fellow cooks.',
+      imageSet: {
+        mobileSrc:
+          'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=800',
       },
-      bannerImageAlt:
-        'Community reviews and tips — read cook reviews, tips, and ratings to customize recipes.',
-      link: {
-        href: '/get-started',
-        pressed: true,
-        children: 'Check It Out',
-      },
+      imageAlt: 'People cooking together in a shared kitchen',
+      ctaText: 'Join the Conversation',
+      ctaHref: '/get-started',
+      iconName: 'message-square',
+      variant: 'split',
     },
   ],
 };

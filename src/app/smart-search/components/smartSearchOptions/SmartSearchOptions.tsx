@@ -33,9 +33,9 @@ function SmartSearchOptions({
 
   return (
     <div className={styles.smartSearchOptions}>
-      {sortedConfig.map((config, index) => (
+      {sortedConfig.map((config) => (
         <SmartFilterSection
-          key={`smart-filter-section-${index}`}
+          key={config.key}
           config={config}
           value={options[config.key as SmartSearchFilterKey]}
           updateOption={updateOption}
