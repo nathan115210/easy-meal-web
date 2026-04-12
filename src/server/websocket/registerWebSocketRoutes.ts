@@ -17,41 +17,31 @@ export function registerWebSocketRoutes(
   server: HttpServer,
   options: RegisterWebSocketRoutesOptions
 ): void {
-  const debug = process.env.NODE_ENV !== 'production';
-
   // Each websocket feature owns its own ws server instance. The route registry
   // decides which instance should receive a given upgrade request.
   const tipsWebSocketServer = createTipsWebSocketServer(options);
 
-  if (debug) {
-    console.log('[ws] websocket route registry ready');
-  }
+  console.log('[ws] websocket route registry ready');
 
   server.on('upgrade', (request, socket, head) => {
     const pathname = getRequestPathname(request);
 
-    if (debug) {
-      console.log('[ws] upgrade request received', {
-        pathname,
-        method: request.method,
-        host: request.headers.host,
-      });
-    }
+    console.log('[ws] upgrade request received', {
+      pathname,
+      method: request.method,
+      host: request.headers.host,
+    });
 
     // Live tips channel.
     if (pathname === '/ws/live-tips') {
-      if (debug) {
-        console.log('[ws] routing upgrade to live tips websocket server', {
-          pathname,
-        });
-      }
+      console.log('[ws] routing upgrade to live tips websocket server', {
+        pathname,
+      });
 
       tipsWebSocketServer.handleUpgrade(request, socket, head, (webSocket) => {
-        if (debug) {
-          console.log('[ws] websocket upgrade completed for live tips', {
-            pathname,
-          });
-        }
+        console.log('[ws] websocket upgrade completed for live tips', {
+          pathname,
+        });
 
         tipsWebSocketServer.emit('connection', webSocket, request);
       });
@@ -60,11 +50,9 @@ export function registerWebSocketRoutes(
 
     // Any websocket route we do not own must be forwarded back to Next.
     // In development, this includes /_next/webpack-hmr for hot reload.
-    if (debug) {
-      console.log('[ws] forwarding upgrade back to Next', {
-        pathname,
-      });
-    }
+    console.log('[ws] forwarding upgrade back to Next', {
+      pathname,
+    });
 
     void options.handleUpgrade(request, socket, head).catch((error) => {
       console.error('[ws] error forwarding upgrade back to Next', {

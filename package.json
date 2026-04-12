@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsx watch src/server/server.ts",
+    "dev": "NODE_ENV=development tsx watch src/server/server.ts",
     "db:start": "docker start easy-meal-postgres || docker ps",
     "db:stop": "docker stop easy-meal-postgres || docker ps",
     "db:generate": "prisma generate",
@@ -51,7 +51,6 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/ui": "^4.0.6",
     "baseline-browser-mapping": "^2.10.16",
-    "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
