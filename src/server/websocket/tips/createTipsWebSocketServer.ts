@@ -35,10 +35,12 @@ export function createTipsWebSocketServer(
   webSocketServer.on('connection', (webSocket, request) => {
     const clientLabel = getClientLabel(request);
 
-    console.log('[ws/live-tips] client connected', {
-      client: clientLabel,
-      readyState: getReadyStateLabel(webSocket.readyState),
-    });
+    if (debug) {
+      console.log('[ws/live-tips] client connected', {
+        client: clientLabel,
+        readyState: getReadyStateLabel(webSocket.readyState),
+      });
+    }
 
     // Send an immediate acknowledgement so the client knows the websocket is
     // open before the first 6-second broadcast happens.
@@ -167,12 +169,14 @@ export function createTipsWebSocketServer(
     webSocket.on('close', (code, reason) => {
       connectionClosed = true;
 
-      console.log('[ws/live-tips] client connection closed', {
-        client: clientLabel,
-        code,
-        reason: reason.toString(),
-        readyState: getReadyStateLabel(webSocket.readyState),
-      });
+      if (debug) {
+        console.log('[ws/live-tips] client connection closed', {
+          client: clientLabel,
+          code,
+          reason: reason.toString(),
+          readyState: getReadyStateLabel(webSocket.readyState),
+        });
+      }
 
       // Stop any pending future broadcast once the client disconnects.
       if (nextBroadcastTimerId) {

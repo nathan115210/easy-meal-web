@@ -23,7 +23,7 @@ import Button from '@/components/button/Button';
 import Steps from './components/steps';
 import CookModeModal from './components/cookModeModal';
 
-type PageProps = { params: Promise<{ slug: string }> };
+type PageProps = { params: { slug: string } };
 
 export const revalidate = 3600; // ISR: revalidate at most every hour
 
@@ -33,7 +33,7 @@ export async function generateStaticParams() {
 }
 
 export default async function MealDetailPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug } = params;
 
   const mealData: Meal | undefined = await getMealBySlug(slug);
 
@@ -55,22 +55,7 @@ export default async function MealDetailPage({ params }: PageProps) {
   const { calories, carbs, fat, protein } = nutritionInfo || {};
   const hotTag: string | null = topTags?.[0] || tags?.[0] || null;
   const showInfoRow = Boolean(cookTime || difficulty || calories);
-  console.log({
-    Grid,
-    Row,
-    Col,
-    Chip,
-    InfoRow,
-    InfoRowItem: InfoRow?.Item,
-    InfoRowIcon: InfoRow?.Icon,
-    InfoRowLabel: InfoRow?.Label,
-    ImageWrapper,
-    ChipsGroup,
-    Ingredients,
-    Button,
-    Steps,
-    CookModeModal,
-  });
+
   return (
     <Grid data-testid="meal-details-page">
       <Row className={styles.detailsContainer}>

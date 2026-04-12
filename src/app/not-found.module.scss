@@ -1,6 +1,7 @@
 @use '@styles/tokens/colors' as *;
 @use '@styles/tokens/spacing' as *;
 @use '@styles/tokens/border-radius' as *;
+@use '@styles/tokens/z-index' as *;
 
 @keyframes pulse-ring {
   0%,
@@ -29,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: zIndex(modal);
   overflow: hidden;
 }
 

@@ -16,7 +16,7 @@ const liveTipIcons: Record<LiveTipIcon, LucideIcon> = {
 };
 
 function LiveTipsNotificationBar() {
-  const { notificationState, connectionStatus } = useLiveTips();
+  const { notificationState, connectionStatus, disconnect } = useLiveTips();
   const [dismissed, setDismissed] = useState<string | null>(null);
 
   if (
@@ -41,7 +41,10 @@ function LiveTipsNotificationBar() {
       <div className={styles.flipUpSlide}>
         <NotificationBar
           dismissible
-          onDismiss={() => setDismissed(tipKey)}
+          onDismiss={() => {
+            disconnect();
+            setDismissed(tipKey);
+          }}
           icon={<Icon size={18} aria-hidden />}
           message={notificationState.tip.label}
           type="brand"
